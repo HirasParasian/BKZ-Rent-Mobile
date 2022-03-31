@@ -2,19 +2,12 @@
 import * as React from 'react';
 import UpdateProfile from './screens/Profile';
 import Home from './screens/Home';
+import Reservation from './screens/Reservation';
 import { Text, View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-function Feed() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Feed!</Text>
-    </View>
-  );
-}
 
 function Profile() {
   return (
@@ -46,7 +39,7 @@ function MyTabs() {
           backgroundColor: '#F56D91',
           bottom: 10,
           left: 10,
-          marginRight: 20,
+          right: 10,
           borderRadius: 15,
           paddingTop: 10,
         },
@@ -77,7 +70,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="testing"
-        component={Profile}
+        component={Reservation}
         options={{
           tabBarLabel: '',
           tabBarActiveTintColor: '#8D8DAA',
