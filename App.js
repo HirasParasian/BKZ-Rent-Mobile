@@ -3,8 +3,10 @@ import * as React from 'react';
 import Profile from './screens/Profile';
 import Home from './screens/Home';
 import Reservation from './screens/Vehicles/Reservation';
+import History from './screens/History';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
+import Search from './screens/Search';
 import ForgotPassword from './screens/ForgotPassword';
 import FAQ from './screens/Profile/FAQ';
 import Help from './screens/Profile/Help';
@@ -64,7 +66,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Search"
-        component={Login}
+        component={Search}
         options={{
           tabBarLabel: '',
           tabBarActiveTintColor: '#8D8DAA',
@@ -76,7 +78,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="testing"
-        component={Reservation}
+        component={History}
         options={{
           tabBarLabel: '',
           tabBarActiveTintColor: '#8D8DAA',
@@ -134,6 +136,7 @@ function Vehicles() {
       screenOptions={{ headerShown: false }}
       initialRouteName="Home">
       <Stack.Screen name="Bike" component={Bike} />
+      <Stack.Screen name="Reservation" component={Reservation} />
     </Stack.Navigator>
   );
 }
