@@ -7,6 +7,7 @@ import Login from './screens/Signup';
 import { Text, View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { extendTheme, NativeBaseProvider } from 'native-base';
@@ -21,6 +22,7 @@ const newColorTheme = {
 const theme = extendTheme({ colors: newColorTheme });
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 function MyTabs() {
   return (
@@ -95,7 +97,9 @@ export default function App() {
   return (
     <NativeBaseProvider theme={theme}>
       <NavigationContainer>
-        <MyTabs />
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="BottomTab" component={MyTabs} />
+        </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
   );
