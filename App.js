@@ -1,12 +1,18 @@
-/* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
-import UpdateProfile from './screens/Profile';
+//Import Screen
+import Profile from './screens/Profile';
 import Home from './screens/Home';
 import Reservation from './screens/Reservation';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
 import ForgotPassword from './screens/ForgotPassword';
-import { Text, View, StyleSheet } from 'react-native';
+import FAQ from './screens/Profile/FAQ';
+import Help from './screens/Profile/Help';
+import MyFavorite from './screens/Profile/MyFavorite';
+import UpdatePassword from './screens/Profile/UpdatePassword';
+import UpdateProfile from './screens/Profile/UpdateProfile';
+//End Import Screen
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -81,7 +87,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Profile"
-        component={UpdateProfile}
+        component={Profiles}
         options={{
           tabBarLabel: '',
           tabBarActiveTintColor: '#8D8DAA',
@@ -106,6 +112,20 @@ function Auth() {
     </Stack.Navigator>
   );
 }
+function Profiles() {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Home">
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="FAQ" component={FAQ} />
+      <Stack.Screen name="MyFavorite" component={MyFavorite} />
+      <Stack.Screen name="Help" component={Help} />
+      <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
+      <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
+    </Stack.Navigator>
+  );
+}
 
 export default function App() {
   return (
@@ -114,6 +134,7 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Auth" component={Auth} />
           <Stack.Screen name="BottomTab" component={MyTabs} />
+          {/* <Stack.Screen name="PofileNAv" component={Profiles} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

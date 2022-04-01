@@ -3,7 +3,7 @@ import React from 'react';
 import avatar from '../src/assets/images/avatar.png';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
   return (
     <>
       <View style={styles.background}>
@@ -16,22 +16,32 @@ const Profile = () => {
           <Text style={styles.mobile}>+6281388981122</Text>
         </View>
         <View style={styles.mid}>
-          <TouchableOpacity style={styles.column}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('MyFavorite')}
+            style={styles.column}>
             <Text style={styles.arrows}>Your Favorites</Text>
             <Entypo name="chevron-right" size={30} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.column}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('FAQ')}
+            style={styles.column}>
             <Text style={styles.arrows}>FAQ</Text>
             <Entypo name="chevron-right" size={30} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.column}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Help')}
+            style={styles.column}>
             <Text style={styles.arrows}>Help</Text>
             <Entypo name="chevron-right" size={30} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.column}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('UpdateProfile')}
+            style={styles.column}>
             <Text style={styles.arrows}>Update Profile</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.column}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('UpdatePassword')}
+            style={styles.column}>
             <Text style={styles.arrows}>Update Password</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.logout}>
