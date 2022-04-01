@@ -1,9 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
 import UpdateProfile from './screens/Profile';
-import Home from './screens/ForgotPassword';
+import Home from './screens/Home';
 import Reservation from './screens/Reservation';
-import Login from './screens/Login';
+import Login from './screens/Signup';
 import { Text, View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
