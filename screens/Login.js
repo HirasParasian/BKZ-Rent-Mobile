@@ -9,7 +9,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import LoginImg from '../src/assets/images/login.png';
-export default function App() {
+export default function Login({ navigation }) {
   return (
     <ImageBackground
       source={LoginImg}
@@ -24,22 +24,39 @@ export default function App() {
         />
         <TextInput
           style={styles.input}
-          keyboardType="numeric"
+          secureTextEntry={true}
           placeholder="password"
           placeholderTextColor="#fff"
         />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
           <Text> Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('BottomTab')}
+          style={styles.button}>
           <Text style={styles.text_size}> Login </Text>
         </TouchableOpacity>
+        <View style={styles.signup}>
+          <Text style={styles.dont}>Don’t have account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+            <Text style={styles.dont}>Sign up now</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  signup: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  dont: {
+    fontSize: 15,
+    color: 'white',
+    marginTop: 10,
+  },
   background: {
     height: '100%',
     opacity: 0.8,

@@ -11,7 +11,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ForgotImg from '../src/assets/images/forgot.png';
 
-export default function App() {
+export default function ForgotPassword({ navigation }) {
   return (
     // <View>
     <ImageBackground
@@ -19,7 +19,9 @@ export default function App() {
       resizeMode={'cover'}
       style={styles.background}>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.icon}>
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => navigation.navigate('Login')}>
           <Ionicons name="chevron-back" size={24} color="black" />
           <Text> Back </Text>
         </TouchableOpacity>

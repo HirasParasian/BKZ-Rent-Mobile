@@ -3,7 +3,9 @@ import * as React from 'react';
 import UpdateProfile from './screens/Profile';
 import Home from './screens/Home';
 import Reservation from './screens/Reservation';
-import Login from './screens/Signup';
+import Login from './screens/Login';
+import Signup from './screens/Signup';
+import ForgotPassword from './screens/ForgotPassword';
 import { Text, View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -93,11 +95,24 @@ function MyTabs() {
   );
 }
 
+function Auth() {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Home">
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+    </Stack.Navigator>
+  );
+}
+
 export default function App() {
   return (
     <NativeBaseProvider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Auth" component={Auth} />
           <Stack.Screen name="BottomTab" component={MyTabs} />
         </Stack.Navigator>
       </NavigationContainer>

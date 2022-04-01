@@ -11,7 +11,7 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SignupImg from '../src/assets/images/signup.png';
 
-export default function App() {
+export default function App({ navigation }) {
   return (
     <ImageBackground
       source={SignupImg}
@@ -26,7 +26,7 @@ export default function App() {
         />
         <TextInput
           style={styles.input}
-          keyboardType="text"
+          secureTextEntry={true}
           placeholder="password"
           placeholderTextColor="#fff"
         />
@@ -36,16 +36,19 @@ export default function App() {
           placeholder="mobile phone"
           placeholderTextColor="#fff"
         />
-        <TouchableOpacity>
-          <Text> Forgot Password?</Text>
-        </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.text_size}> Login </Text>
+          <Text style={styles.text_size}> Sign Up </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button_signup}>
           <AntDesign name="google" size={24} color="black" />
           <Text style={styles.text_size}> Signup With Google</Text>
         </TouchableOpacity>
+        <View style={styles.signup}>
+          <Text style={styles.dont}>Already have an account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.dont}>Login now</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ImageBackground>
     // </View>
@@ -53,6 +56,15 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  signup: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  dont: {
+    fontSize: 15,
+    color: 'white',
+    marginTop: 10,
+  },
   background: {
     height: '100%',
     opacity: 0.8,
