@@ -89,7 +89,7 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="Profiles"
         component={Profiles}
         options={{
           tabBarLabel: '',
@@ -141,7 +141,7 @@ function Vehicles() {
   );
 }
 
-export default function App() {
+function Main() {
   return (
     <NativeBaseProvider theme={theme}>
       <NavigationContainer>
@@ -155,6 +155,13 @@ export default function App() {
   );
 }
 
+export default function App() {
+  return (
+    <>
+      <Main />
+    </>
+  );
+}
 const styles = StyleSheet.create({
   // tabNavigator: {
   //   padding: 20,
