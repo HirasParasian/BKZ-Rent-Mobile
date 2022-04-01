@@ -44,7 +44,9 @@ const Profile = ({ navigation }) => {
             style={styles.column}>
             <Text style={styles.arrows}>Update Password</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.logout}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Login')}
+            style={styles.logout}>
             <Entypo name="log-out" size={30} />
             <Text style={styles.arrows}>Log Out</Text>
           </TouchableOpacity>
