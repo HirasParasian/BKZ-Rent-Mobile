@@ -74,11 +74,11 @@ const Reservation = () => {
             </View>
           </View>
           <View style={styles.selectRow}>
-            <Text style={styles.select}>Select Bikes</Text>
+            <Text style={styles.select}>Select Bikes :</Text>
             <TouchableOpacity>
               <FontAwesome
                 style={styles.plus}
-                size={25}
+                size={20}
                 color="#FFF"
                 name="minus"
               />
@@ -87,7 +87,7 @@ const Reservation = () => {
             <TouchableOpacity>
               <FontAwesome
                 style={styles.plus}
-                size={25}
+                size={20}
                 color="#FFF"
                 name="plus"
               />
@@ -101,13 +101,13 @@ const Reservation = () => {
 
 const styles = StyleSheet.create({
   count: {
-    fontSize: 30,
+    fontSize: 24,
   },
   plus: {
     backgroundColor: '#8D8DAA',
     paddingVertical: 2,
     paddingHorizontal: 5,
-    borderRadius: 10,
+    borderRadius: 7,
   },
   selectRow: {
     flexDirection: 'row',
@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingVertical: 15,
     paddingHorizontal: 10,
+    elevation: 3,
   },
   price: {
     fontSize: 25,
@@ -213,6 +214,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
+    elevation: 3,
   },
 });
 

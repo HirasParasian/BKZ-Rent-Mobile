@@ -27,47 +27,57 @@ const Home = () => {
   };
   return (
     <SafeAreaView style={styles.screen}>
-      <ScrollView>
+      <ScrollView style={styles.scroll}>
         <Image
           source={require('../src/assets/images/header.png')}
           style={styles.headerImg}
         />
         <View style={styles.content}>
-          <Title child={'Recommended'} resChild={'View more'} />
-          <FlatList
-            data={data}
-            renderItem={renderItem}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
-          <Title child={'Hot Deals'} resChild={'View more'} />
-          <FlatList
-            data={data}
-            renderItem={renderItem}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
-          <Title child={'Cars'} resChild={'View more'} />
-          <FlatList
-            data={data}
-            renderItem={renderItem}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
-          <Title child={'Bike'} resChild={'View more'} />
-          <FlatList
-            data={data}
-            renderItem={renderItem}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
-          <Title child={'Motorbike'} resChild={'View more'} />
-          <FlatList
-            data={data}
-            renderItem={renderItem}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
+          <View style={styles.box}>
+            <Title child={'Recommended'} resChild={'View more'} />
+            <FlatList
+              data={data}
+              renderItem={renderItem}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
+          <View style={styles.box}>
+            <Title child={'Hot Deals'} resChild={'View more'} />
+            <FlatList
+              data={data}
+              renderItem={renderItem}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
+          <View style={styles.box}>
+            <Title child={'Cars'} resChild={'View more'} />
+            <FlatList
+              data={data}
+              renderItem={renderItem}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
+          <View style={styles.box}>
+            <Title child={'Bike'} resChild={'View more'} />
+            <FlatList
+              data={data}
+              renderItem={renderItem}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
+          <View style={styles.box}>
+            <Title child={'Motorbike'} resChild={'View more'} />
+            <FlatList
+              data={data}
+              renderItem={renderItem}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -75,13 +85,26 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
+  content: {
+    paddingBottom: 65,
+  },
+  box: {
+    margin: 10,
+    paddingRight: 15,
+    backgroundColor: '#F7F5F2',
+    borderRadius: 30,
+    elevation: 3,
+  },
   screen: {
     position: 'relative',
     height: '100%',
-    backgroundColor: 'rgba(154, 208, 236, 0.1)',
+    backgroundColor: '#DFDFDE',
   },
   headerImg: {
     width: '100%',
+    position: 'relative',
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
   },
   coverImg: {
     width: 300,
