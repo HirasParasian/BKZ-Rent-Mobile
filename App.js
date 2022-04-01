@@ -1,29 +1,24 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
 import UpdateProfile from './screens/Profile';
-import Home from './screens/Home';
+import Home from './screens/ForgotPassword';
 import Reservation from './screens/Reservation';
+import Login from './screens/Login';
 import { Text, View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-function Profile() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Profile!</Text>
-    </View>
-  );
-}
-
-function Notifications() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Notifications!</Text>
-    </View>
-  );
-}
+import { extendTheme, NativeBaseProvider } from 'native-base';
+const newColorTheme = {
+  brand: {
+    100: '#8D8DAA',
+    200: '#DFDFDE',
+    300: '#F7F5F2',
+    400: '#F56D91',
+  },
+};
+const theme = extendTheme({ colors: newColorTheme });
 
 const Tab = createBottomTabNavigator();
 
@@ -58,7 +53,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Search"
-        component={Notifications}
+        component={Login}
         options={{
           tabBarLabel: '',
           tabBarActiveTintColor: '#8D8DAA',
@@ -98,9 +93,11 @@ function MyTabs() {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <MyTabs />
-    </NavigationContainer>
+    <NativeBaseProvider theme={theme}>
+      <NavigationContainer>
+        <MyTabs />
+      </NavigationContainer>
+    </NativeBaseProvider>
   );
 }
 
