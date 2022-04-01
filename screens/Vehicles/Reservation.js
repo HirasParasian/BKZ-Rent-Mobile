@@ -25,7 +25,7 @@ const Reservation = () => {
       <SafeAreaView style={styles.screen}>
         <ScrollView>
           <Image
-            source={require('../src/assets/images/header.png')}
+            source={require('../../src/assets/images/header.png')}
             style={styles.headerImg}
           />
           <View style={styles.back}>

@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Title from '../src/component/Title';
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const data = [
     { id: 1, image: require('../src/assets/images/1.png') },
     { id: 2, image: require('../src/assets/images/1.png') },
@@ -34,7 +34,11 @@ const Home = () => {
         />
         <View style={styles.content}>
           <View style={styles.box}>
-            <Title child={'Recommended'} resChild={'View more'} />
+            <Title
+              onPress={() => navigation.navigate('Bike')}
+              child={'Recommended'}
+              resChild={'View more'}
+            />
             <FlatList
               data={data}
               renderItem={renderItem}
