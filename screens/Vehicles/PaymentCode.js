@@ -65,7 +65,7 @@ const PaymentCode = ({ navigation }) => {
           </Container>
           <Center>
             <Button
-              onPress={() => navigation.navigate('PaymentCode')}
+              onPress={() => navigation.navigate('FinishPayment')}
               w="80%"
               my={'1'}
               py={'4'}
