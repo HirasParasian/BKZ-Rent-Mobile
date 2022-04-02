@@ -16,7 +16,7 @@ import FAicon from 'react-native-vector-icons/FontAwesome';
 import ADicon from 'react-native-vector-icons/AntDesign';
 import IONicon from 'react-native-vector-icons/Ionicons';
 
-const Reservation = () => {
+const Reservation = ({ navigation }) => {
   const [date, setDate] = useState(new Date());
   const [modalVisible, setModalVisible] = useState(false);
   let [service, setService] = React.useState('');
@@ -166,7 +166,10 @@ const Reservation = () => {
             </View>
             <View>
               <TouchableOpacity>
-                <Button styles={styles.reservation} size="md">
+                <Button
+                  onPress={() => navigation.navigate('Payment')}
+                  styles={styles.reservation}
+                  size="md">
                   Reservation
                 </Button>
               </TouchableOpacity>

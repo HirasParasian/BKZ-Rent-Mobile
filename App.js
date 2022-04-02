@@ -1,20 +1,4 @@
 import * as React from 'react';
-//Import Screen
-import Profile from './screens/Profile';
-import Home from './screens/Home';
-import Reservation from './screens/Vehicles/Reservation';
-import History from './screens/History';
-import Login from './screens/Login';
-import Signup from './screens/Signup';
-import Search from './screens/Search';
-import ForgotPassword from './screens/ForgotPassword';
-import FAQ from './screens/Profile/FAQ';
-import Help from './screens/Profile/Help';
-import MyFavorite from './screens/Profile/MyFavorite';
-import UpdatePassword from './screens/Profile/UpdatePassword';
-import UpdateProfile from './screens/Profile/UpdateProfile';
-import Bike from './screens/Vehicles/Bike';
-//End Import Screen
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -23,11 +7,37 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { extendTheme, NativeBaseProvider } from 'native-base';
 
-//Persist Intergration
+//--------------IMPORT SCREEN--------------------------------------
+//AUTH
+import Login from './screens/Login';
+import Signup from './screens/Signup';
+import ForgotPassword from './screens/ForgotPassword';
+//HOME
+import Home from './screens/Home';
+import Reservation from './screens/Vehicles/Reservation';
+import Bike from './screens/Vehicles/Bike';
+import Cars from './screens/Vehicles/Cars';
+import Motorbike from './screens/Vehicles/Motorbike';
+import Payment from './screens/Vehicles/Payment';
+
+//PROFILE
+import Profile from './screens/Profile';
+import FAQ from './screens/Profile/FAQ';
+import Help from './screens/Profile/Help';
+import MyFavorite from './screens/Profile/MyFavorite';
+import UpdatePassword from './screens/Profile/UpdatePassword';
+import UpdateProfile from './screens/Profile/UpdateProfile';
+//HISTORY
+import History from './screens/History';
+//SEARCH
+import Search from './screens/Search';
+//-------------END IMPORT SCREEN-----------------------------------
+
+//-------------PERSIST INTEGRATION---------------------------------
 import reduxStore from './src/redux/store';
 import { Provider, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-//Persist
+//-------------END PERSIST INTEGRATION-----------------------------
 const newColorTheme = {
   brand: {
     100: '#8D8DAA',
@@ -59,8 +69,8 @@ function MyTabs() {
         },
       }}>
       <Tab.Screen
-        name="Home"
-        component={Home}
+        name="Homes"
+        component={Homes}
         options={{
           tabBarLabel: '',
           tabBarActiveTintColor: '#8D8DAA',
@@ -114,7 +124,7 @@ function Auth() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="Home">
+      initialRouteName="Login">
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
@@ -136,13 +146,17 @@ function Profiles() {
   );
 }
 
-function Vehicles() {
+function Homes() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
       initialRouteName="Home">
+      <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Bike" component={Bike} />
+      <Stack.Screen name="Cars" component={Cars} />
+      <Stack.Screen name="Motorbike" component={Motorbike} />
       <Stack.Screen name="Reservation" component={Reservation} />
+      <Stack.Screen name="Payment" component={Payment} />
     </Stack.Navigator>
   );
 }
@@ -155,7 +169,6 @@ function Main() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {auth.token === null && <Stack.Screen name="Auth" component={Auth} />}
           <Stack.Screen name="BottomTab" component={MyTabs} />
-          <Stack.Screen name="Vehicles" component={Vehicles} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

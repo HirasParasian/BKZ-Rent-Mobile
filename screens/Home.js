@@ -20,7 +20,9 @@ const Home = ({ navigation }) => {
   ];
   const renderItem = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.coverImg}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Reservation')}
+        style={styles.coverImg}>
         <Image source={item.image} style={styles.listImg} />
       </TouchableOpacity>
     );
@@ -34,11 +36,7 @@ const Home = ({ navigation }) => {
         />
         <View style={styles.content}>
           <View style={styles.box}>
-            <Title
-              onPress={() => navigation.navigate('Bike')}
-              child={'Recommended'}
-              resChild={'View more'}
-            />
+            <Title child={'Recommended'} resChild={'View more'} />
             <FlatList
               data={data}
               renderItem={renderItem}
@@ -56,7 +54,13 @@ const Home = ({ navigation }) => {
             />
           </View>
           <View style={styles.box}>
-            <Title child={'Cars'} resChild={'View more'} />
+            <Title
+              onPress={() =>
+                navigation.navigate('Cars', { screen: 'Vehicles' })
+              }
+              child={'Cars'}
+              resChild={'View more'}
+            />
             <FlatList
               data={data}
               renderItem={renderItem}
@@ -65,7 +69,13 @@ const Home = ({ navigation }) => {
             />
           </View>
           <View style={styles.box}>
-            <Title child={'Bike'} resChild={'View more'} />
+            <Title
+              onPress={() =>
+                navigation.navigate('Bike', { screen: 'Vehicles' })
+              }
+              child={'Bike'}
+              resChild={'View more'}
+            />
             <FlatList
               data={data}
               renderItem={renderItem}
@@ -74,7 +84,13 @@ const Home = ({ navigation }) => {
             />
           </View>
           <View style={styles.box}>
-            <Title child={'Motorbike'} resChild={'View more'} />
+            <Title
+              onPress={() =>
+                navigation.navigate('Motorbike', { screen: 'Vehicles' })
+              }
+              child={'Motorbike'}
+              resChild={'View more'}
+            />
             <FlatList
               data={data}
               renderItem={renderItem}
