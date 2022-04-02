@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { AuthLogin } from '../src/redux/actions/auth';
 import {
   Text,
   View,
@@ -8,8 +9,16 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 import LoginImg from '../src/assets/images/login.png';
 export default function Login({ navigation }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const onLogin = () => {
+    console.log(username, password);
+    dispatch(AuthLogin(username, password));
+  };
   return (
     <ImageBackground
       source={LoginImg}
@@ -21,19 +30,21 @@ export default function Login({ navigation }) {
           style={styles.input}
           placeholder="username"
           placeholderTextColor="blue"
+          value={username}
+          onChangeText={setUsername}
         />
         <TextInput
           style={styles.input}
           secureTextEntry={true}
           placeholder="password"
           placeholderTextColor="#fff"
+          value={password}
+          onChangeText={setPassword}
         />
         <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
           <Text> Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('BottomTab')}
-          style={styles.button}>
+        <TouchableOpacity onPress={onLogin} style={styles.button}>
           <Text style={styles.text_size}> Login </Text>
         </TouchableOpacity>
         <View style={styles.signup}>

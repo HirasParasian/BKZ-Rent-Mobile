@@ -22,6 +22,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { extendTheme, NativeBaseProvider } from 'native-base';
+
+//Persist Intergration
+import reduxStore from './src/redux/store';
+import { Provider, useSelector } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+//Persist
 const newColorTheme = {
   brand: {
     100: '#8D8DAA',
@@ -142,11 +148,12 @@ function Vehicles() {
 }
 
 function Main() {
+  const auth = useSelector(state => state.auth);
   return (
     <NativeBaseProvider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Auth" component={Auth} />
+          {auth.token === null && <Stack.Screen name="Auth" component={Auth} />}
           <Stack.Screen name="BottomTab" component={MyTabs} />
           <Stack.Screen name="Vehicles" component={Vehicles} />
         </Stack.Navigator>
@@ -155,11 +162,15 @@ function Main() {
   );
 }
 
+const { store, persistor } = reduxStore();
+
 export default function App() {
   return (
-    <>
-      <Main />
-    </>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <Main />
+      </PersistGate>
+    </Provider>
   );
 }
 const styles = StyleSheet.create({
