@@ -17,7 +17,7 @@ const PaymentCode = ({ navigation }) => {
           </Box>
           <Center py={'5'}>
             <Container>
-              <Stepper count={3} currentlyActive={2} />
+              <Stepper count={3} currentlyActive={3} />
             </Container>
           </Center>
           <Center>

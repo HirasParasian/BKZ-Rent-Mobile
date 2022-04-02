@@ -84,7 +84,7 @@ const Payment = ({ navigation }) => {
           <Select.Item label="Partial payment (include tax)" value="cross" />
         </Select>
         <Button
-          onPress={() => navigation.navigate('PaymentCode')}
+          onPress={() => navigation.navigate('OrderDetails')}
           w="80%"
           my={'1'}
           py={'3'}
