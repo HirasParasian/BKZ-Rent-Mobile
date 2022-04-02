@@ -49,6 +49,7 @@ const Stepper = ({ currentlyActive, count, weight = ITEM_WH }) => {
           {[...Array(count - 1)].map((o, i) => {
             return (
               <LinearGradient
+                key={String(Math.random())}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 colors={
@@ -64,6 +65,7 @@ const Stepper = ({ currentlyActive, count, weight = ITEM_WH }) => {
         {[...Array(count)].map((o, i) => {
           return (
             <LinearGradient
+              key={String(Math.random())}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
               colors={

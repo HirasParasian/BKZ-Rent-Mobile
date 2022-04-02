@@ -38,15 +38,36 @@ import reduxStore from './src/redux/store';
 import { Provider, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 //-------------END PERSIST INTEGRATION-----------------------------
-const newColorTheme = {
-  brand: {
-    100: '#8D8DAA',
-    200: '#DFDFDE',
-    300: '#F7F5F2',
-    400: '#F56D91',
+const theme = extendTheme({
+  colors: {
+    brand: {
+      100: '#8D8DAA',
+      200: '#DFDFDE',
+      300: '#F7F5F2',
+      400: '#F56D91',
+    },
+    primary: {
+      // 50: '#E3F2F9',
+      // 100: '#C5E4F3',
+      // 200: '#A2D4EC',
+      // 300: '#7AC1E4',
+      // 400: '#47A9DA',
+      // 500: '#0088CC',
+      600: '#8D8DAA',
+      700: '#DFDFDE',
+      800: '#F7F5F2',
+      900: '#F56D91',
+    },
+    // Redefinig only one shade, rest of the color will remain same.
+    amber: {
+      400: '#d97706',
+    },
   },
-};
-const theme = extendTheme({ colors: newColorTheme });
+  // config: {
+  //   // Changing initialColorMode to 'dark'
+  //   initialColorMode: 'dark',
+  // },
+});
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
