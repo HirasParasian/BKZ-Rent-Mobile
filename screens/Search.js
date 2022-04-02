@@ -58,22 +58,28 @@ const Search = ({ navigation }) => {
   };
   const renderItem = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.coverImg}>
-        <Image
-          width={'100%'}
-          alt={item.location}
-          source={item.image}
-          style={styles.listImg}
-        />
-        <Center>Kintamani, 0.1 miles from your location</Center>
-        <View style={styles.rows}>
-          <View>
-            <Text>{item.title}</Text>
-            <Text>Available</Text>
+      <View style={styles.elevate}>
+        <TouchableOpacity style={styles.coverImg}>
+          <Image
+            width={'100%'}
+            alt={item.location}
+            source={item.image}
+            style={styles.listImg}
+          />
+        </TouchableOpacity>
+        <View style={styles.textVehicle}>
+          <Text style={styles.text}>
+            Kintamani, 0.1 miles from your location
+          </Text>
+          <View style={styles.rows}>
+            <View>
+              <Text style={styles.textName}>{item.title}</Text>
+              <Text style={styles.textAvailable}>Available</Text>
+            </View>
+            <Text style={styles.price}>Rp. {item.price}/Day</Text>
           </View>
-          <Text>{item.price}</Text>
         </View>
-      </TouchableOpacity>
+      </View>
     );
   };
   return (
@@ -109,7 +115,7 @@ const Search = ({ navigation }) => {
               ) : null
             }
           />
-          <TouchableOpacity style={styles.rows}>
+          <TouchableOpacity style={styles.row}>
             <FAicon
               color={'#8D8DAA'}
               name="filter"
@@ -119,26 +125,62 @@ const Search = ({ navigation }) => {
             <Text>Filter</Text>
           </TouchableOpacity>
         </Box>
-        <Box px="5">
+        <View style={styles.main}>
           <FlatList
             data={data}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
           />
-        </Box>
+        </View>
       </View>
     </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
+  main: {
+    height: '100%',
+    paddingHorizontal: 20,
+    paddingBottom: 120,
+  },
+  text: {
+    fontSize: 16,
+    color: 'grey',
+  },
+  textName: {
+    fontSize: 16,
+    color: '#8D8DAA',
+    fontWeight: 'bold',
+  },
+  textAvailable: {
+    fontSize: 16,
+    color: '#F56D91',
+    fontWeight: 'bold',
+  },
+  price: {
+    fontSize: 25,
+    color: '#F56D91',
+    fontWeight: 'bold',
+    paddingTop: 10,
+  },
+  textVehicle: {
+    backgroundColor: 'pink',
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    paddingBottom: 20,
+    paddingTop: 8,
+    paddingHorizontal: 12,
+  },
+  elevate: {
+    marginVertical: 20,
+    elevation: 5,
+    borderRadius: 30,
+  },
   listImg: {
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    elevation: 3,
   },
   coverImg: {
-    // elevation: 1,
-    paddingVertical: 10,
+    elevation: 3,
   },
   search: {
     marginLeft: 16,
@@ -158,6 +200,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: -10,
   },
 });
 export default Search;
