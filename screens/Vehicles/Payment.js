@@ -1,10 +1,11 @@
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
+import Stepper from '../../src/component/Stepper';
 
 const Payment = () => {
   return (
     <View>
-      <Text>Payment</Text>
+      <Stepper count={3} currentlyActive={2} />
     </View>
   );
 };
