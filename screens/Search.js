@@ -26,27 +26,6 @@ const Search = ({ navigation }) => {
       title: 'Vespa Matic',
       isAvailable: true,
     },
-    {
-      image: require('../src/assets/images/1.png'),
-      location: 'Makassar',
-      price: 250000,
-      title: 'Vespa Matic',
-      isAvailable: true,
-    },
-    {
-      image: require('../src/assets/images/1.png'),
-      location: 'Makassar',
-      price: 250000,
-      title: 'Vespa Matic',
-      isAvailable: true,
-    },
-    {
-      image: require('../src/assets/images/1.png'),
-      location: 'Makassar',
-      price: 250000,
-      title: 'Vespa Matic',
-      isAvailable: true,
-    },
   ];
   const [search, setSearch] = useState('');
   const searchChange = e => {
@@ -138,9 +117,8 @@ const Search = ({ navigation }) => {
 };
 const styles = StyleSheet.create({
   main: {
-    height: '100%',
     paddingHorizontal: 20,
-    paddingBottom: 120,
+    paddingBottom: 400,
   },
   text: {
     fontSize: 16,
