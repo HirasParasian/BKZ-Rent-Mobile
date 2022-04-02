@@ -4,7 +4,7 @@ import Stepper from '../../src/component/Stepper';
 import { Container, Center, Input, Select, Button } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const Payment = () => {
+const Payment = ({ navigation }) => {
   return (
     <>
       <View>
@@ -84,6 +84,7 @@ const Payment = () => {
           <Select.Item label="Partial payment (include tax)" value="cross" />
         </Select>
         <Button
+          onPress={() => navigation.navigate('PaymentCode')}
           w="80%"
           my={'1'}
           py={'3'}
@@ -91,7 +92,7 @@ const Payment = () => {
           style={styles.Button}
           colorScheme={'pink'}
           variant="subtle">
-          See Order Details
+          <Text>See Order Details</Text>
         </Button>
       </Center>
     </>

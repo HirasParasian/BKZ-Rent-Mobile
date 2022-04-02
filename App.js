@@ -19,7 +19,7 @@ import Bike from './screens/Vehicles/Bike';
 import Cars from './screens/Vehicles/Cars';
 import Motorbike from './screens/Vehicles/Motorbike';
 import Payment from './screens/Vehicles/Payment';
-
+import PaymentCode from './screens/Vehicles/PaymentCode';
 //PROFILE
 import Profile from './screens/Profile';
 import FAQ from './screens/Profile/FAQ';
@@ -178,6 +178,7 @@ function Homes() {
       <Stack.Screen name="Motorbike" component={Motorbike} />
       <Stack.Screen name="Reservation" component={Reservation} />
       <Stack.Screen name="Payment" component={Payment} />
+      <Stack.Screen name="PaymentCode" component={PaymentCode} />
     </Stack.Navigator>
   );
 }
