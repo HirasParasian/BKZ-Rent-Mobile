@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -8,10 +8,22 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import { Input } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ForgotImg from '../src/assets/images/forgot.png';
+import { onForgot } from '../src/redux/actions/auth';
+import { useDispatch } from 'react-redux';
 
 export default function ForgotPassword({ navigation }) {
+  const [code, setCode] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const dispatch = useDispatch();
+  const onLogin = () => {
+    // console.log(username, password);
+    dispatch(onForgot(email, code, password, confirmPassword));
+  };
   return (
     // <View>
     <ImageBackground
@@ -27,12 +39,43 @@ export default function ForgotPassword({ navigation }) {
         </TouchableOpacity>
         <Text style={styles.text}>THAT’S OKAY, WE GOT YOUR BACK</Text>
         <Text>Enter your email to get reset password code</Text>
-        <TextInput
+        <Input
           style={styles.input}
+          variant="filled"
+          rounded={10}
           placeholder="Enter your email adress"
-          placeholderTextColor="#fff"
+          placeholderTextColor="#000"
+          value={email}
+          onChangeText={setEmail}
         />
-        <TouchableOpacity style={styles.button}>
+        <Input
+          style={styles.input}
+          variant="filled"
+          rounded={10}
+          placeholder="Enter Code"
+          placeholderTextColor="#000"
+          value={code}
+          onChangeText={setCode}
+        />
+        <Input
+          style={styles.input}
+          variant="filled"
+          rounded={10}
+          placeholder="Password"
+          placeholderTextColor="#000"
+          value={password}
+          onChangeText={setPassword}
+        />
+        <Input
+          style={styles.input}
+          variant="filled"
+          rounded={10}
+          placeholder="Confirm Password"
+          placeholderTextColor="#000"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+        />
+        <TouchableOpacity onPress={onLogin} style={styles.button}>
           <Text style={styles.text_size}> Send Code </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button_signup}>

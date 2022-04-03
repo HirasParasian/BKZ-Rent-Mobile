@@ -12,6 +12,9 @@ const auth = (state = initialState, action) => {
     case 'AUTH_LOGIN': {
       return { ...state, token: action.payload };
     }
+    case 'AUTH_FORGOT': {
+      return { ...state };
+    }
     case 'AUTH_SIGNUP': {
       state.signup = true;
       return { ...state };
