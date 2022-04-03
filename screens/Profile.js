@@ -1,11 +1,23 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import avatar from '../src/assets/images/avatar.png';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProfile } from '../src/redux/actions/auth';
 
 const Profile = ({ navigation }) => {
+  const auth = useSelector(state => state.auth);
+  const data = useSelector(state => state.auth?.userData);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    getProfiler();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getProfiler = async () => {
+    await dispatch(getProfile(auth.token));
+  };
   return (
     <>
       <View style={styles.background}>
@@ -13,9 +25,9 @@ const Profile = ({ navigation }) => {
           <TouchableOpacity>
             <Image style={styles.avatar} source={avatar} />
           </TouchableOpacity>
-          <Text style={styles.name}>Hiras Parasian</Text>
-          <Text style={styles.email}>hirasparasian@gmail.com</Text>
-          <Text style={styles.mobile}>+6281388981122</Text>
+          <Text style={styles.name}>{data?.fullName}</Text>
+          <Text style={styles.email}>{data?.email}</Text>
+          <Text style={styles.mobile}>{data?.mobileNumber}</Text>
         </View>
         <View style={styles.mid}>
           <TouchableOpacity

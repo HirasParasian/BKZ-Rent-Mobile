@@ -62,3 +62,20 @@ export const OnRegister = (username, password, MobileNumber) => {
     }
   };
 };
+
+export const getProfile = token => {
+  return async dispatch => {
+    try {
+      const { data } = await http(token).get('/profile');
+      dispatch({
+        type: 'GET_PROFILE',
+        payload: data.results,
+      });
+    } catch (e) {
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e.response.data.error[0],
+      });
+    }
+  };
+};

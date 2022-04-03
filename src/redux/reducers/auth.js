@@ -4,6 +4,7 @@ const initialState = {
   errMsg: '',
   isLoading: false,
   signup: false,
+  userData: {},
 };
 const auth = (state = initialState, action) => {
   switch (action.type) {
@@ -23,23 +24,8 @@ const auth = (state = initialState, action) => {
     case 'CLEAR_ERROR': {
       return { ...state, isError: false, errMsg: '' };
     }
-    case 'LOGIN_PENDING': {
-      state.isLoading = true;
-      return { ...state };
-    }
-    case 'LOGIN_FULFILLED': {
-      const { data } = action.payload;
-      state.token = data.results.token;
-      state.isLoading = false;
-      state.isError = false;
-      state.isAuthenticated = true;
-      return { ...state };
-    }
-    case 'LOGIN_REJECTED': {
-      const { data } = action.payload.response;
-      state.isLoading = false;
-      state.isError = true;
-      state.errMessage = data.message;
+    case 'GET_PROFILE': {
+      state.userData = action.payload;
       return { ...state };
     }
     default: {
