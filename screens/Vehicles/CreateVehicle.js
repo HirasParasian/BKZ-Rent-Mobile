@@ -35,6 +35,13 @@ const CreateVehicle = () => {
             />
           </Center>
           <Center>
+            <Button rounded={10} my={'1'} py={'2'} w="40%">
+              <Text fontSize={16} color={'white'} bold>
+                Add a Picture
+              </Text>
+            </Button>
+          </Center>
+          <Center>
             <Input
               mt="3"
               w="60%"
