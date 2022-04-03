@@ -23,7 +23,10 @@ export const OnCreate = (
       dispatch({
         type: 'CLEAR_ERROR',
       });
-      const { data } = await http(token).post('/vehicles', qs.stringify(dataa));
+      const { data } = await http(token).post(
+        '/vehicles/create',
+        qs.stringify(dataa),
+      );
       console.log(data);
       dispatch({
         type: 'CREATE_VEHICLE',
