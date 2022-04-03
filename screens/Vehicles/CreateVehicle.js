@@ -1,8 +1,10 @@
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Camera from '../../src/assets/images/cameras.png';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import { OnCreate } from '../../src/redux/actions/vehicle';
+import ModalSuccess from '../../src/component/ModalSuccess';
+import ModalError from '../../src/component/ModalError';
 import {
   Container,
   Center,
@@ -18,12 +20,20 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const CreateVehicle = () => {
   const auth = useSelector(state => state.auth);
+  const vehicle = useSelector(state => state.vehicle);
+  // console.log(vehicle.errMsg[0]);
+  useEffect(() => {
+    dispatch({
+      type: 'CLEAR_MESSAGE',
+    });
+  }, [dispatch]);
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [stock, setStock] = useState('');
   const [description, serDescription] = useState('');
   let [location, setLocation] = React.useState('');
   let [category, setCategory] = React.useState('');
+  // const hiddenFileInput = useRef(null);
   const token = auth.token;
   const dispatch = useDispatch();
   const onCreated = () => {
@@ -32,10 +42,34 @@ const CreateVehicle = () => {
       OnCreate(name, price, stock, description, location, category, token),
     );
   };
+
+  //Upload File Handler
+  // const uploadFile = e => {
+  //   e.preventDefault();
+  //   hiddenFileInput.current.click();
+  // };
+  // const fileInputHandler = e => {
+  //   const reader = new FileReader();
+  //   const picture = e.target.files[0];
+  //   const profileImage = document.querySelector('#profile-image');
+  //   reader.readAsDataURL(picture);
+  //   reader.onload = e => {
+  //     profileImage.src = e.target.result;
+  //     profileImage.className += ' rounded-circle';
+  //   };
+  //   setDatas({
+  //     picture: e.target.files[0],
+  //   });
+  // };
+
   return (
     <>
       <ScrollView>
         <View style={styles.content}>
+          {vehicle.createVehicle && (
+            <ModalSuccess message={'Create Successfully'} />
+          )}
+          {vehicle?.isError && <ModalError message={vehicle.errMsg[0]} />}
           <View>
             <TouchableOpacity style={styles.icon}>
               <Ionicons name="chevron-back" size={28} color="black" />
@@ -150,10 +184,10 @@ const CreateVehicle = () => {
               />
             </TouchableOpacity>
             <Input
-              mt="3"
               w="20%"
+              size={'xl'}
               variant={'solid'}
-              placeholder="0"
+              placeholder="     0"
               borderBottomColor="gray.400"
               value={stock}
               onChangeText={setStock}
