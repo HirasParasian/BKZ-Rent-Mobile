@@ -6,6 +6,8 @@ const initialState = {
   signup: false,
   userData: {},
   updateProfile: false,
+  forgot: false,
+  successMsg: '',
 };
 const auth = (state = initialState, action) => {
   switch (action.type) {
@@ -13,7 +15,8 @@ const auth = (state = initialState, action) => {
       return { ...state, token: action.payload };
     }
     case 'AUTH_FORGOT': {
-      return { ...state };
+      state.forgot = true;
+      return { ...state, successMsg: action.payload };
     }
     case 'AUTH_SIGNUP': {
       state.signup = true;
@@ -34,6 +37,11 @@ const auth = (state = initialState, action) => {
     }
     case 'GET_PROFILE': {
       state.userData = action.payload;
+      return { ...state };
+    }
+    case 'CLEAR_FORGOT_MESSAGE': {
+      state.forgot = false;
+      state.successMsg = '';
       return { ...state };
     }
     default: {
