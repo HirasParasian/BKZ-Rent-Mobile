@@ -28,6 +28,41 @@ export const loginProcess = (username, password) => {
   };
 };
 
+export const onForgot = (email, code, password, confirmPassword) => {
+  const dataa = {
+    email: email,
+    code: code,
+    password: password,
+    confirmPassword: confirmPassword,
+  };
+  return async dispatch => {
+    try {
+      dispatch({
+        type: 'CLEAR_ERROR',
+      });
+      const { data } = await http().post(
+        '/auth/forgotPassword',
+        qs.stringify(dataa),
+      );
+      dispatch({
+        type: 'AUTH_FORGOT',
+        payload: data.message,
+      });
+    } catch (err) {
+      let payload = '';
+      if (err.response) {
+        payload = err.response.data.message;
+      } else {
+        payload = err.message;
+      }
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: payload,
+      });
+    }
+  };
+};
+
 export const OnRegister = (username, password, MobileNumber) => {
   const dataa = {
     username: username,
