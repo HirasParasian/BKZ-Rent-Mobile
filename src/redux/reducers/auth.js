@@ -3,11 +3,16 @@ const initialState = {
   isError: false,
   errMsg: '',
   isLoading: false,
+  signup: false,
 };
 const auth = (state = initialState, action) => {
   switch (action.type) {
     case 'AUTH_LOGIN': {
       return { ...state, token: action.payload };
+    }
+    case 'AUTH_SIGNUP': {
+      state.signup = true;
+      return { ...state };
     }
     case 'AUTH_LOGOUT': {
       return { ...initialState };

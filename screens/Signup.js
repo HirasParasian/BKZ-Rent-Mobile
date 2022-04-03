@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -11,8 +11,18 @@ import {
 import { Input } from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SignupImg from '../src/assets/images/signup.png';
+import { OnRegister } from '../src/redux/actions/auth';
+import { useDispatch } from 'react-redux';
 
 export default function App({ navigation }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  const dispatch = useDispatch();
+  const onSignup = () => {
+    console.log(username, password, mobileNumber);
+    dispatch(OnRegister(username, password, mobileNumber));
+  };
   return (
     <ImageBackground
       source={SignupImg}
@@ -27,6 +37,8 @@ export default function App({ navigation }) {
           style={styles.input}
           placeholder="username"
           placeholderTextColor="#000"
+          value={username}
+          onChangeText={setUsername}
         />
         <Input
           rounded={'10'}
@@ -35,6 +47,8 @@ export default function App({ navigation }) {
           secureTextEntry={true}
           placeholder="password"
           placeholderTextColor="#000"
+          value={password}
+          onChangeText={setPassword}
         />
         <Input
           my={'3'}
@@ -44,8 +58,10 @@ export default function App({ navigation }) {
           keyboardType="numeric"
           placeholder="mobile phone"
           placeholderTextColor="#000"
+          value={mobileNumber}
+          onChangeText={setMobileNumber}
         />
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity onPress={onSignup} style={styles.button}>
           <Text style={styles.text_size}> Sign Up </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button_signup}>
