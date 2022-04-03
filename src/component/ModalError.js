@@ -1,12 +1,11 @@
 import { StyleSheet, View } from 'react-native';
-import { Modal, Button, ScrollView, VStack, Text, Center } from 'native-base';
+import { Modal, Button, ScrollView, Text, Center } from 'native-base';
 import React, { useEffect } from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 const ModalError = ({ message }) => {
   //Modal
   const [modalVisible, setModalVisible] = React.useState(false);
-  const [size, setSize] = React.useState('md');
   useEffect(() => {
     console.log(message);
     if (message) {
@@ -15,14 +14,10 @@ const ModalError = ({ message }) => {
       setModalVisible(false);
     }
   }, [message]);
-  const handleSizeClick = newSize => {
-    setSize(newSize);
-    setModalVisible(!modalVisible);
-  };
   //Modal
   return (
     <View>
-      <Modal isOpen={modalVisible} onClose={setModalVisible} size={size}>
+      <Modal isOpen={modalVisible} onClose={setModalVisible} size={'md'}>
         <Modal.Content maxH="212">
           <Modal.CloseButton />
           <Modal.Header>
