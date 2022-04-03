@@ -1,7 +1,8 @@
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import Camera from '../../src/assets/images/cameras.png';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
+import { OnCreate } from '../../src/redux/actions/vehicle';
 import {
   Container,
   Center,
@@ -13,8 +14,24 @@ import {
   ScrollView,
 } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useDispatch, useSelector } from 'react-redux';
 
 const CreateVehicle = () => {
+  const auth = useSelector(state => state.auth);
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
+  const [stock, setStock] = useState('');
+  const [description, serDescription] = useState('');
+  let [location, setLocation] = React.useState('');
+  let [category, setCategory] = React.useState('');
+  const token = auth.token;
+  const dispatch = useDispatch();
+  const onCreated = () => {
+    console.log(name, price, stock, description, location, category, token);
+    dispatch(
+      OnCreate(name, price, stock, description, location, category, token),
+    );
+  };
   return (
     <>
       <ScrollView>
@@ -48,6 +65,8 @@ const CreateVehicle = () => {
               variant={'underlined'}
               placeholder="Type product name min. 30 characters"
               borderBottomColor="gray.400"
+              value={name}
+              onChangeText={setName}
             />
             <Input
               mt="3"
@@ -55,6 +74,8 @@ const CreateVehicle = () => {
               variant={'underlined'}
               placeholder="Type product price"
               borderBottomColor="gray.400"
+              value={price}
+              onChangeText={setPrice}
             />
           </Center>
           <Container mx="5">
@@ -70,6 +91,8 @@ const CreateVehicle = () => {
               variant={'underlined'}
               placeholder="Type product name min. 30 characters"
               borderBottomColor="gray.400"
+              value={description}
+              onChangeText={serDescription}
             />
           </Center>
           <Container mx="5">
@@ -84,12 +107,14 @@ const CreateVehicle = () => {
               w="80%"
               my={'1'}
               py={'3'}
+              selectedValue={location}
+              onValueChange={itemValue => setLocation(itemValue)}
               variant="underlined"
               borderBottomColor="gray.400"
               placeholder="Select Location">
-              <Select.Item label="Bekasi" value="ux" />
-              <Select.Item label="Bogor" value="web" />
-              <Select.Item label="Bandung" value="cross" />
+              <Select.Item label="Bekasi" value="bekasi" />
+              <Select.Item label="Bogor" value="bogor" />
+              <Select.Item label="Bandung" value="bandung" />
             </Select>
           </Center>
           <Container mx="5">
@@ -104,12 +129,14 @@ const CreateVehicle = () => {
               w="80%"
               my={'1'}
               py={'3'}
+              selectedValue={category}
+              onValueChange={itemValue => setCategory(itemValue)}
               variant="underlined"
               borderBottomColor="gray.400"
               placeholder="Select Category">
-              <Select.Item label="Cars" value="ux" />
-              <Select.Item label="Bike" value="web" />
-              <Select.Item label="MotorBike" value="cross" />
+              <Select.Item label="Cars" value="3" />
+              <Select.Item label="Bike" value="1" />
+              <Select.Item label="MotorBike" value="2" />
             </Select>
           </Center>
           <View style={styles.selectRow}>
@@ -122,7 +149,15 @@ const CreateVehicle = () => {
                 name="minus"
               />
             </TouchableOpacity>
-            <Text style={styles.count}>0</Text>
+            <Input
+              mt="3"
+              w="20%"
+              variant={'solid'}
+              placeholder="0"
+              borderBottomColor="gray.400"
+              value={stock}
+              onChangeText={setStock}
+            />
             <TouchableOpacity>
               <FontAwesome
                 style={styles.plus}
@@ -133,7 +168,7 @@ const CreateVehicle = () => {
             </TouchableOpacity>
           </View>
           <Center>
-            <Button rounded={10} my={'1'} py={'4'} w="80%">
+            <Button onPress={onCreated} rounded={10} my={'1'} py={'4'} w="80%">
               <Text fontSize={16} color={'white'} bold>
                 Save Product
               </Text>

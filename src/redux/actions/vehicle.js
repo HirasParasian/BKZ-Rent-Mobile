@@ -4,10 +4,11 @@ import qs from 'qs';
 export const OnCreate = (
   name,
   price,
+  stock,
   description,
   location,
   category,
-  stock,
+  token,
 ) => {
   const dataa = {
     name: name,
@@ -22,7 +23,7 @@ export const OnCreate = (
       dispatch({
         type: 'CLEAR_ERROR',
       });
-      const { data } = await http().post('/vehicles', qs.stringify(dataa));
+      const { data } = await http(token).post('/vehicles', qs.stringify(dataa));
       console.log(data);
       dispatch({
         type: 'CREATE_VEHICLE',
