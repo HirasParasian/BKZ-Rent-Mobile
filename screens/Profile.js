@@ -2,8 +2,10 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
 import avatar from '../src/assets/images/avatar.png';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { useDispatch } from 'react-redux';
 
 const Profile = ({ navigation }) => {
+  const dispatch = useDispatch();
   return (
     <>
       <View style={styles.background}>
@@ -45,7 +47,7 @@ const Profile = ({ navigation }) => {
             <Text style={styles.arrows}>Update Password</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Login')}
+            onPress={() => dispatch({ type: 'AUTH_LOGOUT' })}
             style={styles.logout}>
             <Entypo name="log-out" size={30} />
             <Text style={styles.arrows}>Log Out</Text>

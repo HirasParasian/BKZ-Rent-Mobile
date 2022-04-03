@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -8,10 +8,21 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import { Input } from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SignupImg from '../src/assets/images/signup.png';
+import { OnRegister } from '../src/redux/actions/auth';
+import { useDispatch } from 'react-redux';
 
 export default function App({ navigation }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  const dispatch = useDispatch();
+  const onSignup = () => {
+    console.log(username, password, mobileNumber);
+    dispatch(OnRegister(username, password, mobileNumber));
+  };
   return (
     <ImageBackground
       source={SignupImg}
@@ -19,24 +30,38 @@ export default function App({ navigation }) {
       style={styles.background}>
       <View style={styles.container}>
         <Text style={styles.text}>LET’S EXPLORE THE WORLD</Text>
-        <TextInput
+        <Input
+          my={'3'}
+          rounded={'10'}
+          variant={'filled'}
           style={styles.input}
           placeholder="username"
-          placeholderTextColor="#fff"
+          placeholderTextColor="#000"
+          value={username}
+          onChangeText={setUsername}
         />
-        <TextInput
+        <Input
+          rounded={'10'}
+          variant={'filled'}
           style={styles.input}
           secureTextEntry={true}
           placeholder="password"
-          placeholderTextColor="#fff"
+          placeholderTextColor="#000"
+          value={password}
+          onChangeText={setPassword}
         />
-        <TextInput
+        <Input
+          my={'3'}
+          rounded={'10'}
+          variant={'filled'}
           style={styles.input}
           keyboardType="numeric"
           placeholder="mobile phone"
-          placeholderTextColor="#fff"
+          placeholderTextColor="#000"
+          value={mobileNumber}
+          onChangeText={setMobileNumber}
         />
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity onPress={onSignup} style={styles.button}>
           <Text style={styles.text_size}> Sign Up </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button_signup}>

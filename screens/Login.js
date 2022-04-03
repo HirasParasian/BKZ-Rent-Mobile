@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { AuthLogin } from '../src/redux/actions/auth';
+import { loginProcess } from '../src/redux/actions/auth';
 import {
   Text,
   View,
   StyleSheet,
-  Button,
   TextInput,
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import { Input } from 'native-base';
 import { useDispatch } from 'react-redux';
 import LoginImg from '../src/assets/images/login.png';
 export default function Login({ navigation }) {
@@ -17,7 +17,7 @@ export default function Login({ navigation }) {
   const dispatch = useDispatch();
   const onLogin = () => {
     console.log(username, password);
-    dispatch(AuthLogin(username, password));
+    dispatch(loginProcess(username, password));
   };
   return (
     <ImageBackground
@@ -26,18 +26,23 @@ export default function Login({ navigation }) {
       style={styles.background}>
       <View style={styles.container}>
         <Text style={styles.text}>LET’S EXPLORE THE WORLD</Text>
-        <TextInput
+        <Input
+          rounded={'10'}
+          variant={'filled'}
           style={styles.input}
           placeholder="username"
           placeholderTextColor="blue"
           value={username}
           onChangeText={setUsername}
         />
-        <TextInput
+        <Input
+          rounded={'10'}
+          variant={'filled'}
+          my={'3'}
           style={styles.input}
           secureTextEntry={true}
           placeholder="password"
-          placeholderTextColor="#fff"
+          placeholderTextColor="#000"
           value={password}
           onChangeText={setPassword}
         />
@@ -74,10 +79,12 @@ const styles = StyleSheet.create({
   },
   text_size: {
     fontWeight: 'bold',
+    color: 'black',
   },
   text: {
     fontSize: 35,
     marginBottom: 120,
+    color: 'black',
   },
   container: {
     flex: 1,
@@ -86,19 +93,20 @@ const styles = StyleSheet.create({
   },
   input: {
     borderRadius: 10,
-    borderColor: 'transparent',
+    // borderColor: 'transparent',
     backgroundColor: '#DFDEDE',
+    color: 'black',
     height: 40,
     marginVertical: 12,
     borderWidth: 1,
     padding: 10,
     paddingVertical: 20,
-    opacity: 0.4,
+    // opacity: 0.4,
   },
   button: {
     alignItems: 'center',
     backgroundColor: '#FFCD61',
-    padding: 10,
+    padding: 15,
     borderRadius: 10,
     marginTop: 30,
   },
