@@ -1,7 +1,7 @@
 const initialState = {
   token: null,
   isError: false,
-  errMsg: '',
+  errMsg: [],
   isLoading: false,
   createVehicle: false,
 };
@@ -9,6 +9,12 @@ const vehicle = (state = initialState, action) => {
   switch (action.type) {
     case 'CREATE_VEHICLE': {
       state.createVehicle = true;
+      return { ...state };
+    }
+    case 'CLEAR_MESSAGE': {
+      state.createVehicle = false;
+      state.errMsg = [];
+      state.isError = false;
       return { ...state };
     }
     case 'CREATE_ERROR': {

@@ -35,7 +35,7 @@ export const OnCreate = (
     } catch (err) {
       let payload = '';
       if (err.response) {
-        payload = err.response.data.message;
+        payload = err.response.data.error;
       } else {
         payload = err.message;
       }
