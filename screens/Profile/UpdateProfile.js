@@ -1,22 +1,76 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Text,
   View,
   StyleSheet,
-  Button,
   DatePickerIOS,
   TextInput,
   TouchableOpacity,
   ImageBackground,
   Image,
+  Modal,
 } from 'react-native';
+import { Text, Button, Input } from 'native-base';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProfile, OnEditProfile } from '../../src/redux/actions/auth';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import DatePicker from 'react-native-date-picker';
+import FAicon from 'react-native-vector-icons/FontAwesome';
 
-export default function App() {
+export default function App({ navigation }) {
+  const auth = useSelector(state => state.auth);
+  const data = useSelector(state => state.auth?.userData);
+  console.log(date?.birthDate);
+  const token = auth?.token;
+  const [date, setDate] = useState(new Date());
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [address, setAddress] = useState('');
+
+  const dispatch = useDispatch();
+  const onSignup = () => {
+    dispatch(
+      OnEditProfile(fullName, email, mobileNumber, address, date, token),
+    );
+  };
+
+  console.log(date);
+  const [modalVisible, setModalVisible] = useState(false);
+  useEffect(() => {
+    getProfiler();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const getProfiler = async () => {
+    await dispatch(getProfile(auth.token));
+  };
   return (
     // <View>
     <View style={styles.container}>
+      <View>
+        <Modal transparent={true} animationType="slide" visible={modalVisible}>
+          <View style={styles.datetime}>
+            <TouchableOpacity style={styles.close}>
+              <Text style={styles.selectDate}>Select Date</Text>
+              <FAicon
+                onPress={() => setModalVisible(!modalVisible)}
+                size={40}
+                color="#F56D91"
+                name="close"
+              />
+            </TouchableOpacity>
+            <View>
+              <DatePicker date={date} mode="date" onDateChange={setDate} />
+            </View>
+            <TouchableOpacity
+              onPress={() => setModalVisible(false)}
+              style={styles.save}>
+              <Text style={styles.textSave}>Save</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+      </View>
       <TouchableOpacity style={styles.icon}>
-        {/* <Ionicons name="chevron-back" size={24} color="black" /> */}
+        <Ionicons name="chevron-back" size={24} color="black" />
         <Text style={styles.back}> Update Profile </Text>
       </TouchableOpacity>
       <View style={styles.row}>
@@ -31,36 +85,67 @@ export default function App() {
       </View>
       <View style={styles.form}>
         <Text>Name :</Text>
-        <TextInput
+        <Input
           style={styles.input}
-          defaultValue="Hiras Parasian"
+          defaultValue={data?.fullName}
           placeholderTextColor="#fff"
+          variant={'underlined'}
+          onChangeText={setFullName}
         />
         <Text>Email Address :</Text>
-        <TextInput
+        <Input
           style={styles.input}
-          defaultValue="hirasparasian@gmail.com"
+          defaultValue={data?.email}
           placeholderTextColor="#fff"
+          variant={'underlined'}
+          onChangeText={setEmail}
         />
         <Text>Mobile Number :</Text>
-        <TextInput
+        <Input
           style={styles.input}
-          defaultValue="081388981122"
+          defaultValue={data?.mobileNumber}
           placeholderTextColor="#fff"
+          variant={'underlined'}
+          onChangeText={setMobileNumber}
         />
         <Text>Date of Birth :</Text>
-        <TextInput
-          style={styles.input}
-          defaultValue="08 November 1999"
-          placeholderTextColor="#fff"
-        />
+        <View style={styles.rows}>
+          <Input
+            w={'80%'}
+            style={styles.input}
+            defaultValue={date?.birthDate}
+            variant="underlined"
+            placeholderTextColor="#fff"
+            onChangeText={setDate}
+          />
+          <FAicon
+            style={styles.iconDate}
+            onPress={() => setModalVisible(true)}
+            size={30}
+            color="#F56D91"
+            name="calendar"
+          />
+        </View>
         <Text>Delivery Address :</Text>
         {/* <DatePickerIOS /> */}
         <TextInput
           style={styles.input}
-          defaultValue="Iskandar Street Block A Number 102"
+          defaultValue={data?.address}
           placeholderTextColor="#fff"
+          variant={'underlined'}
+          onChangeText={setAddress}
         />
+        <Button
+          onPress={onSignup}
+          w="100%"
+          my={'1'}
+          py={'3'}
+          rounded={10}
+          style={styles.Button}
+          colorScheme={'pink'}
+          variant="subtle">
+          <Text>Save</Text>
+        </Button>
       </View>
     </View>
     //   </ImageBackground>
@@ -69,6 +154,55 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  rows: { flexDirection: 'row' },
+  iconDate: {
+    marginStart: 20,
+    marginRight: -30,
+  },
+  inputDate: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 10,
+  },
+  save: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textSave: {
+    backgroundColor: '#8D8DAA',
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 20,
+    marginTop: 20,
+  },
+  selectDate: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingStart: 10,
+  },
+  close: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'rgba(245, 109, 145, 0.3)',
+    paddingEnd: 10,
+    paddingBottom: 5,
+    borderRadius: 15,
+  },
+  datetime: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    top: '40%',
+    left: '10%',
+    borderRadius: 20,
+    elevation: 3,
+    // flexDirection: 'row',
+  },
   form: {
     marginBottom: 100,
     marginTop: 30,

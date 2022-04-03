@@ -5,6 +5,7 @@ const initialState = {
   isLoading: false,
   signup: false,
   userData: {},
+  updateProfile: false,
 };
 const auth = (state = initialState, action) => {
   switch (action.type) {
@@ -13,6 +14,10 @@ const auth = (state = initialState, action) => {
     }
     case 'AUTH_SIGNUP': {
       state.signup = true;
+      return { ...state };
+    }
+    case 'UPDATE_PROFILE': {
+      state.updateProfile = true;
       return { ...state };
     }
     case 'AUTH_LOGOUT': {
