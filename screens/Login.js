@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AuthLogin } from '../src/redux/actions/auth';
+import { loginProcess } from '../src/redux/actions/auth';
 import {
   Text,
   View,
@@ -17,7 +17,7 @@ export default function Login({ navigation }) {
   const dispatch = useDispatch();
   const onLogin = () => {
     console.log(username, password);
-    dispatch(AuthLogin(username, password));
+    dispatch(loginProcess(username, password));
   };
   return (
     <ImageBackground

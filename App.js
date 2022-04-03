@@ -194,7 +194,9 @@ function Main() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {auth.token === null && <Stack.Screen name="Auth" component={Auth} />}
-          <Stack.Screen name="BottomTab" component={MyTabs} />
+          {auth.token !== null && (
+            <Stack.Screen name="BottomTab" component={MyTabs} />
+          )}
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
