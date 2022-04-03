@@ -79,3 +79,44 @@ export const getProfile = token => {
     }
   };
 };
+
+export const OnEditProfile = (
+  fullName,
+  email,
+  mobileNumber,
+  address,
+  date,
+  token,
+) => {
+  const dataa = {
+    fullName: fullName,
+    email: email,
+    mobileNumber: mobileNumber,
+    address: address,
+    date: date,
+  };
+  return async dispatch => {
+    try {
+      dispatch({
+        type: 'CLEAR_ERROR',
+      });
+      const { data } = await http(token).patch('/profile', qs.stringify(dataa));
+      console.log(data);
+      dispatch({
+        type: 'UPDATE_PROFILE',
+        payload: data.results,
+      });
+    } catch (err) {
+      let payload = '';
+      if (err.response) {
+        payload = err.response.data.message;
+      } else {
+        payload = err.message;
+      }
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: payload,
+      });
+    }
+  };
+};
