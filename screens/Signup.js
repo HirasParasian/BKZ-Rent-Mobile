@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import { Input } from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SignupImg from '../src/assets/images/signup.png';
 
@@ -19,22 +20,30 @@ export default function App({ navigation }) {
       style={styles.background}>
       <View style={styles.container}>
         <Text style={styles.text}>LET’S EXPLORE THE WORLD</Text>
-        <TextInput
+        <Input
+          my={'3'}
+          rounded={'10'}
+          variant={'filled'}
           style={styles.input}
           placeholder="username"
-          placeholderTextColor="#fff"
+          placeholderTextColor="#000"
         />
-        <TextInput
+        <Input
+          rounded={'10'}
+          variant={'filled'}
           style={styles.input}
           secureTextEntry={true}
           placeholder="password"
-          placeholderTextColor="#fff"
+          placeholderTextColor="#000"
         />
-        <TextInput
+        <Input
+          my={'3'}
+          rounded={'10'}
+          variant={'filled'}
           style={styles.input}
           keyboardType="numeric"
           placeholder="mobile phone"
-          placeholderTextColor="#fff"
+          placeholderTextColor="#000"
         />
         <TouchableOpacity style={styles.button}>
           <Text style={styles.text_size}> Sign Up </Text>
