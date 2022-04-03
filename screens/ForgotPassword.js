@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -12,24 +12,33 @@ import { Input } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ForgotImg from '../src/assets/images/forgot.png';
 import { onForgot } from '../src/redux/actions/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import ModalSuccess from '../src/component/ModalSuccess';
 
 export default function ForgotPassword({ navigation }) {
+  const auth = useSelector(state => state.auth);
   const [code, setCode] = useState('');
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(null);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: 'CLEAR_FORGOT_MESSAGE',
+    });
+  }, [dispatch]);
   const onLogin = () => {
     // console.log(username, password);
     dispatch(onForgot(email, code, password, confirmPassword));
   };
   return (
     // <View>
+
     <ImageBackground
       source={ForgotImg}
       resizeMode={'cover'}
       style={styles.background}>
+      {auth.forgot && <ModalSuccess message={auth.successMsg} />}
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.icon}

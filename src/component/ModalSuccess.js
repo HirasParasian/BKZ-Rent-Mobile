@@ -26,13 +26,11 @@ const ModalSuccess = ({ message }) => {
             </Center>
           </Modal.Header>
           <Modal.Body>
-            <ScrollView>
-              <Center>
-                <Text fontSize={'xl'} style={styles.message}>
-                  {message}
-                </Text>
-              </Center>
-            </ScrollView>
+            <Center>
+              <Text fontSize={'xl'} style={styles.message}>
+                {message}
+              </Text>
+            </Center>
           </Modal.Body>
           <Modal.Footer>
             <Button.Group space={2}>
