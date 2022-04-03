@@ -22,6 +22,7 @@ import Payment from './screens/Vehicles/Payment';
 import PaymentCode from './screens/Vehicles/PaymentCode';
 import OrderDetails from './screens/Vehicles/OrderDetails';
 import FinishPayment from './screens/Vehicles/FinishPayment';
+import CreateVehicle from './screens/Vehicles/CreateVehicle';
 //PROFILE
 import Profile from './screens/Profile';
 import FAQ from './screens/Profile/FAQ';
@@ -183,6 +184,7 @@ function Homes() {
       <Stack.Screen name="PaymentCode" component={PaymentCode} />
       <Stack.Screen name="OrderDetails" component={OrderDetails} />
       <Stack.Screen name="FinishPayment" component={FinishPayment} />
+      <Stack.Screen name="CreateVehicle" component={CreateVehicle} />
     </Stack.Navigator>
   );
 }

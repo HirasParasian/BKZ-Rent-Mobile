@@ -9,6 +9,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
+import { Button, Center } from 'native-base';
 import Title from '../src/component/Title';
 
 const Home = ({ navigation }) => {
@@ -30,10 +31,20 @@ const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.screen}>
       <ScrollView style={styles.scroll}>
-        <Image
-          source={require('../src/assets/images/header.png')}
-          style={styles.headerImg}
-        />
+        <View>
+          <Center>
+            <Image
+              source={require('../src/assets/images/header.png')}
+              style={styles.headerImg}
+            />
+            <Button
+              onPress={() => navigation.navigate('CreateVehicle')}
+              w="80%"
+              style={styles.addItem}>
+              <Text style={styles.textAdd}>Add New Item</Text>
+            </Button>
+          </Center>
+        </View>
         <View style={styles.content}>
           <View style={styles.box}>
             <Title child={'Recommended'} resChild={'View more'} />
@@ -119,6 +130,15 @@ const styles = StyleSheet.create({
     position: 'relative',
     height: '100%',
     backgroundColor: '#DFDFDE',
+  },
+  textAdd: {
+    fontSize: 30,
+    padding: 5,
+  },
+  addItem: {
+    backgroundColor: '#DFDFDE',
+    position: 'absolute',
+    borderRadius: 20,
   },
   headerImg: {
     width: '100%',
