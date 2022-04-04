@@ -1,39 +1,85 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   View,
   Text,
   StyleSheet,
-  Image,
   SafeAreaView,
   ScrollView,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import { Button, Center } from 'native-base';
+import { Button, Image, Center } from 'native-base';
 import Title from '../src/component/Title';
+import { getBike, getCar, getMotor } from '../src/redux/actions/vehicle';
 
 const Home = ({ navigation }) => {
+  const bike = useSelector(state => state.auth?.bike);
+  const car = useSelector(state => state.auth?.car);
+  const motor = useSelector(state => state.auth?.motor);
+  console.log(bike);
+  // let urlImg = {
+  //   uri: bike.image,
+  // };
+  // console.log(urlImg);
   const data = [
     { id: 1, image: require('../src/assets/images/1.png') },
     { id: 2, image: require('../src/assets/images/1.png') },
     { id: 3, image: require('../src/assets/images/1.png') },
     { id: 4, image: require('../src/assets/images/1.png') },
   ];
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getProfiler();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const getProfiler = async () => {
+    await dispatch(getBike());
+    await dispatch(getCar());
+    await dispatch(getMotor());
+  };
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
         // onPress={() => navigation.navigate('Reservation')}
         style={styles.coverImg}>
-        <Image source={item.image} style={styles.listImg} />
+        <Image
+          width={'100%'}
+          height="180"
+          alt={'image'}
+          source={item.image}
+          style={styles.listImg}
+        />
       </TouchableOpacity>
     );
   };
+  const renderBike = ({ item }) => {
+    let urlImg = {
+      uri: item?.image,
+    };
+    console.log(urlImg);
+    return (
+      <TouchableOpacity
+        // onPress={() => navigation.navigate('Reservation')}
+        style={styles.coverImg}>
+        <Image
+          width={'100%'}
+          height="180"
+          alt={'image'}
+          source={urlImg}
+          style={styles.listImg}
+        />
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
       <ScrollView style={styles.scroll}>
         <View>
           <Center>
             <Image
+              alt="bg"
               source={require('../src/assets/images/header.png')}
               style={styles.headerImg}
             />
@@ -58,8 +104,8 @@ const Home = ({ navigation }) => {
           <View style={styles.box}>
             <Title child={'Hot Deals'} resChild={'View more'} />
             <FlatList
-              data={data}
-              renderItem={renderItem}
+              data={bike}
+              renderItem={renderBike}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             />
@@ -73,8 +119,8 @@ const Home = ({ navigation }) => {
               resChild={'View more'}
             />
             <FlatList
-              data={data}
-              renderItem={renderItem}
+              data={car}
+              renderItem={renderBike}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             />
@@ -88,8 +134,8 @@ const Home = ({ navigation }) => {
               resChild={'View more'}
             />
             <FlatList
-              data={data}
-              renderItem={renderItem}
+              data={bike}
+              renderItem={renderBike}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             />
@@ -103,8 +149,8 @@ const Home = ({ navigation }) => {
               resChild={'View more'}
             />
             <FlatList
-              data={data}
-              renderItem={renderItem}
+              data={motor}
+              renderItem={renderBike}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             />

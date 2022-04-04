@@ -34,6 +34,7 @@ export default function App({ navigation }) {
     dispatch(
       OnEditProfile(fullName, email, mobileNumber, address, date, token),
     );
+    dispatch(getProfile(auth.token));
   };
 
   console.log(date);

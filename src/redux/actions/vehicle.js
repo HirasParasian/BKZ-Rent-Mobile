@@ -63,6 +63,58 @@ export const getVehicle = () => {
     }
   };
 };
+
+export const getBike = () => {
+  return async dispatch => {
+    try {
+      const { data } = await http().get('/vehicles?category=1');
+      dispatch({
+        type: 'GET_BIKE',
+        payload: data.results,
+      });
+    } catch (e) {
+      dispatch({
+        type: 'VEHICLE_ERROR',
+        payload: e.response.data.error[0],
+      });
+    }
+  };
+};
+
+export const getCar = () => {
+  return async dispatch => {
+    try {
+      const { data } = await http().get('/vehicles?category=3');
+      dispatch({
+        type: 'GET_CAR',
+        payload: data.results,
+      });
+    } catch (e) {
+      dispatch({
+        type: 'VEHICLE_ERROR',
+        payload: e.response.data.error[0],
+      });
+    }
+  };
+};
+
+export const getMotor = () => {
+  return async dispatch => {
+    try {
+      const { data } = await http().get('/vehicles?category=2');
+      dispatch({
+        type: 'GET_MOTOR',
+        payload: data.results,
+      });
+    } catch (e) {
+      dispatch({
+        type: 'VEHICLE_ERROR',
+        payload: e.response.data.error[0],
+      });
+    }
+  };
+};
+
 export const getDetailVehicle = vehicleId => {
   console.log(vehicleId);
   return async dispatch => {
