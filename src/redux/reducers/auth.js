@@ -24,7 +24,7 @@ const auth = (state = initialState, action) => {
     }
     case 'UPDATE_PROFILE': {
       state.updateProfile = true;
-      return { ...state };
+      return { ...state, successMsg: action.payload };
     }
     case 'AUTH_LOGOUT': {
       return { ...initialState };
@@ -33,7 +33,7 @@ const auth = (state = initialState, action) => {
       return { ...state, isError: true, errMsg: action.payload };
     }
     case 'CLEAR_ERROR': {
-      return { ...state, isError: false, errMsg: '' };
+      return { ...state, isError: false, errMsg: '', successMsg: '' };
     }
     case 'GET_PROFILE': {
       state.userData = action.payload;

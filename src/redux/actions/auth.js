@@ -139,14 +139,14 @@ export const OnEditProfile = (
       console.log(data);
       dispatch({
         type: 'UPDATE_PROFILE',
-        payload: data.results,
+        payload: data.message,
       });
     } catch (err) {
       let payload = '';
       if (err.response) {
-        payload = err.response.data.message;
+        payload = err.response.data.error;
       } else {
-        payload = err.message;
+        payload = err.error;
       }
       dispatch({
         type: 'AUTH_ERROR',
