@@ -20,7 +20,7 @@ const auth = (state = initialState, action) => {
     }
     case 'AUTH_SIGNUP': {
       state.signup = true;
-      return { ...state };
+      return { ...state, successMsg: action.payload };
     }
     case 'UPDATE_PROFILE': {
       state.updateProfile = true;
@@ -42,6 +42,13 @@ const auth = (state = initialState, action) => {
     case 'CLEAR_FORGOT_MESSAGE': {
       state.forgot = false;
       state.successMsg = '';
+      return { ...state };
+    }
+    case 'CLEAR_SIGNUP_MESSAGE': {
+      state.signup = false;
+      state.successMsg = '';
+      state.errMsg = '';
+
       return { ...state };
     }
     default: {

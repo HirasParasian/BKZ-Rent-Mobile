@@ -81,7 +81,7 @@ export const OnRegister = (username, password, MobileNumber) => {
       console.log(data);
       dispatch({
         type: 'AUTH_SIGNUP',
-        payload: data.results,
+        payload: data.message,
       });
     } catch (err) {
       let payload = '';
