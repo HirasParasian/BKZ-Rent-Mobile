@@ -9,9 +9,11 @@ import {
   ImageBackground,
 } from 'react-native';
 import { Input } from 'native-base';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LoginImg from '../src/assets/images/login.png';
+import ModalError from '../src/component/ModalError';
 export default function Login({ navigation }) {
+  const auth = useSelector(state => state.auth);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
@@ -24,6 +26,7 @@ export default function Login({ navigation }) {
       source={LoginImg}
       resizeMode={'cover'}
       style={styles.background}>
+      <ModalError message={auth.errMsg} />
       <View style={styles.container}>
         <Text style={styles.text}>LET’S EXPLORE THE WORLD</Text>
         <Input
