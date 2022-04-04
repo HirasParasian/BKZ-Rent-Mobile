@@ -27,7 +27,7 @@ const auth = (state = initialState, action) => {
       return { ...state, successMsg: action.payload };
     }
     case 'AUTH_LOGOUT': {
-      return { ...initialState };
+      return { ...initialState, token: null };
     }
     case 'AUTH_ERROR': {
       return { ...state, isError: true, errMsg: action.payload };
@@ -37,6 +37,11 @@ const auth = (state = initialState, action) => {
     }
     case 'GET_PROFILE': {
       state.userData = action.payload;
+      return { ...state };
+    }
+    case 'CLEAR_UPDATE_MESSAGE': {
+      state.updateProfile = false;
+      state.successMsg = '';
       return { ...state };
     }
     case 'CLEAR_FORGOT_MESSAGE': {

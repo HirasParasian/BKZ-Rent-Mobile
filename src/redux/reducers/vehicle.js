@@ -5,6 +5,9 @@ const initialState = {
   isLoading: false,
   createVehicle: false,
   allVehicle: {},
+  bike: {},
+  motor: {},
+  car: {},
   detailVehicle: {},
 };
 const vehicle = (state = initialState, action) => {
@@ -15,6 +18,18 @@ const vehicle = (state = initialState, action) => {
     }
     case 'GET_VEHICLE': {
       state.allVehicle = action.payload;
+      return { ...state };
+    }
+    case 'GET_BIKE': {
+      state.bike = action.payload;
+      return { ...state };
+    }
+    case 'GET_MOTOR': {
+      state.motor = action.payload;
+      return { ...state };
+    }
+    case 'GET_CAR': {
+      state.car = action.payload;
       return { ...state };
     }
     case 'GET_DETAIL_VEHICLE': {
