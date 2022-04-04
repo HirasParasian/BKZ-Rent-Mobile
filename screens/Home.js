@@ -22,7 +22,7 @@ const Home = ({ navigation }) => {
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate('Reservation')}
+        // onPress={() => navigation.navigate('Reservation')}
         style={styles.coverImg}>
         <Image source={item.image} style={styles.listImg} />
       </TouchableOpacity>

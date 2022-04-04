@@ -63,3 +63,20 @@ export const getVehicle = () => {
     }
   };
 };
+export const getDetailVehicle = vehicleId => {
+  console.log(vehicleId);
+  return async dispatch => {
+    try {
+      const { data } = await http().get(`/vehicles/search/${vehicleId}`);
+      dispatch({
+        type: 'GET_DETAIL_VEHICLE',
+        payload: data.result,
+      });
+    } catch (e) {
+      dispatch({
+        type: 'VEHICLE_ERROR',
+        payload: e.response.data.error[0],
+      });
+    }
+  };
+};
