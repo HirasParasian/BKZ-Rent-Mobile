@@ -27,7 +27,7 @@ const auth = (state = initialState, action) => {
       return { ...state, successMsg: action.payload };
     }
     case 'AUTH_LOGOUT': {
-      return { ...initialState, token: null };
+      return { ...initialState };
     }
     case 'AUTH_ERROR': {
       return { ...state, isError: true, errMsg: action.payload };

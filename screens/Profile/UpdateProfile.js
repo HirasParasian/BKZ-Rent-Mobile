@@ -30,6 +30,11 @@ export default function App({ navigation }) {
   const [address, setAddress] = useState('');
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: 'CLEAR_UPDATE_MESSAGE',
+    });
+  }, [dispatch]);
   const onEdit = () => {
     dispatch(
       OnEditProfile(fullName, email, mobileNumber, address, date, token),

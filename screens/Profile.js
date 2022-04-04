@@ -11,6 +11,9 @@ const Profile = ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch({
+      type: 'CLEAR_UPDATE_MESSAGE',
+    });
     getProfiler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
