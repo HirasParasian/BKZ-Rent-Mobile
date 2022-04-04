@@ -17,6 +17,7 @@ import ModalSuccess from '../src/component/ModalSuccess';
 
 export default function ForgotPassword({ navigation }) {
   const auth = useSelector(state => state.auth);
+  console.log(auth.errMsg);
   const [code, setCode] = useState('');
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState('');

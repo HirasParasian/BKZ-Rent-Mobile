@@ -15,11 +15,13 @@ import { getProfile, OnEditProfile } from '../../src/redux/actions/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DatePicker from 'react-native-date-picker';
 import FAicon from 'react-native-vector-icons/FontAwesome';
+import ModalSuccess from '../../src/component/ModalSuccess';
+import ModalError from '../../src/component/ModalError';
 
 export default function App({ navigation }) {
   const auth = useSelector(state => state.auth);
   const data = useSelector(state => state.auth?.userData);
-  console.log(date?.birthDate);
+  // console.log(date?.birthDate);
   const token = auth?.token;
   const [date, setDate] = useState(new Date());
   const [fullName, setFullName] = useState('');
@@ -28,7 +30,7 @@ export default function App({ navigation }) {
   const [address, setAddress] = useState('');
 
   const dispatch = useDispatch();
-  const onSignup = () => {
+  const onEdit = () => {
     dispatch(
       OnEditProfile(fullName, email, mobileNumber, address, date, token),
     );
@@ -73,6 +75,8 @@ export default function App({ navigation }) {
         <Ionicons name="chevron-back" size={24} color="black" />
         <Text style={styles.back}> Update Profile </Text>
       </TouchableOpacity>
+      {auth.updateProfile && <ModalSuccess message={auth?.successMsg} />}
+      {auth.isError && <ModalError message={auth?.errMsg} />}
       <View style={styles.row}>
         <View style={styles.column}>
           <TouchableOpacity style={styles.button}>
@@ -136,7 +140,7 @@ export default function App({ navigation }) {
           onChangeText={setAddress}
         />
         <Button
-          onPress={onSignup}
+          onPress={onEdit}
           w="100%"
           my={'1'}
           py={'3'}

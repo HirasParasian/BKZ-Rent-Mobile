@@ -20,11 +20,11 @@ const auth = (state = initialState, action) => {
     }
     case 'AUTH_SIGNUP': {
       state.signup = true;
-      return { ...state };
+      return { ...state, successMsg: action.payload };
     }
     case 'UPDATE_PROFILE': {
       state.updateProfile = true;
-      return { ...state };
+      return { ...state, successMsg: action.payload };
     }
     case 'AUTH_LOGOUT': {
       return { ...initialState };
@@ -33,7 +33,7 @@ const auth = (state = initialState, action) => {
       return { ...state, isError: true, errMsg: action.payload };
     }
     case 'CLEAR_ERROR': {
-      return { ...state, isError: false, errMsg: '' };
+      return { ...state, isError: false, errMsg: '', successMsg: '' };
     }
     case 'GET_PROFILE': {
       state.userData = action.payload;
@@ -42,6 +42,13 @@ const auth = (state = initialState, action) => {
     case 'CLEAR_FORGOT_MESSAGE': {
       state.forgot = false;
       state.successMsg = '';
+      return { ...state };
+    }
+    case 'CLEAR_SIGNUP_MESSAGE': {
+      state.signup = false;
+      state.successMsg = '';
+      state.errMsg = '';
+
       return { ...state };
     }
     default: {

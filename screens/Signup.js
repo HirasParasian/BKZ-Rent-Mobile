@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -12,12 +12,20 @@ import { Input } from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SignupImg from '../src/assets/images/signup.png';
 import { OnRegister } from '../src/redux/actions/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import ModalError from '../src/component/ModalError';
+import ModalSuccess from '../src/component/ModalSuccess';
 
 export default function App({ navigation }) {
   const [username, setUsername] = useState('');
+  const auth = useSelector(state => state.auth);
   const [password, setPassword] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
+  useEffect(() => {
+    dispatch({
+      type: 'CLEAR_SIGNUP_MESSAGE',
+    });
+  }, [dispatch]);
   const dispatch = useDispatch();
   const onSignup = () => {
     console.log(username, password, mobileNumber);
@@ -28,6 +36,8 @@ export default function App({ navigation }) {
       source={SignupImg}
       resizeMode={'cover'}
       style={styles.background}>
+      {auth.isError && <ModalError message={auth?.errMsg} />}
+      {auth.signup && <ModalSuccess message={auth?.successMsg} />}
       <View style={styles.container}>
         <Text style={styles.text}>LET’S EXPLORE THE WORLD</Text>
         <Input
