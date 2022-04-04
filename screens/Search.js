@@ -1,9 +1,23 @@
 import FAicon from 'react-native-vector-icons/FontAwesome';
 import { View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Input, Text, FlatList, Image, Center } from 'native-base';
+import { getVehicle } from '../src/redux/actions/vehicle';
 
 const Search = ({ navigation }) => {
+  const vehicle = useSelector(state => state.vehicle);
+  const vehicles = useSelector(state => state.auth?.allVehicle);
+  console.log(vehicles);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getProfiler();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getProfiler = async () => {
+    await dispatch(getVehicle());
+  };
   const data = [
     {
       image: require('../src/assets/images/1.png'),
@@ -36,13 +50,18 @@ const Search = ({ navigation }) => {
     setSearch('');
   };
   const renderItem = ({ item }) => {
+    let urlImg = {
+      uri: item.image,
+    };
+    console.log(urlImg);
     return (
       <View style={styles.elevate}>
         <TouchableOpacity style={styles.coverImg}>
           <Image
             width={'100%'}
+            height="180"
             alt={item.location}
-            source={item.image}
+            source={urlImg}
             style={styles.listImg}
           />
         </TouchableOpacity>
@@ -52,7 +71,7 @@ const Search = ({ navigation }) => {
           </Text>
           <View style={styles.rows}>
             <View>
-              <Text style={styles.textName}>{item.title}</Text>
+              <Text style={styles.textName}>{item.name}</Text>
               <Text style={styles.textAvailable}>Available</Text>
             </View>
             <Text style={styles.price}>Rp. {item.price}/Day</Text>
@@ -106,7 +125,7 @@ const Search = ({ navigation }) => {
         </Box>
         <View style={styles.main}>
           <FlatList
-            data={data}
+            data={vehicles}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
           />

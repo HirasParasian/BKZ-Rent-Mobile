@@ -46,3 +46,20 @@ export const OnCreate = (
     }
   };
 };
+
+export const getVehicle = () => {
+  return async dispatch => {
+    try {
+      const { data } = await http().get('/vehicles');
+      dispatch({
+        type: 'GET_VEHICLE',
+        payload: data.results,
+      });
+    } catch (e) {
+      dispatch({
+        type: 'VEHICLE_ERROR',
+        payload: e.response.data.error[0],
+      });
+    }
+  };
+};
