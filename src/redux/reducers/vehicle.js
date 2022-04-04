@@ -4,11 +4,16 @@ const initialState = {
   errMsg: [],
   isLoading: false,
   createVehicle: false,
+  allVehicle: {},
 };
 const vehicle = (state = initialState, action) => {
   switch (action.type) {
     case 'CREATE_VEHICLE': {
       state.createVehicle = true;
+      return { ...state };
+    }
+    case 'GET_VEHICLE': {
+      state.allVehicle = action.payload;
       return { ...state };
     }
     case 'CLEAR_MESSAGE': {
