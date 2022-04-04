@@ -8,7 +8,7 @@ import { getVehicle } from '../src/redux/actions/vehicle';
 const Search = ({ navigation }) => {
   const vehicle = useSelector(state => state.vehicle);
   const vehicles = useSelector(state => state.auth?.allVehicle);
-  console.log(vehicles);
+  // console.log(vehicles);
   const dispatch = useDispatch();
   useEffect(() => {
     getProfiler();
@@ -18,29 +18,6 @@ const Search = ({ navigation }) => {
   const getProfiler = async () => {
     await dispatch(getVehicle());
   };
-  const data = [
-    {
-      image: require('../src/assets/images/1.png'),
-      location: 'Makassar',
-      price: 250000,
-      title: 'Vespa Matic',
-      isAvailable: true,
-    },
-    {
-      image: require('../src/assets/images/1.png'),
-      location: 'Makassar',
-      price: 250000,
-      title: 'Vespa Matic',
-      isAvailable: true,
-    },
-    {
-      image: require('../src/assets/images/1.png'),
-      location: 'Makassar',
-      price: 250000,
-      title: 'Vespa Matic',
-      isAvailable: true,
-    },
-  ];
   const [search, setSearch] = useState('');
   const searchChange = e => {
     setSearch(e);
@@ -53,10 +30,14 @@ const Search = ({ navigation }) => {
     let urlImg = {
       uri: item.image,
     };
-    console.log(urlImg);
+    // console.log(urlImg);
     return (
       <View style={styles.elevate}>
-        <TouchableOpacity style={styles.coverImg}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Reservation', { vehicleId: item.vehicleId })
+          }
+          style={styles.coverImg}>
           <Image
             width={'100%'}
             height="180"

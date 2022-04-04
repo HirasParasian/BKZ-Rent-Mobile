@@ -5,6 +5,7 @@ const initialState = {
   isLoading: false,
   createVehicle: false,
   allVehicle: {},
+  detailVehicle: {},
 };
 const vehicle = (state = initialState, action) => {
   switch (action.type) {
@@ -14,6 +15,10 @@ const vehicle = (state = initialState, action) => {
     }
     case 'GET_VEHICLE': {
       state.allVehicle = action.payload;
+      return { ...state };
+    }
+    case 'GET_DETAIL_VEHICLE': {
+      state.detailVehicle = action.payload;
       return { ...state };
     }
     case 'CLEAR_MESSAGE': {

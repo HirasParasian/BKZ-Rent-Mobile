@@ -1,31 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  Image,
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
   Modal,
 } from 'react-native';
-import { Input, Select, Center, Box, Button } from 'native-base';
+import { Input, Image, Select, Center, Box, Button } from 'native-base';
 import DatePicker from 'react-native-date-picker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import FAicon from 'react-native-vector-icons/FontAwesome';
 import ADicon from 'react-native-vector-icons/AntDesign';
 import IONicon from 'react-native-vector-icons/Ionicons';
+import { getDetailVehicle } from '../../src/redux/actions/vehicle';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Reservation = ({ navigation }) => {
+const Reservation = ({ route, navigation }) => {
+  const vehicles = useSelector(state => state.auth?.detailVehicle);
+  const { vehicleId } = route.params;
+  console.log(vehicles);
   const [date, setDate] = useState(new Date());
   const [modalVisible, setModalVisible] = useState(false);
   let [service, setService] = React.useState('');
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getProfiler();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  let urlImg = {
+    uri: vehicles?.image,
+  };
+  console.log(urlImg);
+  const getProfiler = async () => {
+    await dispatch(getDetailVehicle(vehicleId));
+  };
   return (
     <>
       <SafeAreaView style={styles.screen}>
         <ScrollView>
           <Image
-            source={require('../../src/assets/images/header.png')}
+            width={'100%'}
+            height="200"
+            source={urlImg}
+            // source={require('../../src/assets/images/1.png')}
+            alt="image"
             style={styles.headerImg}
           />
           <View style={styles.back}>
@@ -49,8 +69,8 @@ const Reservation = ({ navigation }) => {
           <View style={styles.container}>
             <View style={styles.rows}>
               <View>
-                <Text style={styles.name}>Sepeda Lipat</Text>
-                <Text style={styles.price}>Rp. 99.999/day</Text>
+                <Text style={styles.name}>{vehicles?.name}</Text>
+                <Text style={styles.price}>Rp. {vehicles?.price}/day</Text>
               </View>
               <View>
                 <TouchableOpacity>
@@ -72,9 +92,7 @@ const Reservation = ({ navigation }) => {
                 <View style={styles.ionicon}>
                   <IONicon size={35} color="#F56D91" name="location-sharp" />
                 </View>
-                <Text style={styles.textLoc}>
-                  Jalan Maliboboro, No. 21, Yogyakarta
-                </Text>
+                <Text style={styles.textLoc}>{vehicles?.location}</Text>
               </View>
               <View style={styles.rows}>
                 <View style={styles.ionicons}>
