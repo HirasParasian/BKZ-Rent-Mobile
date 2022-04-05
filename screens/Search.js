@@ -117,7 +117,7 @@ const Search = ({ navigation }) => {
 };
 const styles = StyleSheet.create({
   main: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     paddingBottom: 400,
   },
   text: {

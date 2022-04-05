@@ -3,15 +3,13 @@ import React from 'react';
 import Stepper from '../../src/component/Stepper';
 import { Container, Center, Input, Select, Button } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Back from '../../src/component/Back';
 
 const Payment = ({ navigation }) => {
   return (
     <>
       <View>
-        <TouchableOpacity style={styles.icon}>
-          <Ionicons name="chevron-back" size={28} color="black" />
-          <Text style={styles.back}> Payment </Text>
-        </TouchableOpacity>
+        <Back name={'Payment'} />
       </View>
       <Center py={'5'}>
         <Container>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -12,8 +13,10 @@ import {
 import { Button, Image, Center } from 'native-base';
 import Title from '../src/component/Title';
 import { getBike, getCar, getMotor } from '../src/redux/actions/vehicle';
+import { getProfile } from '../src/redux/actions/auth';
 
 const Home = ({ navigation }) => {
+  const auth = useSelector(state => state.auth);
   const bike = useSelector(state => state.auth?.bike);
   const car = useSelector(state => state.auth?.car);
   const motor = useSelector(state => state.auth?.motor);
@@ -31,12 +34,12 @@ const Home = ({ navigation }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     getProfiler();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const getProfiler = async () => {
-    await dispatch(getBike());
-    await dispatch(getCar());
-    await dispatch(getMotor());
+  const getProfiler = () => {
+    dispatch(getProfile(auth.token));
+    dispatch(getBike());
+    dispatch(getCar());
+    dispatch(getMotor());
   };
   const renderItem = ({ item }) => {
     return (
@@ -57,7 +60,7 @@ const Home = ({ navigation }) => {
     let urlImg = {
       uri: item?.image,
     };
-    console.log(urlImg);
+    // console.log(urlImg);
     return (
       <TouchableOpacity
         // onPress={() => navigation.navigate('Reservation')}
