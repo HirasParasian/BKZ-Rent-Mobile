@@ -4,10 +4,10 @@ const initialState = {
   errMsg: [],
   isLoading: false,
   createVehicle: false,
-  allVehicle: {},
-  bike: {},
-  motor: {},
-  car: {},
+  allVehicle: [],
+  bike: [],
+  motor: [],
+  car: [],
   detailVehicle: {},
 };
 const vehicle = (state = initialState, action) => {

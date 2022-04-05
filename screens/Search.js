@@ -7,7 +7,7 @@ import { getVehicle } from '../src/redux/actions/vehicle';
 
 const Search = ({ navigation }) => {
   const vehicle = useSelector(state => state.vehicle);
-  const vehicles = useSelector(state => state.auth?.allVehicle);
+  const vehicles = useSelector(state => state.vehicle?.allVehicle);
   // console.log(vehicles);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -28,7 +28,7 @@ const Search = ({ navigation }) => {
   };
   const renderItem = ({ item }) => {
     let urlImg = {
-      uri: item.image,
+      uri: item?.image,
     };
     // console.log(urlImg);
     return (
@@ -41,7 +41,7 @@ const Search = ({ navigation }) => {
           <Image
             width={'100%'}
             height="180"
-            alt={item.location}
+            alt={item?.location}
             source={urlImg}
             style={styles.listImg}
           />
@@ -52,10 +52,10 @@ const Search = ({ navigation }) => {
           </Text>
           <View style={styles.rows}>
             <View>
-              <Text style={styles.textName}>{item.name}</Text>
+              <Text style={styles.textName}>{item?.name}</Text>
               <Text style={styles.textAvailable}>Available</Text>
             </View>
-            <Text style={styles.price}>Rp. {item.price}/Day</Text>
+            <Text style={styles.price}>Rp. {item?.price}/Day</Text>
           </View>
         </View>
       </View>
