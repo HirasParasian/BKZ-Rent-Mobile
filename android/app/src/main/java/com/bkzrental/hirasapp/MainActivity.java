@@ -1,4 +1,4 @@
-package com.awesomeproject;
+package com.bkzrental.hirasapp;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;
@@ -11,10 +11,14 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "AwesomeProject";
+    return "BKZRent";
   }
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(null);
-}
+  }
+  // @Override
+  // public void onNewIntent(Intent intent) {
+  //     super.onNewIntent(intent);
+  // }
 }

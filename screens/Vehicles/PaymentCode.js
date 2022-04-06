@@ -3,18 +3,14 @@ import React from 'react';
 import Stepper from '../../src/component/Stepper';
 import { Container, Center, Button, Box, Text, ScrollView } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Back from '../../src/component/Back';
 
 const PaymentCode = ({ navigation }) => {
   return (
     <>
+      <Back name={'Payment Code'} />
       <ScrollView>
         <View style={styles.content}>
-          <Box>
-            <TouchableOpacity style={styles.icon}>
-              <Ionicons name="chevron-back" size={28} color="black" />
-              <Text style={styles.back}> Payment </Text>
-            </TouchableOpacity>
-          </Box>
           <Center py={'5'}>
             <Container>
               <Stepper count={3} currentlyActive={3} />

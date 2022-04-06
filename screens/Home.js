@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -12,52 +13,34 @@ import {
 import { Button, Image, Center } from 'native-base';
 import Title from '../src/component/Title';
 import { getBike, getCar, getMotor } from '../src/redux/actions/vehicle';
+import { getProfile } from '../src/redux/actions/auth';
+import ImageThumb from '../src/assets/images/1.png';
 
 const Home = ({ navigation }) => {
-  const bike = useSelector(state => state.auth?.bike);
-  const car = useSelector(state => state.auth?.car);
-  const motor = useSelector(state => state.auth?.motor);
-  console.log(bike);
+  const auth = useSelector(state => state.auth);
+  const bike = useSelector(state => state.vehicle?.bike);
+  const car = useSelector(state => state.vehicle?.car);
+  const motor = useSelector(state => state.vehicle?.motor);
   // let urlImg = {
   //   uri: bike.image,
   // };
   // console.log(urlImg);
-  const data = [
-    { id: 1, image: require('../src/assets/images/1.png') },
-    { id: 2, image: require('../src/assets/images/1.png') },
-    { id: 3, image: require('../src/assets/images/1.png') },
-    { id: 4, image: require('../src/assets/images/1.png') },
-  ];
+
   const dispatch = useDispatch();
   useEffect(() => {
     getProfiler();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const getProfiler = async () => {
-    await dispatch(getBike());
-    await dispatch(getCar());
-    await dispatch(getMotor());
-  };
-  const renderItem = ({ item }) => {
-    return (
-      <TouchableOpacity
-        // onPress={() => navigation.navigate('Reservation')}
-        style={styles.coverImg}>
-        <Image
-          width={'100%'}
-          height="180"
-          alt={'image'}
-          source={item.image}
-          style={styles.listImg}
-        />
-      </TouchableOpacity>
-    );
+  const getProfiler = () => {
+    dispatch(getProfile(auth.token));
+    dispatch(getBike());
+    dispatch(getCar());
+    dispatch(getMotor());
   };
   const renderBike = ({ item }) => {
     let urlImg = {
       uri: item?.image,
     };
-    console.log(urlImg);
+    // console.log(urlImg);
     return (
       <TouchableOpacity
         // onPress={() => navigation.navigate('Reservation')}
@@ -77,26 +60,28 @@ const Home = ({ navigation }) => {
     <SafeAreaView style={styles.screen}>
       <ScrollView style={styles.scroll}>
         <View>
-          <Center>
-            <Image
-              alt="bg"
-              source={require('../src/assets/images/header.png')}
-              style={styles.headerImg}
-            />
-            <Button
-              onPress={() => navigation.navigate('CreateVehicle')}
-              w="80%"
-              style={styles.addItem}>
-              <Text style={styles.textAdd}>Add New Item</Text>
-            </Button>
-          </Center>
+          {auth.userData?.role === 'admin' && (
+            <Center>
+              <Image
+                alt="bg"
+                source={require('../src/assets/images/header.png')}
+                style={styles.headerImg}
+              />
+              <Button
+                onPress={() => navigation.navigate('CreateVehicle')}
+                w="80%"
+                style={styles.addItem}>
+                <Text style={styles.textAdd}>Add New Item</Text>
+              </Button>
+            </Center>
+          )}
         </View>
         <View style={styles.content}>
           <View style={styles.box}>
             <Title child={'Recommended'} resChild={'View more'} />
             <FlatList
-              data={data}
-              renderItem={renderItem}
+              data={motor}
+              renderItem={renderBike}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             />

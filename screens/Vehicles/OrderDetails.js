@@ -14,18 +14,14 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FA5icon from 'react-native-vector-icons/FontAwesome5';
 import Order from '../../src/assets/images/1.png';
+import Back from '../../src/component/Back';
 
 const OrderDetails = ({ navigation }) => {
   return (
     <>
+      <Back name={'Order Details'} />
       <ScrollView>
         <View style={styles.content}>
-          <Box>
-            <TouchableOpacity style={styles.icon}>
-              <Ionicons name="chevron-back" size={28} color="black" />
-              <Text style={styles.back}> Payment </Text>
-            </TouchableOpacity>
-          </Box>
           <Center py={'5'}>
             <Container>
               <Stepper count={3} currentlyActive={2} />

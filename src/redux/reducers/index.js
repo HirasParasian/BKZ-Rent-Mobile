@@ -15,7 +15,7 @@ const persistVehicle = {
 
 const rootReducers = combineReducers({
   auth: persistReducer(persistAuth, auth),
-  vehicle: persistReducer(persistAuth, vehicle),
+  vehicle: persistReducer(persistVehicle, vehicle),
 });
 
 export default rootReducers;

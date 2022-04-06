@@ -44,13 +44,6 @@ export default function App({ navigation }) {
 
   console.log(date);
   const [modalVisible, setModalVisible] = useState(false);
-  useEffect(() => {
-    getProfiler();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const getProfiler = async () => {
-    await dispatch(getProfile(auth.token));
-  };
   return (
     // <View>
     <View style={styles.container}>

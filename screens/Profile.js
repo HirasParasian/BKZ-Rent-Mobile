@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProfile } from '../src/redux/actions/auth';
 
 const Profile = ({ navigation }) => {
-  const auth = useSelector(state => state.auth);
   const data = useSelector(state => state.auth?.userData);
   const dispatch = useDispatch();
 
@@ -14,13 +13,8 @@ const Profile = ({ navigation }) => {
     dispatch({
       type: 'CLEAR_UPDATE_MESSAGE',
     });
-    getProfiler();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
-  const getProfiler = async () => {
-    await dispatch(getProfile(auth.token));
-  };
   return (
     <>
       <View style={styles.background}>
