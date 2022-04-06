@@ -184,11 +184,6 @@ function Homes() {
       <Stack.Screen name="Bike" component={Bike} />
       <Stack.Screen name="Cars" component={Cars} />
       <Stack.Screen name="Motorbike" component={Motorbike} />
-      <Stack.Screen name="Reservation" component={Reservation} />
-      <Stack.Screen name="Payment" component={Payment} />
-      <Stack.Screen name="PaymentCode" component={PaymentCode} />
-      <Stack.Screen name="OrderDetails" component={OrderDetails} />
-      <Stack.Screen name="FinishPayment" component={FinishPayment} />
       <Stack.Screen name="CreateVehicle" component={CreateVehicle} />
     </Stack.Navigator>
   );
@@ -204,6 +199,11 @@ function Main() {
           {auth.token !== null && (
             <Stack.Screen name="BottomTab" component={MyTabs} />
           )}
+          <Stack.Screen name="Reservation" component={Reservation} />
+          <Stack.Screen name="Payment" component={Payment} />
+          <Stack.Screen name="PaymentCode" component={PaymentCode} />
+          <Stack.Screen name="OrderDetails" component={OrderDetails} />
+          <Stack.Screen name="FinishPayment" component={FinishPayment} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
