@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { extendTheme, NativeBaseProvider } from 'native-base';
-
+import messaging from '@react-native-firebase/messaging';
 //--------------IMPORT SCREEN--------------------------------------
 //AUTH
 import Login from './screens/Login';
@@ -208,6 +208,13 @@ function Main() {
 const { store, persistor } = reduxStore();
 
 export default function App() {
+  const getTokens = async () => {
+    const token = await messaging().getToken();
+    console.log('Token Notif = ' + token);
+  };
+  useEffect(() => {
+    getTokens();
+  }, []);
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
