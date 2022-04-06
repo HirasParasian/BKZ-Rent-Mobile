@@ -10,6 +10,7 @@ import pushNotif from 'react-native-push-notification';
 pushNotif.createChannel({
   channelId: 'testId',
   channelName: 'TestingName',
+  playSound: false,
 });
 //--------------IMPORT SCREEN--------------------------------------
 //AUTH
