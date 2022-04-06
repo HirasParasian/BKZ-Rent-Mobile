@@ -16,8 +16,10 @@ import ADicon from 'react-native-vector-icons/AntDesign';
 import IONicon from 'react-native-vector-icons/Ionicons';
 import { getDetailVehicle } from '../../src/redux/actions/vehicle';
 import { useDispatch, useSelector } from 'react-redux';
+import { orderCount } from '../../src/redux/actions/transaction';
 
 const Reservation = ({ route, navigation }) => {
+  const [count, setCount] = useState(1);
   const vehicles = useSelector(state => state.vehicle?.detailVehicle);
   const { vehicleId } = route.params;
   console.log(vehicles);
@@ -25,6 +27,18 @@ const Reservation = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   let [service, setService] = React.useState('');
   const dispatch = useDispatch();
+
+  const increment = () => {
+    if (count < vehicles.stock) {
+      setCount(count + 1);
+    }
+  };
+  const decrement = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
+
   useEffect(() => {
     getProfiler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,6 +49,15 @@ const Reservation = ({ route, navigation }) => {
   console.log(urlImg);
   const getProfiler = async () => {
     await dispatch(getDetailVehicle(vehicleId));
+  };
+
+  const onReservation = () => {
+    var endDate = new Date(
+      new Date(date).getTime() + service * 24 * 60 * 60 * 1000,
+    );
+    console.log(date, endDate);
+    dispatch(orderCount(count, date, endDate, service));
+    navigation.navigate('Payment');
   };
   return (
     <>
@@ -103,7 +126,7 @@ const Reservation = ({ route, navigation }) => {
             </View>
             <View style={styles.selectRow}>
               <Text style={styles.select}>Select Bikes :</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={decrement}>
                 <FontAwesome
                   style={styles.plus}
                   size={20}
@@ -111,8 +134,8 @@ const Reservation = ({ route, navigation }) => {
                   name="minus"
                 />
               </TouchableOpacity>
-              <Text style={styles.count}>0</Text>
-              <TouchableOpacity>
+              <Text style={styles.count}>{count}</Text>
+              <TouchableOpacity onPress={increment}>
                 <FontAwesome
                   style={styles.plus}
                   size={20}
@@ -144,7 +167,9 @@ const Reservation = ({ route, navigation }) => {
                         onDateChange={setDate}
                       />
                     </View>
-                    <TouchableOpacity style={styles.save}>
+                    <TouchableOpacity
+                      onPress={() => setModalVisible(!modalVisible)}
+                      style={styles.save}>
                       <Text style={styles.textSave}>Save</Text>
                     </TouchableOpacity>
                   </View>
@@ -156,6 +181,7 @@ const Reservation = ({ route, navigation }) => {
                   placeholder="Select Date"
                   w="40%"
                   maxWidth="300px"
+                  value={date.toString('DD MM yyyy')}
                 />
                 <FAicon
                   style={styles.iconDate}
@@ -185,7 +211,7 @@ const Reservation = ({ route, navigation }) => {
             <View>
               <TouchableOpacity>
                 <Button
-                  onPress={() => navigation.navigate('Payment')}
+                  onPress={onReservation}
                   styles={styles.reservation}
                   size="md">
                   Reservation
