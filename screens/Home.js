@@ -60,21 +60,21 @@ const Home = ({ navigation }) => {
     <SafeAreaView style={styles.screen}>
       <ScrollView style={styles.scroll}>
         <View>
-          {auth.userData?.role === 'admin' && (
-            <Center>
-              <Image
-                alt="bg"
-                source={require('../src/assets/images/header.png')}
-                style={styles.headerImg}
-              />
+          <Center>
+            <Image
+              alt="bg"
+              source={require('../src/assets/images/header.png')}
+              style={styles.headerImg}
+            />
+            {auth.userData?.role === 'admin' && (
               <Button
                 onPress={() => navigation.navigate('CreateVehicle')}
                 w="80%"
                 style={styles.addItem}>
                 <Text style={styles.textAdd}>Add New Item</Text>
               </Button>
-            </Center>
-          )}
+            )}
+          </Center>
         </View>
         <View style={styles.content}>
           <View style={styles.box}>
