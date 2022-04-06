@@ -16,7 +16,7 @@ import Back from '../../src/component/Back';
 import ImageThumb from '../../src/assets/images/1.png';
 import Love from 'react-native-vector-icons/AntDesign';
 
-const MyFavorite = () => {
+const MyFavorite = ({ navigation }) => {
   // const renderBike = ({ item }) => {
   //   let urlImg = {
   //     uri: item?.image,
