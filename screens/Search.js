@@ -35,7 +35,10 @@ const Search = ({ navigation }) => {
       <View style={styles.elevate}>
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate('Reservation', { vehicleId: item.vehicleId })
+            navigation.navigate('Reservation', {
+              vehicleId: item.vehicleId,
+              eventId: null,
+            })
           }
           style={styles.coverImg}>
           <Image

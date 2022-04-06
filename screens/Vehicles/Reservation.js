@@ -18,7 +18,7 @@ import { getDetailVehicle } from '../../src/redux/actions/vehicle';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Reservation = ({ route, navigation }) => {
-  const vehicles = useSelector(state => state.auth?.detailVehicle);
+  const vehicles = useSelector(state => state.vehicle?.detailVehicle);
   const { vehicleId } = route.params;
   console.log(vehicles);
   const [date, setDate] = useState(new Date());
