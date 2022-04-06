@@ -6,7 +6,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { extendTheme, NativeBaseProvider } from 'native-base';
-import messaging from '@react-native-firebase/messaging';
+import pushNotif from 'react-native-push-notification';
+pushNotif.createChannel({
+  channelId: 'testId',
+  channelName: 'TestingName',
+});
 //--------------IMPORT SCREEN--------------------------------------
 //AUTH
 import Login from './screens/Login';
@@ -208,13 +212,13 @@ function Main() {
 const { store, persistor } = reduxStore();
 
 export default function App() {
-  const getTokens = async () => {
-    const token = await messaging().getToken();
-    console.log('Token Notif = ' + token);
-  };
-  useEffect(() => {
-    getTokens();
-  }, []);
+  // const getTokens = async () => {
+  //   const token = await messaging().getToken();
+  //   console.log('Token Notif = ' + token);
+  // };
+  // useEffect(() => {
+  //   getTokens();
+  // }, []);
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
