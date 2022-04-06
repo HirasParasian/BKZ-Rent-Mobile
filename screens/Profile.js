@@ -4,6 +4,7 @@ import avatar from '../src/assets/images/avatar.png';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfile } from '../src/redux/actions/auth';
+import pushNotif from 'react-native-push-notification';
 
 const Profile = ({ navigation }) => {
   const data = useSelector(state => state.auth?.userData);
@@ -14,6 +15,14 @@ const Profile = ({ navigation }) => {
       type: 'CLEAR_UPDATE_MESSAGE',
     });
   }, [dispatch]);
+
+  const localNotification = () => {
+    pushNotif.localNotification({
+      channelId: 'testId',
+      message: 'Message',
+      title: 'Title',
+    });
+  };
 
   return (
     <>
@@ -54,6 +63,9 @@ const Profile = ({ navigation }) => {
             onPress={() => navigation.navigate('UpdatePassword')}
             style={styles.column}>
             <Text style={styles.arrows}>Update Password</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={localNotification} style={styles.column}>
+            <Text style={styles.arrows}>Test Local Notif</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => dispatch({ type: 'AUTH_LOGOUT' })}
