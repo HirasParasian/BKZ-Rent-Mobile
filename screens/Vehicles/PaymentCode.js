@@ -4,8 +4,12 @@ import Stepper from '../../src/component/Stepper';
 import { Container, Center, Button, Box, Text, ScrollView } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Back from '../../src/component/Back';
+import { useSelector } from 'react-redux';
 
 const PaymentCode = ({ navigation }) => {
+  const transaction = useSelector(state => state.transaction);
+  const vehicles = useSelector(state => state.vehicle?.detailVehicle);
+  console.log(transaction);
   return (
     <>
       <Back name={'Payment Code'} />
@@ -21,7 +25,7 @@ const PaymentCode = ({ navigation }) => {
               Payment Code :
             </Text>
             <Text bold fontSize={'4xl'}>
-              90887620
+              {transaction?.paymentCode}
             </Text>
             <Text>
               Insert your payment code while you transfer booking order
@@ -33,7 +37,9 @@ const PaymentCode = ({ navigation }) => {
             <Text bold fontSize={'2xl'} my="3">
               0290-90203-345-2
             </Text>
-            <Text fontSize={'md'}>Booking code : VSP09875</Text>
+            <Text fontSize={'md'}>
+              Booking code : {transaction?.bookingCode}
+            </Text>
             <Text my="3">Use booking code to pick up your vespa</Text>
             <Button
               onPress={() => navigation.navigate('PaymentCode')}
@@ -49,10 +55,15 @@ const PaymentCode = ({ navigation }) => {
           </Center>
           <Container my={'5'} mx={'5'}>
             <Text mx={'5'}>Order details :</Text>
-            <Text mx={'5'}>2 Vespa</Text>
+            <Text mx={'5'}>
+              {transaction.stock} {vehicles.name}
+            </Text>
             <Text mx={'5'}>Prepayement (no tax)</Text>
-            <Text mx={'5'}>4 days</Text>
-            <Text mx={'5'}>Jan 18 2021 to Jan 22 2021</Text>
+            <Text mx={'5'}>{transaction.day} days</Text>
+            <Text mx={'5'}>
+              {transaction.startDate.toISOString().slice(0, 10)} to{' '}
+              {transaction.endDate.toISOString().slice(0, 10)}
+            </Text>
           </Container>
           <Container pb={'5'} mx={'5'}>
             <Text bold fontSize={'2xl'} mx={'5'}>

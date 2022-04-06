@@ -1,5 +1,4 @@
 const initialState = {
-  token: null,
   isError: false,
   errMsg: [],
   isLoading: false,
