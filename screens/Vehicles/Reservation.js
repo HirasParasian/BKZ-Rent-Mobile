@@ -65,7 +65,7 @@ const Reservation = ({ route, navigation }) => {
         <ScrollView>
           <Image
             width={'100%'}
-            height="200"
+            height="220"
             source={urlImg}
             // source={require('../../src/assets/images/1.png')}
             alt="image"
@@ -213,7 +213,10 @@ const Reservation = ({ route, navigation }) => {
                 <Button
                   onPress={onReservation}
                   styles={styles.reservation}
-                  size="md">
+                  size="lg"
+                  py="3"
+                  mt="5"
+                  rounded={15}>
                   Reservation
                 </Button>
               </TouchableOpacity>
@@ -343,7 +346,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 10,
     elevation: 3,
-    paddingBottom: 65,
+    // paddingBottom: 65,
   },
   price: {
     fontSize: 25,
