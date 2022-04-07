@@ -24,12 +24,12 @@ import { orderCount } from '../../src/redux/actions/transaction';
 
 const Reservation = ({ route, navigation }) => {
   const [favoriteReady, setFavoriteReady] = useState();
-  console.log('---------------' + favoriteReady);
+  // console.log('---------------' + favoriteReady);
   const [idFavorite, setIdFavorite] = useState();
   const [favorite, setFavorite] = useState(false);
   const [count, setCount] = useState(1);
   const token = useSelector(state => state.auth?.token);
-  const user = useSelector(state => state.auth);
+  const user = useSelector(state => state.auth.userData);
   const fav = useSelector(state => state.auth?.favoriteId);
   // console.log(fav);
   const vehicles = useSelector(state => state.vehicle?.detailVehicle);
@@ -78,7 +78,7 @@ const Reservation = ({ route, navigation }) => {
     var endDate = new Date(
       new Date(date).getTime() + service * 24 * 60 * 60 * 1000,
     );
-    console.log(date, endDate);
+    // console.log(date, endDate);
     dispatch(orderCount(count, date, endDate, service));
     navigation.navigate('Payment');
   };
@@ -90,32 +90,51 @@ const Reservation = ({ route, navigation }) => {
       .post('/favorite', qs.stringify(dataa))
       .then(res => {
         if (res.status < 400) {
-          // setWhislist(res.data.results)
           setFavoriteReady(true);
-          // dispatch(getWishLlists)
+          getDetailVehicle(vehicleId);
         }
       })
       .catch(e => {
-        setFavoriteReady(false);
+        // setFavoriteReady(false);
       });
   };
-  // const addFavorite = async e => {
+
+  const onFavoriteDel = async event => {
+    // console.log(idFavorite);
+    event.preventDefault();
+    await http()
+      .delete(`/favorite/${idFavorite}`)
+      .then(res => {
+        if (res.status < 400) {
+          // setWhislist(res.data.results)
+          setFavoriteReady(false);
+          getDetailVehicle(vehicleId);
+        }
+      })
+      .catch(e => {
+        // setFavoriteReady(true);
+        console.log('failed');
+      });
+  };
+
+  // const deleteWihslist = async (e) => {
   //   e.preventDefault();
-  //   // setIsLoading(true)
-  //   await http()
-  //     .post('/users/favorite-product', param)
+  //   setIsLoading(true)
+  //   const token = window.localStorage.getItem('token');
+  //   await http(token).delete(`/users/favorite-product/${idWishlist}`)
   //     .then(res => {
   //       if (res.status < 400) {
-  //         // setWhislist(res.data.results)
-  //         setFavoriteReady(true);
-  //         // dispatch(getWishLlists)
+  //         setWhislist(true)
+  //         setWhislistReady(false)
+  //         dispatch(getWishLlists)
   //       }
   //     })
-  //     .catch(e => {
-  //       setFavoriteReady(false);
-  //     });
-  //   // setIsLoading(false)
-  // };
+  //     .catch(err => {
+  //       setWhislist(false)
+  //       // setWhislistReady(true)
+  //     })
+  //   setIsLoading(true)
+  // }
 
   return (
     <>
@@ -143,7 +162,12 @@ const Reservation = ({ route, navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity>
                   {favoriteReady ? (
-                    <FAicon size={40} color="#F56D91" name="heart" />
+                    <FAicon
+                      size={40}
+                      onPress={onFavoriteDel}
+                      color="#F56D91"
+                      name="heart"
+                    />
                   ) : (
                     <FAicon
                       size={40}

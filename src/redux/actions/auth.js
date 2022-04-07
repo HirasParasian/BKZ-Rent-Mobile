@@ -132,6 +132,24 @@ export const getFavoriteId = token => {
   };
 };
 
+export const onDeleteFavorite = id => {
+  // console.log(id);
+  return async dispatch => {
+    try {
+      const { data } = await http().get(`/vehicles/search/${id}`);
+      dispatch({
+        type: 'DELETE_FAVORITE',
+        payload: data.result,
+      });
+    } catch (e) {
+      dispatch({
+        type: 'DELETE_ERROR',
+        payload: e.response.data.error[0],
+      });
+    }
+  };
+};
+
 export const OnEditProfile = (
   fullName,
   email,
