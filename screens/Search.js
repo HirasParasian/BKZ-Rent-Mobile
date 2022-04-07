@@ -2,10 +2,12 @@ import FAicon from 'react-native-vector-icons/FontAwesome';
 import { View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Input, Text, FlatList, Image, Center } from 'native-base';
+import { Box, Input, Text, FlatList, Image, Center, Button } from 'native-base';
 import { getVehicle } from '../src/redux/actions/vehicle';
+import PaginationDot from 'react-native-animated-pagination-dot';
 
 const Search = ({ navigation }) => {
+  const [page, setPage] = React.useState(1);
   const vehicle = useSelector(state => state.vehicle);
   const vehicles = useSelector(state => state.vehicle?.allVehicle);
   // console.log(vehicles);
@@ -14,6 +16,32 @@ const Search = ({ navigation }) => {
     getProfiler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  let active = 2;
+  let items = [];
+  for (let number = 1; number <= 5; number++) {
+    items.push(
+      active === number && (
+        <Button
+          style={styles.activeMargin}
+          size="lg"
+          className="mx-1"
+          key={number}>
+          {number}
+        </Button>
+      ),
+      active !== number && (
+        <Button
+          style={styles.pagination}
+          size="lg"
+          className="mx-1"
+          colorScheme="pink"
+          key={number}>
+          {number}
+        </Button>
+      ),
+    );
+  }
 
   const getProfiler = async () => {
     await dispatch(getVehicle());
@@ -107,7 +135,11 @@ const Search = ({ navigation }) => {
             />
             <Text>Filter</Text>
           </TouchableOpacity>
+          <Center>
+            <View style={styles.page}>{items}</View>
+          </Center>
         </Box>
+
         <View style={styles.main}>
           <FlatList
             data={vehicles}
@@ -120,6 +152,15 @@ const Search = ({ navigation }) => {
   );
 };
 const styles = StyleSheet.create({
+  activeMargin: { marginHorizontal: 2 },
+  pagination: {
+    marginHorizontal: 2,
+    // backgroundColor: 'red',
+  },
+  page: {
+    flexDirection: 'row',
+    marginHorizontal: 10,
+  },
   main: {
     paddingHorizontal: 10,
     paddingBottom: 400,
