@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import http from '../../src/helpers/http';
+import qs from 'qs';
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -27,6 +29,7 @@ const Reservation = ({ route, navigation }) => {
   const [favorite, setFavorite] = useState(false);
   const [count, setCount] = useState(1);
   const token = useSelector(state => state.auth?.token);
+  const user = useSelector(state => state.auth);
   const fav = useSelector(state => state.auth?.favoriteId);
   // console.log(fav);
   const vehicles = useSelector(state => state.vehicle?.detailVehicle);
@@ -79,6 +82,41 @@ const Reservation = ({ route, navigation }) => {
     dispatch(orderCount(count, date, endDate, service));
     navigation.navigate('Payment');
   };
+
+  const onFavorite = async event => {
+    event.preventDefault();
+    const dataa = { userId: user.userId, vehicleId: vehicleId };
+    await http()
+      .post('/favorite', qs.stringify(dataa))
+      .then(res => {
+        if (res.status < 400) {
+          // setWhislist(res.data.results)
+          setFavoriteReady(true);
+          // dispatch(getWishLlists)
+        }
+      })
+      .catch(e => {
+        setFavoriteReady(false);
+      });
+  };
+  // const addFavorite = async e => {
+  //   e.preventDefault();
+  //   // setIsLoading(true)
+  //   await http()
+  //     .post('/users/favorite-product', param)
+  //     .then(res => {
+  //       if (res.status < 400) {
+  //         // setWhislist(res.data.results)
+  //         setFavoriteReady(true);
+  //         // dispatch(getWishLlists)
+  //       }
+  //     })
+  //     .catch(e => {
+  //       setFavoriteReady(false);
+  //     });
+  //   // setIsLoading(false)
+  // };
+
   return (
     <>
       <SafeAreaView style={styles.screen}>
@@ -107,7 +145,12 @@ const Reservation = ({ route, navigation }) => {
                   {favoriteReady ? (
                     <FAicon size={40} color="#F56D91" name="heart" />
                   ) : (
-                    <FAicon size={40} color="#F56D91" name="heart-o" />
+                    <FAicon
+                      size={40}
+                      onPress={onFavorite}
+                      color="#F56D91"
+                      name="heart-o"
+                    />
                   )}
                 </TouchableOpacity>
               </View>
