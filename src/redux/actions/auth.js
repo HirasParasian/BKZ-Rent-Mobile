@@ -115,6 +115,23 @@ export const getProfile = token => {
   };
 };
 
+export const getFavoriteId = token => {
+  return async dispatch => {
+    try {
+      const { data } = await http(token).get('/favorite');
+      dispatch({
+        type: 'GET_FAVORITE_ID',
+        payload: data.results,
+      });
+    } catch (e) {
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e.response.data.error[0],
+      });
+    }
+  };
+};
+
 export const OnEditProfile = (
   fullName,
   email,

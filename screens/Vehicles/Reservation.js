@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -14,15 +15,22 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import FAicon from 'react-native-vector-icons/FontAwesome';
 import ADicon from 'react-native-vector-icons/AntDesign';
 import IONicon from 'react-native-vector-icons/Ionicons';
+import { getFavoriteId } from '../../src/redux/actions/auth';
 import { getDetailVehicle } from '../../src/redux/actions/vehicle';
 import { useDispatch, useSelector } from 'react-redux';
 import { orderCount } from '../../src/redux/actions/transaction';
 
 const Reservation = ({ route, navigation }) => {
+  const [favoriteReady, setFavoriteReady] = useState();
+  console.log('---------------' + favoriteReady);
+  const [idFavorite, setIdFavorite] = useState();
+  const [favorite, setFavorite] = useState(false);
   const [count, setCount] = useState(1);
+  const token = useSelector(state => state.auth?.token);
+  const fav = useSelector(state => state.auth?.favoriteId);
+  // console.log(fav);
   const vehicles = useSelector(state => state.vehicle?.detailVehicle);
   const { vehicleId } = route.params;
-  console.log(vehicles);
   const [date, setDate] = useState(new Date());
   const [modalVisible, setModalVisible] = useState(false);
   let [service, setService] = React.useState('');
@@ -41,14 +49,26 @@ const Reservation = ({ route, navigation }) => {
 
   useEffect(() => {
     getProfiler();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getIdFavorite();
+    const filtWishlist = fav.filter(item => item.vehicleId === vehicleId);
+    if (filtWishlist.length > 0) {
+      setFavoriteReady(true);
+      setIdFavorite(filtWishlist[0].id);
+    } else {
+      setFavoriteReady(false);
+      setIdFavorite(null);
+    }
   }, []);
   let urlImg = {
     uri: vehicles?.image,
   };
-  console.log(urlImg);
+  // console.log(urlImg);
   const getProfiler = async () => {
     await dispatch(getDetailVehicle(vehicleId));
+  };
+
+  const getIdFavorite = () => {
+    dispatch(getFavoriteId(token));
   };
 
   const onReservation = () => {
@@ -84,7 +104,11 @@ const Reservation = ({ route, navigation }) => {
                   <ADicon size={23} color="#8D8DAA" name="star" />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                  <FAicon size={40} color="#F56D91" name="heart-o" />
+                  {favoriteReady ? (
+                    <FAicon size={40} color="#F56D91" name="heart" />
+                  ) : (
+                    <FAicon size={40} color="#F56D91" name="heart-o" />
+                  )}
                 </TouchableOpacity>
               </View>
             </View>
