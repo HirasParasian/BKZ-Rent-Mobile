@@ -13,7 +13,7 @@ import {
 import { Button, Image, Center } from 'native-base';
 import Title from '../src/component/Title';
 import { getBike, getCar, getMotor } from '../src/redux/actions/vehicle';
-import { getProfile } from '../src/redux/actions/auth';
+import { getProfile, getMyFavorite } from '../src/redux/actions/auth';
 import ImageThumb from '../src/assets/images/1.png';
 
 const Home = ({ navigation }) => {
@@ -32,6 +32,7 @@ const Home = ({ navigation }) => {
   }, []);
   const getProfiler = () => {
     dispatch(getProfile(auth.token));
+    dispatch(getMyFavorite(auth.token));
     dispatch(getBike());
     dispatch(getCar());
     dispatch(getMotor());
