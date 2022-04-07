@@ -5,6 +5,7 @@ const initialState = {
   isLoading: false,
   signup: false,
   userData: {},
+  favoriteId: [],
   updateProfile: false,
   forgot: false,
   successMsg: '',
@@ -37,6 +38,10 @@ const auth = (state = initialState, action) => {
     }
     case 'GET_PROFILE': {
       state.userData = action.payload;
+      return { ...state };
+    }
+    case 'GET_FAVORITE_ID': {
+      state.favoriteId = action.payload;
       return { ...state };
     }
     case 'CLEAR_UPDATE_MESSAGE': {

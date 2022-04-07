@@ -64,6 +64,7 @@ const Search = ({ navigation }) => {
       </View>
     );
   };
+
   return (
     <SafeAreaView>
       <View>
