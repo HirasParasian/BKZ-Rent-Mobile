@@ -24,7 +24,7 @@ const Search = ({ navigation }) => {
     dispatch(getSearch(page, searching, category));
   };
 
-  let active = page;
+  let active = pageInfo?.currentPage;
   let items = [];
   for (let number = 1; number <= pageInfo?.lastPage; number++) {
     items.push(
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   },
   main: {
     paddingHorizontal: 10,
-    paddingBottom: 400,
+    paddingBottom: 530,
   },
   text: {
     fontSize: 16,
