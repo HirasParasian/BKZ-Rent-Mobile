@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   View,
@@ -14,7 +14,7 @@ import { Button, Image, Center } from 'native-base';
 import Title from '../src/component/Title';
 import { getBike, getCar, getMotor } from '../src/redux/actions/vehicle';
 import { getProfile, getMyFavorite } from '../src/redux/actions/auth';
-import ImageThumb from '../src/assets/images/1.png';
+// import ImageThumb from '../src/assets/images/1.png';
 
 const Home = ({ navigation }) => {
   const auth = useSelector(state => state.auth);

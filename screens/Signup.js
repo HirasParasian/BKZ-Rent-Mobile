@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Input } from 'native-base';
 import {
   Text,
   View,
   StyleSheet,
-  Button,
-  TextInput,
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import { Input } from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SignupImg from '../src/assets/images/signup.png';
 import { OnRegister } from '../src/redux/actions/auth';
-import { useDispatch, useSelector } from 'react-redux';
 import ModalError from '../src/component/ModalError';
 import ModalSuccess from '../src/component/ModalSuccess';
 

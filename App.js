@@ -1,17 +1,20 @@
-import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { extendTheme, NativeBaseProvider } from 'native-base';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { extendTheme, NativeBaseProvider } from 'native-base';
+
+//LOCAL NOTIF
 import pushNotif from 'react-native-push-notification';
 pushNotif.createChannel({
   channelId: 'testId',
   channelName: 'TestingName',
   playSound: false,
 });
+//END OF LOCAL NOTIF
+
 //--------------IMPORT SCREEN--------------------------------------
 //AUTH
 import Login from './screens/Login';
@@ -55,31 +58,21 @@ const theme = extendTheme({
       400: '#F56D91',
     },
     primary: {
-      // 50: '#E3F2F9',
-      // 100: '#C5E4F3',
-      // 200: '#A2D4EC',
-      // 300: '#7AC1E4',
-      // 400: '#47A9DA',
-      // 500: '#0088CC',
       600: '#8D8DAA',
       700: '#DFDFDE',
       800: '#F7F5F2',
       900: '#F56D91',
     },
-    // Redefinig only one shade, rest of the color will remain same.
     amber: {
       400: '#d97706',
     },
   },
-  // config: {
-  //   // Changing initialColorMode to 'dark'
-  //   initialColorMode: 'dark',
-  // },
 });
-
+//-------------STACK---------------------------------
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+//BOTTOM TAB
 function MyTabs() {
   return (
     <Tab.Navigator
@@ -148,7 +141,9 @@ function MyTabs() {
     </Tab.Navigator>
   );
 }
+//END OF BOTTOM TAB
 
+//STACK AUTH
 function Auth() {
   return (
     <Stack.Navigator
@@ -160,6 +155,9 @@ function Auth() {
     </Stack.Navigator>
   );
 }
+//END OF STACK AUTH
+
+//STACK PROFILE
 function Profiles() {
   return (
     <Stack.Navigator
@@ -174,7 +172,9 @@ function Profiles() {
     </Stack.Navigator>
   );
 }
+//END OF STACK PROFILE
 
+//STACK HOME
 function Homes() {
   return (
     <Stack.Navigator
@@ -188,7 +188,9 @@ function Homes() {
     </Stack.Navigator>
   );
 }
+//END OF STACK HOME
 
+//STACK MAIN
 function Main() {
   const auth = useSelector(state => state.auth);
   return (
@@ -209,9 +211,10 @@ function Main() {
     </NativeBaseProvider>
   );
 }
+//END OF STACK MAIN
 
+//APP
 const { store, persistor } = reduxStore();
-
 export default function App() {
   // const getTokens = async () => {
   //   const token = await messaging().getToken();
@@ -228,8 +231,4 @@ export default function App() {
     </Provider>
   );
 }
-const styles = StyleSheet.create({
-  // tabNavigator: {
-  //   padding: 20,
-  // },
-});
+//END OF APP
