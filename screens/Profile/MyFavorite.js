@@ -61,6 +61,12 @@ const MyFavorite = ({ navigation }) => {
           <Text bold>{item.location}</Text>
         </View>
         <Pressable
+          // onPress={() =>
+          //   navigation.navigate('Reservation', {
+          //     vehicleId: item.vehicleId,
+          //     eventId: null,
+          //   })
+          // }
           width={'10'}
           my="5"
           height={'100'}
