@@ -34,7 +34,45 @@ const MyFavorite = ({ navigation }) => {
   //     </TouchableOpacity>
   //   );
   // };
-  const bike = useSelector(state => state.vehicle?.bike);
+  const favorite = useSelector(state => state.auth?.myFavorite);
+  console.log('-------------------' + favorite[0].name);
+
+  const renderFav = ({ item }) => {
+    let urlImg = {
+      uri: item?.image,
+    };
+    // console.log(urlImg);
+    return (
+      <HStack space={3}>
+        <Image
+          rounded={15}
+          source={urlImg}
+          mx={'3'}
+          width={'120'}
+          height={'100'}
+          alt="history"
+        />
+        <View width={'180'} height={'40'}>
+          <Text bold>{item.name}</Text>
+          <Text>Jan 18 to 21 2022</Text>
+          <Text fontSize={14} bold>
+            Price : {item.price}
+          </Text>
+          <Text bold>{item.location}</Text>
+        </View>
+        <Pressable
+          width={'10'}
+          my="5"
+          height={'100'}
+          alignItems={'center'}
+          justifyContent={'center'}>
+          <Center>
+            <Love color={'pink'} size={25} name="heart" />
+          </Center>
+        </Pressable>
+      </HStack>
+    );
+  };
   return (
     <View>
       <View>
@@ -46,41 +84,12 @@ const MyFavorite = ({ navigation }) => {
         </View>
       </ScrollView>
       <View>
-        <HStack space={3}>
-          <Image
-            rounded={15}
-            source={ImageThumb}
-            mx={'3'}
-            my="5"
-            width={'120'}
-            height={'100'}
-            alt="history"
-          />
-          <View width={'180'} my="5" height={'40'}>
-            <Text bold>Vespa Matic</Text>
-            <Text>Jan 18 to 21 2022</Text>
-            <Text fontSize={14} bold>
-              Prepayment : Rp. 245.000
-            </Text>
-            <Text bold>Kintamani, Bali</Text>
-          </View>
-          <Pressable
-            width={'10'}
-            my="5"
-            height={'100'}
-            alignItems={'center'}
-            justifyContent={'center'}>
-            <Center>
-              <Love color={'pink'} size={25} name="heart" />
-            </Center>
-          </Pressable>
-        </HStack>
-        {/* <FlatList
-          data={bike}
-          renderItem={renderBike}
-          horizontal={false}
-          showsHorizontalScrollIndicator={false}
-        /> */}
+        <FlatList
+          data={favorite}
+          renderItem={renderFav}
+          // horizontal={false}
+          // showsHorizontalScrollIndicator={false}
+        />
       </View>
     </View>
   );

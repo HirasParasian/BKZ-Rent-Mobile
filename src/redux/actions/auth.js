@@ -132,6 +132,23 @@ export const getFavoriteId = token => {
   };
 };
 
+export const getMyFavorite = token => {
+  return async dispatch => {
+    try {
+      const { data } = await http(token).get('/favorite/my-favorite');
+      dispatch({
+        type: 'GET_MY_FAVORITE',
+        payload: data.results,
+      });
+    } catch (e) {
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e.response.data.error[0],
+      });
+    }
+  };
+};
+
 export const onDeleteFavorite = id => {
   // console.log(id);
   return async dispatch => {

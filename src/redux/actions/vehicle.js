@@ -132,3 +132,23 @@ export const getDetailVehicle = vehicleId => {
     }
   };
 };
+
+export const getSearch = (page, search, category) => {
+  console.log('------------------' + page, search, category);
+  return async dispatch => {
+    try {
+      const { data } = await http().get(
+        `/vehicles?search=${search}&page=${page}&limit=10&category=${category}`,
+      );
+      dispatch({
+        type: 'GET_SEARCH',
+        payload: data,
+      });
+    } catch (e) {
+      dispatch({
+        type: 'VEHICLE_ERROR',
+        payload: 'Failed',
+      });
+    }
+  };
+};

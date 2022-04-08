@@ -2,21 +2,58 @@ import FAicon from 'react-native-vector-icons/FontAwesome';
 import { View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Input, Text, FlatList, Image, Center } from 'native-base';
-import { getVehicle } from '../src/redux/actions/vehicle';
+import { Box, Input, Text, FlatList, Image, Center, Button } from 'native-base';
+import { getVehicle, getSearch } from '../src/redux/actions/vehicle';
 
 const Search = ({ navigation }) => {
+  let [page, setPage] = React.useState(1);
+  let [searching, setSearching] = React.useState('');
+  let [category, setCategory] = React.useState('');
   const vehicle = useSelector(state => state.vehicle);
-  const vehicles = useSelector(state => state.vehicle?.allVehicle);
-  // console.log(vehicles);
+  const vehicles = useSelector(state => state.vehicle?.searched);
+  const pageInfo = useSelector(state => state.vehicle?.pageSearch);
+  // console.log(pageInfo);
   const dispatch = useDispatch();
   useEffect(() => {
     getProfiler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getProfiler = async () => {
-    await dispatch(getVehicle());
+  const changePages = number => {
+    setPage(number);
+    dispatch(getSearch(page, searching, category));
+  };
+
+  let active = pageInfo?.currentPage;
+  let items = [];
+  for (let number = 1; number <= pageInfo?.lastPage; number++) {
+    items.push(
+      active === number && (
+        <Button
+          style={styles.pagination}
+          size="lg"
+          className="mx-1"
+          key={String(number)}>
+          {number}
+        </Button>
+      ),
+      active !== number && (
+        <Button
+          style={styles.pagination}
+          // onPress={() => getSearch((page = number), searching, category)}
+          onPress={() => changePages(number)}
+          size="lg"
+          className="mx-1"
+          colorScheme="pink"
+          key={String(number)}>
+          {number}
+        </Button>
+      ),
+    );
+  }
+
+  const getProfiler = () => {
+    dispatch(getSearch(page, searching, category));
   };
   const [search, setSearch] = useState('');
   const searchChange = e => {
@@ -107,7 +144,11 @@ const Search = ({ navigation }) => {
             />
             <Text>Filter</Text>
           </TouchableOpacity>
+          <Center>
+            <View style={styles.page}>{items}</View>
+          </Center>
         </Box>
+
         <View style={styles.main}>
           <FlatList
             data={vehicles}
@@ -120,9 +161,18 @@ const Search = ({ navigation }) => {
   );
 };
 const styles = StyleSheet.create({
+  activeMargin: { marginHorizontal: 2 },
+  pagination: {
+    marginHorizontal: 2,
+    // backgroundColor: 'red',
+  },
+  page: {
+    flexDirection: 'row',
+    marginHorizontal: 10,
+  },
   main: {
     paddingHorizontal: 10,
-    paddingBottom: 400,
+    paddingBottom: 530,
   },
   text: {
     fontSize: 16,

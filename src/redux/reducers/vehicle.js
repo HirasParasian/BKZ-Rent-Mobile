@@ -7,6 +7,8 @@ const initialState = {
   bike: [],
   motor: [],
   car: [],
+  searched: [],
+  pageSearch: {},
   detailVehicle: {},
 };
 const vehicle = (state = initialState, action) => {
@@ -17,6 +19,11 @@ const vehicle = (state = initialState, action) => {
     }
     case 'GET_VEHICLE': {
       state.allVehicle = action.payload;
+      return { ...state };
+    }
+    case 'GET_SEARCH': {
+      state.searched = action.payload.results;
+      state.pageSearch = action.payload.pageInfo;
       return { ...state };
     }
     case 'GET_BIKE': {
