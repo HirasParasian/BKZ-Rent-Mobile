@@ -3,48 +3,57 @@ import { View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Input, Text, FlatList, Image, Center, Button } from 'native-base';
-import { getVehicle } from '../src/redux/actions/vehicle';
-import PaginationDot from 'react-native-animated-pagination-dot';
+import { getVehicle, getSearch } from '../src/redux/actions/vehicle';
 
 const Search = ({ navigation }) => {
-  const [page, setPage] = React.useState(1);
+  let [page, setPage] = React.useState(1);
+  let [searching, setSearching] = React.useState('');
+  let [category, setCategory] = React.useState('');
   const vehicle = useSelector(state => state.vehicle);
-  const vehicles = useSelector(state => state.vehicle?.allVehicle);
-  // console.log(vehicles);
+  const vehicles = useSelector(state => state.vehicle?.searched);
+  const pageInfo = useSelector(state => state.vehicle?.pageSearch);
+  // console.log(pageInfo);
   const dispatch = useDispatch();
   useEffect(() => {
     getProfiler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  let active = 2;
+  const changePages = number => {
+    setPage(number);
+    dispatch(getSearch(page, searching, category));
+  };
+
+  let active = page;
   let items = [];
-  for (let number = 1; number <= 5; number++) {
+  for (let number = 1; number <= pageInfo?.lastPage; number++) {
     items.push(
       active === number && (
         <Button
-          style={styles.activeMargin}
+          style={styles.pagination}
           size="lg"
           className="mx-1"
-          key={number}>
+          key={String(number)}>
           {number}
         </Button>
       ),
       active !== number && (
         <Button
           style={styles.pagination}
+          // onPress={() => getSearch((page = number), searching, category)}
+          onPress={() => changePages(number)}
           size="lg"
           className="mx-1"
           colorScheme="pink"
-          key={number}>
+          key={String(number)}>
           {number}
         </Button>
       ),
     );
   }
 
-  const getProfiler = async () => {
-    await dispatch(getVehicle());
+  const getProfiler = () => {
+    dispatch(getSearch(page, searching, category));
   };
   const [search, setSearch] = useState('');
   const searchChange = e => {
