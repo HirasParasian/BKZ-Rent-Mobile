@@ -44,7 +44,12 @@ const Home = ({ navigation }) => {
     // console.log(urlImg);
     return (
       <TouchableOpacity
-        // onPress={() => navigation.navigate('Reservation')}
+        onPress={() =>
+          navigation.navigate('Reservation', {
+            vehicleId: item.vehicleId,
+            eventId: null,
+          })
+        }
         style={styles.coverImg}>
         <Image
           width={'100%'}

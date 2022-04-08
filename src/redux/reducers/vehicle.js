@@ -42,6 +42,10 @@ const vehicle = (state = initialState, action) => {
       state.detailVehicle = action.payload;
       return { ...state };
     }
+    case 'CLEAR_DETAIL_VEHICLE': {
+      state.detailVehicle = {};
+      return { ...state };
+    }
     case 'CLEAR_MESSAGE': {
       state.createVehicle = false;
       state.errMsg = [];

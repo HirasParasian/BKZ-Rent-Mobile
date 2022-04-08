@@ -19,9 +19,9 @@ const Search = ({ navigation }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const changePages = number => {
+  const changePages = async number => {
     setPage(number);
-    dispatch(getSearch(page, searching, category));
+    await dispatch(getSearch(number, searching, category));
   };
 
   let active = pageInfo?.currentPage;
