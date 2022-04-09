@@ -22,7 +22,10 @@ const FinishPayment = ({ navigation }) => {
   };
   return (
     <>
-      <Back name={'See History'} />
+      <Back
+        onPress={() => navigation.navigate('History')}
+        name={'See History'}
+      />
       <ScrollView>
         <View style={styles.content}>
           <View style={styles.elevate}>
@@ -80,7 +83,7 @@ const FinishPayment = ({ navigation }) => {
           </Container>
           <Center>
             <Button
-              // onPress={() => navigation.navigate('PaymentCode')}
+              onPress={() => navigation.navigate('History')}
               w="80%"
               my={'1'}
               py={'4'}

@@ -33,7 +33,7 @@ const Home = ({ navigation }) => {
     getProfiler();
   }, []);
   const getProfiler = () => {
-    dispatch(getMyHistory(auth.token, page));
+    // dispatch(getMyHistory(auth.token, page));
     dispatch(getProfile(auth.token));
     dispatch(getMyFavorite(auth.token));
     dispatch(getBike());
