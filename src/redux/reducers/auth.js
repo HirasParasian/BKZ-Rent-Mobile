@@ -1,6 +1,7 @@
 const initialState = {
   token: null,
   isError: false,
+  favError: false,
   errMsg: '',
   isLoading: false,
   signup: false,
@@ -47,6 +48,11 @@ const auth = (state = initialState, action) => {
       state.pageFavorite = action.payload.pageInfo;
       return { ...state };
     }
+    case 'CLEAR_FAVORITE': {
+      state.myFavorite = [];
+      state.pageFavorite = {};
+      return { ...state };
+    }
     case 'GET_FAVORITE_ID': {
       state.favoriteId = action.payload;
       return { ...state };
@@ -67,6 +73,12 @@ const auth = (state = initialState, action) => {
       state.errMsg = '';
 
       return { ...state };
+    }
+    case 'FAVORITE_ERROR': {
+      return { ...state, favError: true, errMsg: action.payload };
+    }
+    case 'CLEAR_ERROR_FAVORITE': {
+      return { ...state, favError: false, errMsg: '', successMsg: '' };
     }
     default: {
       return { ...state };

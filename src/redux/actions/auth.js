@@ -134,6 +134,9 @@ export const getFavoriteId = token => {
 
 export const getMyFavorite = (token, page) => {
   return async dispatch => {
+    dispatch({
+      type: 'CLEAR_ERROR_FAVORITE',
+    });
     try {
       const { data } = await http(token).get(
         `/favorite/my-favorite?page=${page}`,

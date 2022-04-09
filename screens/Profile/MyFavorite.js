@@ -10,9 +10,11 @@ import {
   Pressable,
   useToast,
   Button,
+  Modal,
 } from 'native-base';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import emptys from '../../src/assets/images/empty2.png';
 import Back from '../../src/component/Back';
 import { deleteFavorite, getMyFavorite } from '../../src/redux/actions/auth';
 import Love from 'react-native-vector-icons/AntDesign';
@@ -23,12 +25,31 @@ const MyFavorite = ({ navigation }) => {
   const pageInfo = useSelector(state => state.auth?.pageFavorite);
   const favorite = useSelector(state => state.auth?.myFavorite);
   let [showModal, setShowModal] = React.useState(false);
-  let [idHistory, setIdHistory] = React.useState();
+  let [idFavorite, setIdFavorite] = React.useState();
   let [page, setPage] = React.useState(1);
   React.useEffect(() => {
     dispatch(getMyFavorite(auth.token, page));
   }, [auth.token, dispatch, page]);
   const dispatch = useDispatch();
+
+  const onTrash = async id => {
+    setShowModal(true);
+    setIdFavorite(id);
+    console.log(id);
+  };
+  const onDel = async event => {
+    event.preventDefault();
+    dispatch(deleteFavorite(idFavorite));
+    dispatch({
+      type: 'CLEAR_FAVORITE',
+    });
+    dispatch(getMyFavorite(auth.token, page));
+    setShowModal(false);
+    toast.show({
+      description: 'Delete Succesfully',
+      duration: 2,
+    });
+  };
   const renderFav = ({ item }) => {
     let urlImg = {
       uri: item?.image,
@@ -53,12 +74,7 @@ const MyFavorite = ({ navigation }) => {
         </View>
         <View style={styles.loves}>
           <Pressable
-            // onPress={() =>
-            //   navigation.navigate('Reservation', {
-            //     vehicleId: item.vehicleId,
-            //     eventId: null,
-            //   })
-            // }
+            onPress={() => onTrash(item?.id)}
             width={'10'}
             mb="1"
             height={'100'}
@@ -68,6 +84,32 @@ const MyFavorite = ({ navigation }) => {
               <Love color={'pink'} size={30} name="heart" />
             </Center>
           </Pressable>
+          <View>
+            <Center>
+              <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+                <Modal.Content maxWidth="400px" py="5">
+                  <Modal.Body>
+                    <Center px="5" mx="5">
+                      <Text bold>Are you sure to delete the </Text>
+                      <Text bold>selected Favorite?</Text>
+                    </Center>
+                  </Modal.Body>
+
+                  <Center pt="5" style={styles.page2}>
+                    <Button
+                      onPress={() => {
+                        setShowModal(false);
+                      }}>
+                      Cancel
+                    </Button>
+                    <Button colorScheme="pink" onPress={onDel}>
+                      Delete
+                    </Button>
+                  </Center>
+                </Modal.Content>
+              </Modal>
+            </Center>
+          </View>
         </View>
       </HStack>
     );
@@ -118,9 +160,23 @@ const MyFavorite = ({ navigation }) => {
         <Center pb="2">Tap love to unlike</Center>
       </View>
       <ScrollView />
-      <View>
-        <FlatList data={favorite} renderItem={renderFav} />
-      </View>
+      {!auth.favError && (
+        <View>
+          <FlatList data={favorite} renderItem={renderFav} />
+        </View>
+      )}
+      {auth.favError && (
+        <>
+          <Center>
+            <Image source={emptys} width={'70%'} height={'70%'} alt="history" />
+          </Center>
+          <Center>
+            <Text fontSize={40} bold>
+              Empty Favorite
+            </Text>
+          </Center>
+        </>
+      )}
     </View>
   );
 };
