@@ -1,6 +1,7 @@
 const initialState = {
   token: null,
   isError: false,
+  favError: false,
   errMsg: '',
   isLoading: false,
   signup: false,
@@ -10,6 +11,7 @@ const initialState = {
   updateProfile: false,
   forgot: false,
   successMsg: '',
+  pageFavorite: {},
 };
 const auth = (state = initialState, action) => {
   switch (action.type) {
@@ -42,7 +44,13 @@ const auth = (state = initialState, action) => {
       return { ...state };
     }
     case 'GET_MY_FAVORITE': {
-      state.myFavorite = action.payload;
+      state.myFavorite = action.payload.results;
+      state.pageFavorite = action.payload.pageInfo;
+      return { ...state };
+    }
+    case 'CLEAR_FAVORITE': {
+      state.myFavorite = [];
+      state.pageFavorite = {};
       return { ...state };
     }
     case 'GET_FAVORITE_ID': {
@@ -65,6 +73,12 @@ const auth = (state = initialState, action) => {
       state.errMsg = '';
 
       return { ...state };
+    }
+    case 'FAVORITE_ERROR': {
+      return { ...state, favError: true, errMsg: action.payload };
+    }
+    case 'CLEAR_ERROR_FAVORITE': {
+      return { ...state, favError: false, errMsg: '', successMsg: '' };
     }
     default: {
       return { ...state };
