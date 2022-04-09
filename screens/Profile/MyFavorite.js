@@ -149,7 +149,7 @@ const MyFavorite = ({ navigation }) => {
   }
 
   return (
-    <View>
+    <View style={styles.scroll}>
       <View>
         <Back name={'My Favorite'} />
       </View>
@@ -183,7 +183,7 @@ const MyFavorite = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   line: { backgroundColor: 'lightgrey', height: 1 },
-  scroll: { paddingBottom: 250 },
+  scroll: { paddingBottom: 300 },
   pagination: { marginHorizontal: 2 },
   page: { flexDirection: 'row', marginHorizontal: 10 },
   page2: { flexDirection: 'row', justifyContent: 'space-evenly' },
