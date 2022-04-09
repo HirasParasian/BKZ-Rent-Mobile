@@ -84,11 +84,10 @@ const MyFavorite = ({ navigation }) => {
       <View>
         <Back name={'My Favorite'} />
       </View>
-      <ScrollView>
-        <View>
-          <Center>Tap love to unlike</Center>
-        </View>
-      </ScrollView>
+      <View>
+        <Center pb="2">Tap love to unlike</Center>
+      </View>
+      <ScrollView />
       <View>
         <FlatList
           data={favorite}
