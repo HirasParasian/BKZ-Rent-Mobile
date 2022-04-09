@@ -132,17 +132,36 @@ export const getFavoriteId = token => {
   };
 };
 
-export const getMyFavorite = token => {
+export const getMyFavorite = (token, page) => {
   return async dispatch => {
     try {
-      const { data } = await http(token).get('/favorite/my-favorite');
+      const { data } = await http(token).get(
+        `/favorite/my-favorite?page=${page}`,
+      );
       dispatch({
         type: 'GET_MY_FAVORITE',
-        payload: data.results,
+        payload: data,
       });
     } catch (e) {
       dispatch({
-        type: 'AUTH_ERROR',
+        type: 'FAVORITE_ERROR',
+        payload: e.response.data.message,
+      });
+    }
+  };
+};
+
+export const deleteFavorite = idFavorite => {
+  return async dispatch => {
+    try {
+      const { data } = await http().delete(`/favorite/${idFavorite}`);
+      dispatch({
+        type: 'DELETE_FAVORITE',
+        payload: data,
+      });
+    } catch (e) {
+      dispatch({
+        type: 'FAVORITE_ERROR',
         payload: e.response.data.error[0],
       });
     }

@@ -35,7 +35,7 @@ const Home = ({ navigation }) => {
   const getProfiler = () => {
     // dispatch(getMyHistory(auth.token, page));
     dispatch(getProfile(auth.token));
-    dispatch(getMyFavorite(auth.token));
+    dispatch(getMyFavorite(auth.token, 1));
     dispatch(getBike());
     dispatch(getCar());
     dispatch(getMotor());

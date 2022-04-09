@@ -10,6 +10,7 @@ const initialState = {
   updateProfile: false,
   forgot: false,
   successMsg: '',
+  pageFavorite: {},
 };
 const auth = (state = initialState, action) => {
   switch (action.type) {
@@ -42,7 +43,8 @@ const auth = (state = initialState, action) => {
       return { ...state };
     }
     case 'GET_MY_FAVORITE': {
-      state.myFavorite = action.payload;
+      state.myFavorite = action.payload.results;
+      state.pageFavorite = action.payload.pageInfo;
       return { ...state };
     }
     case 'GET_FAVORITE_ID': {
