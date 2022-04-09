@@ -12,11 +12,13 @@ import {
 } from 'react-native';
 import { Button, Image, Center } from 'native-base';
 import Title from '../src/component/Title';
+import { getMyHistory } from '../src/redux/actions/history';
 import { getBike, getCar, getMotor } from '../src/redux/actions/vehicle';
 import { getProfile, getMyFavorite } from '../src/redux/actions/auth';
 // import ImageThumb from '../src/assets/images/1.png';
 
 const Home = ({ navigation }) => {
+  let [page, setPage] = React.useState(1);
   const auth = useSelector(state => state.auth);
   const bike = useSelector(state => state.vehicle?.bike);
   const car = useSelector(state => state.vehicle?.car);
@@ -31,6 +33,7 @@ const Home = ({ navigation }) => {
     getProfiler();
   }, []);
   const getProfiler = () => {
+    dispatch(getMyHistory(auth.token, page));
     dispatch(getProfile(auth.token));
     dispatch(getMyFavorite(auth.token));
     dispatch(getBike());

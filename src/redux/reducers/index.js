@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from './auth';
 import vehicle from './vehicle';
 import transaction from './transaction';
+import history from './history';
 import persistReducer from 'redux-persist/es/persistReducer';
 
 const persistAuth = {
@@ -18,10 +19,16 @@ const persistTransaction = {
   storage: AsyncStorage,
 };
 
+const persistHistory = {
+  key: 'history',
+  storage: AsyncStorage,
+};
+
 const rootReducers = combineReducers({
   auth: persistReducer(persistAuth, auth),
   vehicle: persistReducer(persistVehicle, vehicle),
   transaction: persistReducer(persistTransaction, transaction),
+  history: persistReducer(persistHistory, history),
 });
 
 export default rootReducers;
