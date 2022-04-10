@@ -22,7 +22,7 @@ const transaction = (state = initialState, action) => {
         stock: data.stock,
         startDate: data.startDate,
         endDate: data.endDate,
-        dat: data.day,
+        day: data.day,
       };
     }
     case 'ORDER_DETAILS': {

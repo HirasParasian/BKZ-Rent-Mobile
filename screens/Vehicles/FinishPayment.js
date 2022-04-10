@@ -1,25 +1,21 @@
-import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
 import {
   Container,
   Center,
   Button,
-  Box,
+  Image,
   Text,
   ScrollView,
-  HStack,
 } from 'native-base';
 import Back from '../../src/component/Back';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Order from '../../src/assets/images/1.png';
+import { useSelector } from 'react-redux';
 const FinishPayment = ({ navigation }) => {
-  const data = {
-    image: require('../../src/assets/images/1.png'),
-    location: 'Makassar',
-    price: 250000,
-    title: 'Vespa Matic',
-    isAvailable: true,
-  };
+  const transaction = useSelector(state => state.transaction);
+  const vehicles = useSelector(state => state.vehicle?.detailVehicle);
+  console.log('===========================' + vehicles.image);
   return (
     <>
       <Back
@@ -31,8 +27,10 @@ const FinishPayment = ({ navigation }) => {
           <View style={styles.elevate}>
             <TouchableOpacity style={styles.coverImg}>
               <Image
-                alt={data.location}
-                source={Order}
+                width={'100%'}
+                height="180"
+                alt={vehicles.name}
+                source={{ uri: vehicles?.image }}
                 style={styles.listImg}
               />
             </TouchableOpacity>
@@ -42,18 +40,22 @@ const FinishPayment = ({ navigation }) => {
               </Text>
               <View style={styles.rows}>
                 <View>
-                  <Text style={styles.textName}>{data.title}</Text>
+                  <Text style={styles.textName}>{vehicles.name}</Text>
                   <Text style={styles.textAvailable}>Available</Text>
                 </View>
                 <View>
                   <Text style={styles.textName}>4 Days</Text>
-                  <Text style={styles.textName}>Jan 18-21 2021</Text>
+                  <Text style={styles.textName}>
+                    {transaction.rentStartDate} - {transaction.rentEndDate}
+                  </Text>
                 </View>
               </View>
             </View>
           </View>
           <Center>
-            <Text fontSize={'md'}>Booking code : VSP09875</Text>
+            <Text fontSize={'md'}>
+              Booking code : {transaction.bookingCode}
+            </Text>
             <Text my="3">Use booking code to pick up your vespa</Text>
             <Button
               onPress={() => navigation.navigate('PaymentCode')}
@@ -69,21 +71,21 @@ const FinishPayment = ({ navigation }) => {
           </Center>
           <Container my={'5'} mx={'5'}>
             <Text my={'1'} mx={'5'}>
-              ID : 9087627392624
+              ID : {transaction.idCardNumber}
             </Text>
             <Text my={'1'} mx={'5'}>
-              Jessica Jane (jjane@mail.com)
+              {transaction.rentName} {transaction.emailAddress}
             </Text>
             <Text my={'1'} mx={'5'}>
-              0890876789 (active)
+              {transaction.mobilePhone} (active)
             </Text>
             <Text my={'1'} mx={'5'}>
-              Jakarta, Indonesia
+              {transaction.location}, Indonesia
             </Text>
           </Container>
           <Center>
             <Button
-              onPress={() => navigation.navigate('History')}
+              onPress={() => navigation.navigate('Home')}
               w="80%"
               my={'1'}
               py={'4'}
@@ -91,7 +93,7 @@ const FinishPayment = ({ navigation }) => {
               style={styles.Button}
               colorScheme={'pink'}
               variant="subtle">
-              <Text bold>Total : 245.000</Text>
+              <Text bold>Total : {transaction.stock * vehicles.price}</Text>
             </Button>
           </Center>
         </View>

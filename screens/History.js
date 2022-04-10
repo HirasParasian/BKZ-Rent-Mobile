@@ -91,7 +91,10 @@ const History = () => {
           </Text>
           <Text bold>{item?.location}</Text>
         </View>
-        <Pressable onPress={() => onTrash(item?.historyId)}>
+        <Pressable
+          width={'30'}
+          height={'40'}
+          onPress={() => onTrash(item?.historyId)}>
           <Center mt="3">
             <Icon color={'red'} size={30} name="trash-alt" />
           </Center>
@@ -191,7 +194,7 @@ export default History;
 
 const styles = StyleSheet.create({
   line: { backgroundColor: 'lightgrey', height: 1 },
-  scroll: { paddingBottom: 250 },
+  scroll: { paddingBottom: 320 },
   pagination: { marginHorizontal: 2 },
   page: { flexDirection: 'row', marginHorizontal: 10 },
   page2: { flexDirection: 'row', justifyContent: 'space-evenly' },

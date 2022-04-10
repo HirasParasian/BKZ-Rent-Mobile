@@ -74,10 +74,10 @@ const MyFavorite = ({ navigation }) => {
         </View>
         <View style={styles.loves}>
           <Pressable
+            width={'30'}
+            height={'60'}
             onPress={() => onTrash(item?.id)}
-            width={'10'}
             mb="1"
-            height={'100'}
             // alignItems={'center'}
             justifyContent={'center'}>
             <Center>
