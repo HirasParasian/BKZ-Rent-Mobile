@@ -37,7 +37,13 @@ const auth = (state = initialState, action) => {
       return { ...state, isError: true, errMsg: action.payload };
     }
     case 'CLEAR_ERROR': {
-      return { ...state, isError: false, errMsg: '', successMsg: '' };
+      return {
+        ...state,
+        isError: false,
+        errMsg: '',
+        successMsg: '',
+        updateProfile: false,
+      };
     }
     case 'GET_PROFILE': {
       state.userData = action.payload;

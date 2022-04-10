@@ -1,5 +1,47 @@
 import http from '../../helpers/http';
 import qs from 'qs';
+import RNFetchBlob from 'rn-fetch-blob';
+
+export const editProfile = (token, userData) => {
+  return async dispatch => {
+    try {
+      dispatch({
+        type: 'PAGES_LOADING',
+      });
+      console.log(userData);
+      const { data } = await RNFetchBlob.fetch(
+        'PATCH',
+        'http://192.168.100.8:5000/profile/update',
+        {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        [
+          {
+            name: 'images',
+            filename: userData.fileName,
+            type: userData.fileType,
+            data: RNFetchBlob.wrap(userData.picture),
+          },
+        ],
+      );
+      console.log(data);
+      dispatch({
+        type: 'UPDATE_PROFILE',
+        payload: data.results,
+      });
+      dispatch({
+        type: 'PAGES_LOADING',
+      });
+    } catch (e) {
+      console.log(e);
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e,
+      });
+    }
+  };
+};
 
 export const loginProcess = (username, password) => {
   const dataa = { username: username, password: password };

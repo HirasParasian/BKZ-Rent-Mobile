@@ -85,6 +85,9 @@ export const OnCreatePayment = (
         type: 'CREATE_TRANSACTION',
         payload: data.results,
       });
+      dispatch({
+        type: 'CLEAR_ERROR_HISTORY',
+      });
     } catch (err) {
       let payload = '';
       if (err.response) {
