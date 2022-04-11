@@ -60,6 +60,11 @@ const Search = ({ navigation }) => {
     setSearch(e);
   };
 
+  const searchPages = async number => {
+    setPage(number);
+    await dispatch(getSearch(1, search, category));
+  };
+
   const removeHandler = () => {
     setSearch('');
   };
@@ -117,6 +122,7 @@ const Search = ({ navigation }) => {
             placeholderTextColor={'#8D8DAA'}
             InputLeftElement={
               <FAicon
+                onPress={searchPages}
                 color={'#8D8DAA'}
                 name="search"
                 size={20}
@@ -137,6 +143,7 @@ const Search = ({ navigation }) => {
           />
           <TouchableOpacity style={styles.row}>
             <FAicon
+              onPress={() => navigation.navigate('Filter', {})}
               color={'#8D8DAA'}
               name="filter"
               size={25}

@@ -10,6 +10,7 @@ const initialState = {
   myFavorite: [],
   updateProfile: false,
   forgot: false,
+  verify: false,
   successMsg: '',
   pageFavorite: {},
 };
@@ -20,6 +21,10 @@ const auth = (state = initialState, action) => {
     }
     case 'AUTH_FORGOT': {
       state.forgot = true;
+      return { ...state, successMsg: action.payload };
+    }
+    case 'AUTH_VERIFY': {
+      state.verify = true;
       return { ...state, successMsg: action.payload };
     }
     case 'AUTH_SIGNUP': {

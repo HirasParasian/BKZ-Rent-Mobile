@@ -10,7 +10,7 @@ import {
   OnCreatePayment,
 } from '../../src/redux/actions/transaction';
 
-const Payment = ({ navigation }) => {
+const Payment = ({ navigation, navigation: { goBack } }) => {
   //STATE SET
   const [idCardNumber, setIdCardNumber] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -90,7 +90,7 @@ const Payment = ({ navigation }) => {
   return (
     <>
       <View>
-        <Back name={'Payment'} />
+        <Back onPress={() => goBack()} name={'Payment'} />
       </View>
       <Center py={'5'}>
         <Container>

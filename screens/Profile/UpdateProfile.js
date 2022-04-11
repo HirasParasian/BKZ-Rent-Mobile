@@ -9,7 +9,7 @@ import {
   Image,
   Modal,
 } from 'react-native';
-import { Text, Button, Input } from 'native-base';
+import { Text, Button, Input, Pressable } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfile, OnEditProfile } from '../../src/redux/actions/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -17,8 +17,9 @@ import DatePicker from 'react-native-date-picker';
 import FAicon from 'react-native-vector-icons/FontAwesome';
 import ModalSuccess from '../../src/component/ModalSuccess';
 import ModalError from '../../src/component/ModalError';
+import Back from '../../src/component/Back';
 
-export default function App({ navigation }) {
+export default function App({ navigation, navigation: { goBack } }) {
   const auth = useSelector(state => state.auth);
   const data = useSelector(state => state.auth?.userData);
   // console.log(date?.birthDate);
@@ -46,111 +47,105 @@ export default function App({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     // <View>
-    <View style={styles.container}>
-      <View>
-        <Modal transparent={true} animationType="slide" visible={modalVisible}>
-          <View style={styles.datetime}>
-            <TouchableOpacity style={styles.close}>
-              <Text style={styles.selectDate}>Select Date</Text>
-              <FAicon
-                onPress={() => setModalVisible(!modalVisible)}
-                size={40}
-                color="#F56D91"
-                name="close"
-              />
-            </TouchableOpacity>
-            <View>
-              <DatePicker date={date} mode="date" onDateChange={setDate} />
+    <>
+      <Pressable onPress={() => goBack()}>
+        <Back name={'Update Profile'} />
+      </Pressable>
+
+      <View style={styles.container}>
+        <View>
+          <Modal
+            transparent={true}
+            animationType="slide"
+            visible={modalVisible}>
+            <View style={styles.datetime}>
+              <TouchableOpacity style={styles.close}>
+                <Text style={styles.selectDate}>Select Date</Text>
+                <FAicon
+                  onPress={() => setModalVisible(!modalVisible)}
+                  size={40}
+                  color="#F56D91"
+                  name="close"
+                />
+              </TouchableOpacity>
+              <View>
+                <DatePicker date={date} mode="date" onDateChange={setDate} />
+              </View>
+              <TouchableOpacity
+                onPress={() => setModalVisible(false)}
+                style={styles.save}>
+                <Text style={styles.textSave}>Save</Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              onPress={() => setModalVisible(false)}
-              style={styles.save}>
-              <Text style={styles.textSave}>Save</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
-      </View>
-      <TouchableOpacity style={styles.icon}>
-        <Ionicons name="chevron-back" size={24} color="black" />
-        <Text style={styles.back}> Update Profile </Text>
-      </TouchableOpacity>
-      {auth.updateProfile && <ModalSuccess message={auth?.successMsg} />}
-      {auth.isError && <ModalError message={auth?.errMsg} />}
-      <View style={styles.row}>
-        <View style={styles.column}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.text_size}> Take a Picture </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.text_size}> Browse from Galery </Text>
-          </TouchableOpacity>
+          </Modal>
         </View>
-      </View>
-      <View style={styles.form}>
-        <Text>Name :</Text>
-        <Input
-          style={styles.input}
-          defaultValue={data?.fullName}
-          placeholderTextColor="#fff"
-          variant={'underlined'}
-          onChangeText={setFullName}
-        />
-        <Text>Email Address :</Text>
-        <Input
-          style={styles.input}
-          defaultValue={data?.email}
-          placeholderTextColor="#fff"
-          variant={'underlined'}
-          onChangeText={setEmail}
-        />
-        <Text>Mobile Number :</Text>
-        <Input
-          style={styles.input}
-          defaultValue={data?.mobileNumber}
-          placeholderTextColor="#fff"
-          variant={'underlined'}
-          onChangeText={setMobileNumber}
-        />
-        <Text>Date of Birth :</Text>
-        <View style={styles.rows}>
+        {auth.updateProfile && <ModalSuccess message={auth?.successMsg} />}
+        {auth.isError && <ModalError message={auth?.errMsg} />}
+        <View style={styles.form}>
+          <Text>Name :</Text>
           <Input
-            w={'80%'}
             style={styles.input}
-            defaultValue={date?.birthDate}
-            variant="underlined"
+            defaultValue={data?.fullName}
             placeholderTextColor="#fff"
-            onChangeText={setDate}
+            variant={'underlined'}
+            onChangeText={setFullName}
           />
-          <FAicon
-            style={styles.iconDate}
-            onPress={() => setModalVisible(true)}
-            size={30}
-            color="#F56D91"
-            name="calendar"
+          <Text>Email Address :</Text>
+          <Input
+            style={styles.input}
+            defaultValue={data?.email}
+            placeholderTextColor="#fff"
+            variant={'underlined'}
+            onChangeText={setEmail}
           />
+          <Text>Mobile Number :</Text>
+          <Input
+            style={styles.input}
+            defaultValue={data?.mobileNumber}
+            placeholderTextColor="#fff"
+            variant={'underlined'}
+            onChangeText={setMobileNumber}
+          />
+          <Text>Date of Birth :</Text>
+          <View style={styles.rows}>
+            <Input
+              variant={'underlined'}
+              placeholder="Select Date"
+              w="80%"
+              maxWidth="300px"
+              value={date.toString('DD-MM-YYYY')}
+            />
+            <FAicon
+              style={styles.iconDate}
+              onPress={() => setModalVisible(true)}
+              size={30}
+              color="#F56D91"
+              name="calendar"
+            />
+          </View>
+          <Text>Delivery Address :</Text>
+          {/* <DatePickerIOS /> */}
+          <TextInput
+            style={styles.input}
+            defaultValue={data?.address}
+            placeholderTextColor="#fff"
+            variant={'underlined'}
+            onChangeText={setAddress}
+          />
+          <Button
+            onPress={onEdit}
+            w="100%"
+            my={'1'}
+            py={'3'}
+            rounded={10}
+            style={styles.Button}
+            colorScheme={'pink'}
+            variant="subtle">
+            <Text>Save</Text>
+          </Button>
         </View>
-        <Text>Delivery Address :</Text>
-        {/* <DatePickerIOS /> */}
-        <TextInput
-          style={styles.input}
-          defaultValue={data?.address}
-          placeholderTextColor="#fff"
-          variant={'underlined'}
-          onChangeText={setAddress}
-        />
-        <Button
-          onPress={onEdit}
-          w="100%"
-          my={'1'}
-          py={'3'}
-          rounded={10}
-          style={styles.Button}
-          colorScheme={'pink'}
-          variant="subtle">
-          <Text>Save</Text>
-        </Button>
       </View>
-    </View>
+    </>
     //   </ImageBackground>
     // </View>
   );
@@ -230,7 +225,6 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 1,
   },
   text_size: {
     fontWeight: 'bold',

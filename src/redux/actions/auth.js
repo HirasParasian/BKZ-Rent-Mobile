@@ -105,11 +105,45 @@ export const onForgot = (email, code, password, confirmPassword) => {
   };
 };
 
-export const OnRegister = (username, password, MobileNumber) => {
+export const onVerify = (email, code) => {
+  const dataa = {
+    email: email,
+    code: code,
+  };
+  return async dispatch => {
+    try {
+      dispatch({
+        type: 'CLEAR_ERROR',
+      });
+      const { data } = await http().post(
+        '/auth/emailVerify',
+        qs.stringify(dataa),
+      );
+      dispatch({
+        type: 'AUTH_VERIFY',
+        payload: data.message,
+      });
+    } catch (err) {
+      let payload = '';
+      if (err.response) {
+        payload = err.response.data.message;
+      } else {
+        payload = err.message;
+      }
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: payload,
+      });
+    }
+  };
+};
+
+export const OnRegister = (username, password, MobileNumber, email) => {
   const dataa = {
     username: username,
     password: password,
     MobileNumber: MobileNumber,
+    email: email,
   };
   return async dispatch => {
     try {

@@ -19,6 +19,7 @@ export default function App({ navigation }) {
   const auth = useSelector(state => state.auth);
   const [password, setPassword] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
+  const [email, setEmail] = useState('');
   useEffect(() => {
     dispatch({
       type: 'CLEAR_SIGNUP_MESSAGE',
@@ -26,8 +27,8 @@ export default function App({ navigation }) {
   }, [dispatch]);
   const dispatch = useDispatch();
   const onSignup = () => {
-    console.log(username, password, mobileNumber);
-    dispatch(OnRegister(username, password, mobileNumber));
+    console.log(username, password, mobileNumber, email);
+    dispatch(OnRegister(username, password, mobileNumber, email));
   };
   return (
     <ImageBackground
@@ -47,6 +48,16 @@ export default function App({ navigation }) {
           placeholderTextColor="#000"
           value={username}
           onChangeText={setUsername}
+        />
+        <Input
+          mb={'3'}
+          rounded={'10'}
+          variant={'filled'}
+          style={styles.input}
+          placeholder="email"
+          placeholderTextColor="#000"
+          value={email}
+          onChangeText={setEmail}
         />
         <Input
           rounded={'10'}

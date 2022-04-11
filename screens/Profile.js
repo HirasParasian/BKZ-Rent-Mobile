@@ -23,10 +23,11 @@ const Profile = ({ navigation }) => {
     dispatch({
       type: 'CLEAR_UPDATE_MESSAGE',
     });
+    dispatch(getProfile(auth?.token));
     if (data) {
       setImage(data.images);
     }
-  }, [data, data.images, dispatch]);
+  }, [auth?.token, data, data.images, dispatch]);
 
   const ChoosePhoto = () => {
     const options = {
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 35,
+    marginTop: 5,
   },
   column: {
     flexDirection: 'row',

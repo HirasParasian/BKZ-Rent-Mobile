@@ -20,6 +20,7 @@ pushNotif.createChannel({
 import Login from './screens/Login';
 import Signup from './screens/Signup';
 import ForgotPassword from './screens/ForgotPassword';
+import VerifyEmail from './screens/VerifyEmail';
 //HOME
 import Home from './screens/Home';
 import Reservation from './screens/Vehicles/Reservation';
@@ -42,6 +43,7 @@ import UpdateProfile from './screens/Profile/UpdateProfile';
 import History from './screens/History';
 //SEARCH
 import Search from './screens/Search';
+import Filter from './screens/Filter';
 //-------------END IMPORT SCREEN-----------------------------------
 
 //-------------PERSIST INTEGRATION---------------------------------
@@ -103,8 +105,8 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Search"
-        component={Search}
+        name="Searchs"
+        component={Searchs}
         options={{
           tabBarLabel: '',
           tabBarActiveTintColor: '#8D8DAA',
@@ -143,6 +145,17 @@ function MyTabs() {
 }
 //END OF BOTTOM TAB
 
+function Searchs() {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Search">
+      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="Filter" component={Filter} />
+    </Stack.Navigator>
+  );
+}
+
 //STACK AUTH
 function Auth() {
   return (
@@ -152,6 +165,7 @@ function Auth() {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      <Stack.Screen name="VerifyEmail" component={VerifyEmail} />
     </Stack.Navigator>
   );
 }

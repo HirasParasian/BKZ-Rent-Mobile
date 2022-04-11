@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { loginProcess } from '../src/redux/actions/auth';
 import {
-  Text,
   View,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import { Input } from 'native-base';
+import { Input, Text, Center } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
 import LoginImg from '../src/assets/images/login.png';
 import ModalError from '../src/component/ModalError';
@@ -28,7 +27,11 @@ export default function Login({ navigation }) {
       style={styles.background}>
       <ModalError message={auth.errMsg} />
       <View style={styles.container}>
-        <Text style={styles.text}>LET’S EXPLORE THE WORLD</Text>
+        <Center>
+          <Text bold fontSize={35} style={styles.text}>
+            LET’S EXPLORE THE WORLD
+          </Text>
+        </Center>
         <Input
           rounded={'10'}
           variant={'filled'}
@@ -45,13 +48,18 @@ export default function Login({ navigation }) {
           style={styles.input}
           secureTextEntry={true}
           placeholder="password"
-          placeholderTextColor="#000"
           value={password}
           onChangeText={setPassword}
         />
-        <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-          <Text> Forgot Password?</Text>
-        </TouchableOpacity>
+        <View style={styles.signup}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ForgotPassword')}>
+            <Text> Forgot Password?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('VerifyEmail')}>
+            <Text> VerifyEmail?</Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity onPress={onLogin} style={styles.button}>
           <Text style={styles.text_size}> Login </Text>
         </TouchableOpacity>
@@ -85,7 +93,6 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   text: {
-    fontSize: 35,
     marginBottom: 120,
     color: 'black',
   },
