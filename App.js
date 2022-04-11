@@ -41,6 +41,7 @@ import UpdatePassword from './screens/Profile/UpdatePassword';
 import UpdateProfile from './screens/Profile/UpdateProfile';
 //HISTORY
 import History from './screens/History';
+import DetailHistory from './screens/DetailHistory';
 //SEARCH
 import Search from './screens/Search';
 import Filter from './screens/Filter';
@@ -117,8 +118,8 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="testing"
-        component={History}
+        name="Histories"
+        component={Histories}
         options={{
           tabBarLabel: '',
           tabBarActiveTintColor: '#8D8DAA',
@@ -144,6 +145,17 @@ function MyTabs() {
   );
 }
 //END OF BOTTOM TAB
+
+function Histories() {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="History">
+      <Stack.Screen name="History" component={History} />
+      <Stack.Screen name="DetailHistory" component={DetailHistory} />
+    </Stack.Navigator>
+  );
+}
 
 function Searchs() {
   return (

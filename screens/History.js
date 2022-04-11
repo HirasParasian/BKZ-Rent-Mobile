@@ -18,7 +18,7 @@ import emptys from '../src/assets/images/empty.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteHistory, getMyHistory } from '../src/redux/actions/history';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-const History = () => {
+const History = ({ navigation }) => {
   const toast = useToast();
   let [showModal, setShowModal] = React.useState(false);
   let [idHistory, setIdHistory] = React.useState();
@@ -75,14 +75,22 @@ const History = () => {
     // console.log(urlImg);
     return (
       <HStack space={3}>
-        <Image
-          rounded={15}
-          source={urlImg}
-          mx={'3'}
-          width={'120'}
-          height={'100'}
-          alt="history"
-        />
+        <Pressable
+          onPress={() =>
+            navigation.navigate('DetailHistory', {
+              historyId: item.historyId,
+              eventId: null,
+            })
+          }>
+          <Image
+            rounded={15}
+            source={urlImg}
+            mx={'3'}
+            width={'120'}
+            height={'100'}
+            alt="history"
+          />
+        </Pressable>
         <View width={'180'} height={'40'}>
           <Text bold>{item?.vehicle}</Text>
           <Text>Jan 18 to 21 2022</Text>

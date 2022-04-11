@@ -56,14 +56,22 @@ const MyFavorite = ({ navigation }) => {
     };
     return (
       <HStack space={3}>
-        <Image
-          rounded={15}
-          source={urlImg}
-          mx={'3'}
-          width={'120'}
-          height={'100'}
-          alt="history"
-        />
+        <Pressable
+          onPress={() =>
+            navigation.navigate('Reservation', {
+              vehicleId: item.vehicleId,
+              eventId: null,
+            })
+          }>
+          <Image
+            rounded={15}
+            source={urlImg}
+            mx={'3'}
+            width={'120'}
+            height={'100'}
+            alt="history"
+          />
+        </Pressable>
         <View width={'180'} height={'40'}>
           <Text bold>{item.name}</Text>
           <Text>Jan 18 to 21 2022</Text>

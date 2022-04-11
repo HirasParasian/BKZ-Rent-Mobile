@@ -5,10 +5,10 @@ import {
   ScrollView,
   TextInput,
 } from 'react-native';
-import { Button } from 'native-base';
+import { Button, Select } from 'native-base';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Text } from 'native-base';
+import { Text, FormControl, Center } from 'native-base';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 // import { Picker } from '@react-native-picker/picker';
@@ -66,121 +66,29 @@ const Filter = ({ navigation }) => {
   };
 
   return (
-    <View>
-      <View style={styles.backWrapper}>
-        <View style={styles.top}>
-          <TouchableOpacity
-            style={styles.back}
-            onPress={() => navigation.goBack()}>
-            <EntypoIcon
-              name="chevron-left"
-              size={39}
-              style={styles.iconBack}
-              color="black"
-            />
-            <Text fontSize={'2xl'} bold>
-              Filter
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.resetBtn} onPress={handleReset}>
-            <Text>RESET</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <ScrollView style={styles.main} showsVerticalScrollIndicator={false}>
-        <View>
-          <View style={styles.select}>
-            <Text color={'black'} fontSize={'xl'}>
-              Your Location
-            </Text>
-          </View>
-          <View style={styles.select}>
-            <Text color={'black'} fontSize={'xl'}>
-              Star Rating
-            </Text>
-          </View>
-          <View style={styles.select}>
-            <Text color={'black'} fontSize={'xl'}>
-              Sort By
-            </Text>
-          </View>
-          <View style={styles.select}>
-            <Text color={'black'} fontSize={'xl'}>
-              Min Price
-            </Text>
-            <View style={[styles.picker, styles.inputWrapper]}>
-              <TextInput
-                style={styles.input}
-                placeholderTextColor="gray"
-                placeholder="Rp"
-                keyboardType="number-pad"
-                onChangeText={setMin}
-                value={min}
-              />
-              {/* <AntIcon name="caretdown" size={10} style={styles.iconInput} /> */}
-            </View>
-          </View>
-          <View style={styles.select}>
-            <Text color={'black'} fontSize={'xl'}>
-              Max Price
-            </Text>
-            <View style={[styles.picker, styles.inputWrapper]}>
-              <TextInput
-                style={styles.input}
-                placeholderTextColor="gray"
-                placeholder="Rp"
-                keyboardType="number-pad"
-                onChangeText={setMax}
-                value={max}
-              />
-              {/* <AntIcon name="caretdown" size={10} style={styles.iconInput} /> */}
-            </View>
-          </View>
-          <View style={styles.select}>
-            <Text color={'black'} fontSize={'xl'}>
-              Date
-            </Text>
-            <View style={[styles.picker, styles.inputWrapper]}>
-              <TouchableOpacity
-                title={String(date)}
-                onPress={() => setOpen(true)}>
-                <Text style={styles.textBtn}>
-                  {moment(date).format('MMM DD YYYY')}
-                </Text>
-              </TouchableOpacity>
-              <DatePicker
-                style={styles.datePicker}
-                fadeToColor="white"
-                theme="dark"
-                textColor="black"
-                modal
-                mode="date"
-                open={open}
-                date={date}
-                onConfirm={dateItem => {
-                  setOpen(false);
-                  setDate(dateItem);
-                }}
-                onCancel={() => {
-                  setOpen(false);
-                }}
-              />
-              <AntIcon name="caretdown" size={10} style={styles.iconInput} />
-            </View>
-          </View>
-          <View style={styles.select}>
-            <Text color={'black'} fontSize={'xl'}>
-              Type
-            </Text>
-          </View>
-        </View>
-        <View style={styles.btnWrapper}>
-          <Button color="primary" onPress={handleFilter}>
-            Apply
-          </Button>
-        </View>
-      </ScrollView>
-    </View>
+    <Center>
+      <FormControl w="3/4" maxW="300" isRequired isInvalid>
+        <FormControl.Label>Choose service</FormControl.Label>
+        <Select
+          minWidth="200"
+          accessibilityLabel="Choose Service"
+          placeholder="Choose Service"
+          _selectedItem={{
+            bg: 'teal.600',
+            // endIcon: <CheckIcon size={5} />,
+          }}
+          mt="1">
+          <Select.Item label="UX Research" value="ux" />
+          <Select.Item label="Web Development" value="web" />
+          <Select.Item label="Cross Platform Development" value="cross" />
+          <Select.Item label="UI Designing" value="ui" />
+          <Select.Item label="Backend Development" value="backend" />
+        </Select>
+        <FormControl.ErrorMessage>
+          Please make a selection!
+        </FormControl.ErrorMessage>
+      </FormControl>
+    </Center>
   );
 };
 

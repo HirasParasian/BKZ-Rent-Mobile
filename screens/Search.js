@@ -2,13 +2,35 @@ import FAicon from 'react-native-vector-icons/FontAwesome';
 import { View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Input, Text, FlatList, Image, Center, Button } from 'native-base';
-import { getVehicle, getSearch } from '../src/redux/actions/vehicle';
+import {
+  Box,
+  Input,
+  Text,
+  FlatList,
+  Image,
+  Center,
+  Button,
+  Modal,
+  FormControl,
+  Select,
+  Pressable,
+} from 'native-base';
+import { getVehicle, getFilter, getSearch } from '../src/redux/actions/vehicle';
+import DatePicker from 'react-native-date-picker';
+import moment from 'moment';
 
 const Search = ({ navigation }) => {
+  const [showModal, setShowModal] = useState(false);
   let [page, setPage] = React.useState(1);
+  let [location, setLocation] = React.useState('');
+  let [rating, setRating] = React.useState('');
+  let [sort, setSort] = React.useState('name');
   let [searching, setSearching] = React.useState('');
   let [category, setCategory] = React.useState('');
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(99999999);
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
   const vehicle = useSelector(state => state.vehicle);
   const vehicles = useSelector(state => state.vehicle?.searched);
   const pageInfo = useSelector(state => state.vehicle?.pageSearch);
@@ -19,9 +41,34 @@ const Search = ({ navigation }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const getProfiler = () => {
+    dispatch(getSearch(page, location, sort, min, max, category, search));
+  };
+
   const changePages = async number => {
     setPage(number);
-    await dispatch(getSearch(number, searching, category));
+    await dispatch(
+      getFilter(number, location, sort, min, max, category, search),
+    );
+  };
+
+  const searchPages = async number => {
+    setPage(number);
+    await dispatch(getFilter(1, location, sort, min, max, category, search));
+  };
+
+  const onReset = () => {
+    setLocation('');
+    setRating('');
+    setSort('name');
+    setMin(0);
+    setMax(99999999);
+    setCategory('');
+  };
+
+  const onApply = () => {
+    setShowModal(false);
+    dispatch(getFilter(1, location, sort, min, max, category, search));
   };
 
   let active = pageInfo?.currentPage;
@@ -52,17 +99,9 @@ const Search = ({ navigation }) => {
     );
   }
 
-  const getProfiler = () => {
-    dispatch(getSearch(page, searching, category));
-  };
   const [search, setSearch] = useState('');
   const searchChange = e => {
     setSearch(e);
-  };
-
-  const searchPages = async number => {
-    setPage(number);
-    await dispatch(getSearch(1, search, category));
   };
 
   const removeHandler = () => {
@@ -141,9 +180,10 @@ const Search = ({ navigation }) => {
               ) : null
             }
           />
-          <TouchableOpacity style={styles.row}>
+          <TouchableOpacity
+            onPress={() => setShowModal(true)}
+            style={styles.row}>
             <FAicon
-              onPress={() => navigation.navigate('Filter', {})}
               color={'#8D8DAA'}
               name="filter"
               size={25}
@@ -163,11 +203,223 @@ const Search = ({ navigation }) => {
             showsVerticalScrollIndicator={false}
           />
         </View>
+        <Modal
+          style={styles.modals}
+          size={'full'}
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}>
+          <Modal.Content style={styles.modal}>
+            <Modal.Header
+              flexDirection={'row'}
+              justifyContent="space-between"
+              alignItems={'center'}>
+              <Text fontSize={'24'} mx={'5'}>
+                Filter
+              </Text>
+              <Pressable onPress={onReset}>
+                <FAicon size={25} name="refresh" />
+              </Pressable>
+            </Modal.Header>
+            <Modal.Body>
+              <View>
+                <View style={styles.select}>
+                  <Text color={'black'} fontSize={'xl'}>
+                    Your Location
+                  </Text>
+                  <Box w="1/4">
+                    <Select
+                      selectedValue={location}
+                      variant="ghost"
+                      minWidth="150"
+                      fontSize={'20'}
+                      accessibilityLabel="Choose"
+                      placeholder="Choose"
+                      _selectedItem={{
+                        bg: 'pink.600',
+                      }}
+                      mt={1}
+                      onValueChange={itemValue => setLocation(itemValue)}>
+                      <Select.Item label="Bekasi" value="bekasi" />
+                      <Select.Item label="Jakarta" value="jakarta" />
+                      <Select.Item label="Bandung" value="bandung" />
+                      <Select.Item label="Depok" value="depok" />
+                      <Select.Item label="Bogor" value="bogor" />
+                    </Select>
+                  </Box>
+                </View>
+                <View style={styles.select}>
+                  <Text color={'black'} fontSize={'xl'}>
+                    Star Rating
+                  </Text>
+                  <Box w="1/4">
+                    <Select
+                      selectedValue={rating}
+                      variant="ghost"
+                      minWidth="150"
+                      fontSize={'20'}
+                      accessibilityLabel="Choose"
+                      placeholder="Choose"
+                      _selectedItem={{
+                        bg: 'pink.600',
+                      }}
+                      mt={1}
+                      onValueChange={itemValue => setRating(itemValue)}>
+                      <Select.Item label="1" value="1" />
+                      <Select.Item label="2" value="2" />
+                      <Select.Item label="3" value="3" />
+                      <Select.Item label="4" value="4" />
+                      <Select.Item label="5" value="5" />
+                    </Select>
+                  </Box>
+                </View>
+                <View style={styles.select}>
+                  <Text color={'black'} fontSize={'xl'}>
+                    Sort By
+                  </Text>
+                  <Box w="1/4">
+                    <Select
+                      selectedValue={sort}
+                      variant="ghost"
+                      minWidth="150"
+                      fontSize={'20'}
+                      accessibilityLabel="Choose"
+                      placeholder="Choose"
+                      _selectedItem={{
+                        bg: 'pink.600',
+                      }}
+                      mt={1}
+                      onValueChange={itemValue => setSort(itemValue)}>
+                      <Select.Item label="Date" value="createdAt" />
+                      <Select.Item label="Price" value="price" />
+                      <Select.Item label="Rating" value="rating" />
+                    </Select>
+                  </Box>
+                </View>
+                <View style={styles.select}>
+                  <Text color={'black'} fontSize={'xl'}>
+                    Min Price
+                  </Text>
+                  <View style={[styles.picker, styles.inputWrapper]}>
+                    <Input
+                      style={styles.input}
+                      placeholderTextColor="gray"
+                      placeholder="Rp"
+                      keyboardType="number-pad"
+                      onChangeText={setMin}
+                      value={min}
+                    />
+                    {/* <AntIcon name="caretdown" size={10} style={styles.iconInput} /> */}
+                  </View>
+                </View>
+                <View style={styles.select}>
+                  <Text color={'black'} fontSize={'xl'}>
+                    Max Price
+                  </Text>
+                  <View style={[styles.picker, styles.inputWrapper]}>
+                    <Input
+                      style={styles.input}
+                      placeholderTextColor="gray"
+                      placeholder="Rp"
+                      keyboardType="number-pad"
+                      onChangeText={setMax}
+                      value={max}
+                    />
+                  </View>
+                </View>
+                {/* <View style={styles.select}>
+                  <Text color={'black'} fontSize={'xl'}>
+                    Date
+                  </Text>
+                  <View style={[styles.dates]}>
+                    <TouchableOpacity
+                      title={String(date)}
+                      onPress={() => setOpen(true)}>
+                      <Text style={styles.textBtn}>
+                        {moment(date).format('MMM DD YYYY')}
+                      </Text>
+                    </TouchableOpacity>
+                    <DatePicker
+                      style={styles.datePicker}
+                      fadeToColor="white"
+                      theme="dark"
+                      textColor="black"
+                      modal
+                      mode="date"
+                      open={open}
+                      date={date}
+                      onConfirm={dateItem => {
+                        setOpen(false);
+                        setDate(dateItem);
+                      }}
+                      onCancel={() => {
+                        setOpen(false);
+                      }}
+                    />
+                    <FAicon name="calendar" size={20} style={styles.calendar} />
+                  </View>
+                </View> */}
+                <View style={styles.select}>
+                  <Text color={'black'} fontSize={'xl'}>
+                    Category
+                  </Text>
+                  <Box w="1/4">
+                    <Select
+                      selectedValue={category}
+                      variant="ghost"
+                      minWidth="150"
+                      fontSize={'20'}
+                      accessibilityLabel="Choose"
+                      placeholder="Choose"
+                      _selectedItem={{
+                        bg: 'pink.600',
+                      }}
+                      mt={1}
+                      onValueChange={itemValue => setCategory(itemValue)}>
+                      <Select.Item label="Bike" value="1" />
+                      <Select.Item label="Motorbike" value="2" />
+                      <Select.Item label="Car" value="3" />
+                    </Select>
+                  </Box>
+                </View>
+              </View>
+            </Modal.Body>
+            <Modal.Footer style={styles.modals}>
+              <Button.Group space={1}>
+                <Button onPress={onApply}>Apply</Button>
+              </Button.Group>
+            </Modal.Footer>
+          </Modal.Content>
+        </Modal>
       </View>
     </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
+  calendar: {
+    paddingLeft: 19,
+  },
+  dates: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  select: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // marginEnd: 20,
+    marginTop: 20,
+  },
+  modal: {
+    height: 1400,
+    flex: 1,
+  },
+  modals: {
+    backgroundColor: '#FFF',
+    borderColor: 'transparent',
+    borderWidth: 0,
+    elevation: 0,
+  },
   activeMargin: { marginHorizontal: 2 },
   pagination: {
     marginHorizontal: 2,
