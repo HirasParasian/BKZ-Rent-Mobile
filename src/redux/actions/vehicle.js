@@ -2,13 +2,10 @@ import http from '../../helpers/http';
 import qs from 'qs';
 import RNFetchBlob from 'rn-fetch-blob';
 
-export const CreatedVehicles = (token, userData) => {
+export const addVehicles = (token, newData) => {
   return async dispatch => {
     try {
-      // dispatch({
-      //   type: 'IS_LOADING',
-      // });
-      console.log(userData);
+      console.log(newData);
       const { data } = await RNFetchBlob.fetch(
         'POST',
         'http://192.168.100.8:5000/vehicles/create',
@@ -17,99 +14,78 @@ export const CreatedVehicles = (token, userData) => {
           'Content-Type': 'multipart/form-data',
         },
         [
-          {
-            name: 'image',
-            filename: userData.fileName,
-            type: userData.fileType,
-            data: RNFetchBlob.wrap(userData.picture),
-          },
+          newData.picture
+            ? {
+                name: 'image',
+                filename: newData.fileName,
+                type: newData.fileType,
+                data: RNFetchBlob.wrap(newData.picture),
+              }
+            : {},
+          { name: 'name', data: newData.name },
+          { name: 'price', data: newData.price },
+          { name: 'stock', data: newData.stock },
+          { name: 'description', data: newData.description },
+          { name: 'location', data: newData.location },
+          { name: 'category', data: newData.category },
         ],
       );
-      console.log(data);
       dispatch({
-        type: 'CREATE_VEHICLE',
-        payload: data.results,
-      });
-      // dispatch({
-      //   type: 'IS_LOADING',
-      // });
-    } catch (e) {
-      console.log(e);
-      dispatch({
-        type: 'AUTH_ERROR',
-        payload: e.response.data.message,
-      });
-    }
-  };
-};
-
-export const addVehicles = (token, dataVehicle) => {
-  return async dispatch => {
-    try {
-      const { data } = await http(token).post(
-        '/vehicles/create',
-        qs.stringify(dataVehicle),
-      );
-      dispatch({
-        type: 'IS_LOADING',
-      });
-      dispatch({
-        type: 'CREATE_VEHICLE',
-        payload: data,
+        type: 'CREATE_VEHICLES',
+        payload: JSON.parse(data),
       });
       dispatch({
         type: 'IS_LOADING',
       });
     } catch (e) {
       dispatch({
-        type: 'CREATE_ERROR',
-        payload: e.response.data.message,
+        type: 'VEHICLES_ERROR',
+        payload: e,
       });
     }
   };
 };
 
-export const OnCreate = (
-  name,
-  price,
-  stock,
-  description,
-  location,
-  category,
-  token,
-) => {
-  const dataa = {
-    name: name,
-    price: price,
-    description: description,
-    location: location,
-    category: category,
-    stock: stock,
-  };
+export const editVehicles = (token, newData, vehicleId) => {
+  console.log(token, newData, vehicleId);
   return async dispatch => {
     try {
-      dispatch({
-        type: 'CLEAR_ERROR',
-      });
-      const { data } = await http(token).post(
-        '/vehicles/create',
-        qs.stringify(dataa),
+      // console.log(newData);
+      const { data } = await RNFetchBlob.fetch(
+        'PATCH',
+        `http://192.168.100.8:5000/vehicles/edit/${vehicleId}`,
+        {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        [
+          newData.picture
+            ? {
+                name: 'image',
+                filename: newData.fileName,
+                type: newData.fileType,
+                data: RNFetchBlob.wrap(newData.picture),
+              }
+            : {},
+          { name: 'name', data: newData.name },
+          { name: 'price', data: newData.price.toString() },
+          { name: 'stock', data: newData.stock.toString() },
+          { name: 'description', data: newData.description },
+          { name: 'location', data: newData.location },
+          { name: 'category', data: newData.category.toString() },
+        ],
       );
-      console.log(data);
       dispatch({
-        type: 'CREATE_VEHICLE',
-        payload: data.results,
+        type: 'EDIT_VEHICLES',
+        payload: JSON.parse(data),
       });
-    } catch (err) {
-      let payload = '';
-      if (err.response) {
-        payload = err.response.data.error;
-      } else {
-        payload = err.message;
-      }
       dispatch({
-        type: 'CREATE_ERROR',
-        payload: payload,
+        type: 'IS_LOADING',
+      });
+    } catch (e) {
+      dispatch({
+        type: 'VEHICLES_ERROR',
+        payload: e,
       });
     }
   };

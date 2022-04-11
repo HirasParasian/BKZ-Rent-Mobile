@@ -1,12 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useRef, useState, useEffect } from 'react';
 import Camera from '../../src/assets/images/cameras.png';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
-import {
-  OnCreate,
-  CreatedVehicles,
-  addVehicles,
-} from '../../src/redux/actions/vehicle';
+import { editVehicles } from '../../src/redux/actions/vehicle';
 import ModalSuccess from '../../src/component/ModalSuccess';
 import ModalError from '../../src/component/ModalError';
 import {
@@ -24,23 +21,32 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import { launchImageLibrary } from 'react-native-image-picker';
 
-const CreateVehicle = () => {
+const EditVehicle = () => {
   const auth = useSelector(state => state.auth);
   const vehicle = useSelector(state => state.vehicle);
+  const vehicles = useSelector(state => state.vehicle?.detailVehicle);
+  // console.log(vehicles.image);
   // console.log(vehicle.errMsg[0]);
   useEffect(() => {
     dispatch({
       type: 'CLEAR_MESSAGE',
     });
+    setName(vehicles?.name);
+    setPrice(String(vehicles?.price));
+    setStock(vehicles?.stock);
+    serDescription(vehicles?.description);
+    setLocation(vehicles?.location);
+    setCategory(String(vehicles?.category));
+    setPicture(vehicles?.image);
   }, [dispatch]);
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
-  const [stock, setStock] = useState('');
+  let [stock, setStock] = useState(vehicles?.stock);
   const [description, serDescription] = useState('');
   let [location, setLocation] = React.useState('');
-  let [category, setCategory] = React.useState('');
+  let [category, setCategory] = React.useState('1');
   const [moduleOption, setModuleOption] = useState(false);
-  const [picture, setPicture] = useState({ image: null });
+  const [picture, setPicture] = useState(vehicles?.image);
   const [fileName, setFileName] = useState();
   const [fileType, setFileType] = useState();
   const [images, setImages] = React.useState({});
@@ -62,7 +68,8 @@ const CreateVehicle = () => {
       fileName,
       fileType,
     };
-    dispatch(addVehicles(auth.token, data));
+    // console.log(data);
+    dispatch(editVehicles(auth.token, data, vehicles.vehicleId));
     await setModuleSave(true);
   };
 
@@ -83,6 +90,14 @@ const CreateVehicle = () => {
       }
     });
     setModuleOption(false);
+  };
+  const increment = () => {
+    setStock(stock + 1);
+  };
+  const decrement = () => {
+    if (stock > 1) {
+      setStock(stock - 1);
+    }
   };
 
   return (
@@ -106,7 +121,7 @@ const CreateVehicle = () => {
                 my="5"
                 width={'100'}
                 height={'100'}
-                source={picture ? { uri: picture } : Camera}
+                source={{ uri: picture || Camera }}
                 style={styles.uploadedImg}
                 alt="upload"
               />
@@ -126,21 +141,21 @@ const CreateVehicle = () => {
           </Center>
           <Center>
             <Input
-              mt="3"
+              mt="2"
               w="60%"
               variant={'underlined'}
               placeholder="Type product name min. 30 characters"
               borderBottomColor="gray.400"
-              value={name}
+              defaultValue={name}
               onChangeText={setName}
             />
             <Input
-              mt="3"
+              mt="2"
               w="60%"
               variant={'underlined'}
               placeholder="Type product price"
               borderBottomColor="gray.400"
-              value={price}
+              defaultValue={price}
               keyboardType="numeric"
               onChangeText={setPrice}
             />
@@ -158,7 +173,7 @@ const CreateVehicle = () => {
               variant={'underlined'}
               placeholder="Type product name min. 30 characters"
               borderBottomColor="gray.400"
-              value={description}
+              defaultValue={description}
               onChangeText={serDescription}
             />
           </Center>
@@ -179,9 +194,9 @@ const CreateVehicle = () => {
               variant="underlined"
               borderBottomColor="gray.400"
               placeholder="Select Location">
-              <Select.Item label="Bekasi" value="bekasi" />
-              <Select.Item label="Bogor" value="bogor" />
-              <Select.Item label="Bandung" value="bandung" />
+              <Select.Item label="Bekasi" value="Bekasi" />
+              <Select.Item label="Bogor" value="Bogor" />
+              <Select.Item label="Bandung" value="Bandung" />
             </Select>
           </Center>
           <Container mx="5">
@@ -207,8 +222,8 @@ const CreateVehicle = () => {
             </Select>
           </Center>
           <View style={styles.selectRow}>
-            <Text style={styles.select}>Stock :</Text>
-            <TouchableOpacity>
+            <Text style={styles.select}>Select Bikes :</Text>
+            <TouchableOpacity onPress={decrement}>
               <FontAwesome
                 style={styles.plus}
                 size={20}
@@ -216,16 +231,8 @@ const CreateVehicle = () => {
                 name="minus"
               />
             </TouchableOpacity>
-            <Input
-              w="20%"
-              size={'xl'}
-              variant={'solid'}
-              placeholder="     0"
-              borderBottomColor="gray.400"
-              value={stock}
-              onChangeText={setStock}
-            />
-            <TouchableOpacity>
+            <Text style={styles.count}>{stock}</Text>
+            <TouchableOpacity onPress={increment}>
               <FontAwesome
                 style={styles.plus}
                 size={20}
@@ -247,7 +254,7 @@ const CreateVehicle = () => {
   );
 };
 
-export default CreateVehicle;
+export default EditVehicle;
 
 const styles = StyleSheet.create({
   content: { paddingBottom: 80 },

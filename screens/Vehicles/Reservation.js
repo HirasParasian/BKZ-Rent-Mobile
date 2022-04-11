@@ -28,6 +28,7 @@ const Reservation = ({ route, navigation, navigation: { goBack } }) => {
   const [idFavorite, setIdFavorite] = useState();
   const [favorite, setFavorite] = useState(false);
   const [count, setCount] = useState(1);
+  const auth = useSelector(state => state.auth);
   const token = useSelector(state => state.auth?.token);
   const user = useSelector(state => state.auth.userData);
   const fav = useSelector(state => state.auth?.favoriteId);
@@ -180,6 +181,19 @@ const Reservation = ({ route, navigation, navigation: { goBack } }) => {
               </View>
             </View>
           </View>
+          {auth.userData?.role === 'admin' && (
+            <View>
+              <Center>
+                <Button
+                  onPress={() => navigation.navigate('EditVehicle')}
+                  height={10}
+                  mt={2}
+                  size={'60%'}>
+                  Edit Vehicle
+                </Button>
+              </Center>
+            </View>
+          )}
           <View style={styles.container}>
             <View style={styles.rows}>
               <View>

@@ -10,11 +10,20 @@ const initialState = {
   searched: [],
   pageSearch: {},
   detailVehicle: {},
+  edited: false,
+  dataEdited: {},
+  msgEdited: '',
 };
 const vehicle = (state = initialState, action) => {
   switch (action.type) {
     case 'CREATE_VEHICLE': {
       state.createVehicle = true;
+      return { ...state };
+    }
+    case 'EDIT_VEHICLE': {
+      state.edited = true;
+      state.dataEdited = action.payload.results;
+      state.msgEdited = action.payload.message;
       return { ...state };
     }
     case 'GET_VEHICLE': {
