@@ -201,12 +201,12 @@ export const getDetailVehicle = vehicleId => {
   };
 };
 
-export const getSearch = (page, search, category) => {
-  console.log('------------------' + page, search, category);
+export const getSearch = (page, search) => {
+  console.log('------------------' + page, search);
   return async dispatch => {
     try {
       const { data } = await http().get(
-        `/vehicles?search=${search}&page=${page}&limit=10&category=${category}`,
+        `/vehicles?search=${search}&page=${page}&limit=10`,
       );
       dispatch({
         type: 'GET_SEARCH',
@@ -215,7 +215,45 @@ export const getSearch = (page, search, category) => {
     } catch (e) {
       dispatch({
         type: 'VEHICLE_ERROR',
-        payload: 'Failed',
+        payload: e.response.message,
+      });
+    }
+  };
+};
+
+export const getFilter = (
+  page,
+  location,
+  sort,
+  minPrice,
+  maxPrice,
+  category,
+  search,
+) => {
+  console.log(
+    '------------------' + page,
+    location,
+    sort,
+    minPrice,
+    maxPrice,
+    category,
+    search,
+  );
+  return async dispatch => {
+    try {
+      const { data } = await http().get(
+        `/vehicles?search=${search}&page=${page}
+        &limit=10&category=${category}&sort=${sort}
+        &location=${location}&minPrice=${minPrice}&maxPrice=${maxPrice}`,
+      );
+      dispatch({
+        type: 'GET_SEARCH',
+        payload: data,
+      });
+    } catch (e) {
+      dispatch({
+        type: 'VEHICLE_ERROR',
+        payload: e.response.data.message,
       });
     }
   };
