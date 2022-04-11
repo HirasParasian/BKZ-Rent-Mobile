@@ -32,6 +32,7 @@ import PaymentCode from './screens/Vehicles/PaymentCode';
 import OrderDetails from './screens/Vehicles/OrderDetails';
 import FinishPayment from './screens/Vehicles/FinishPayment';
 import CreateVehicle from './screens/Vehicles/CreateVehicle';
+import EditVehicle from './screens/Vehicles/EditVehicle';
 //PROFILE
 import Profile from './screens/Profile';
 import FAQ from './screens/Profile/FAQ';
@@ -232,6 +233,7 @@ function Main() {
           <Stack.Screen name="PaymentCode" component={PaymentCode} />
           <Stack.Screen name="OrderDetails" component={OrderDetails} />
           <Stack.Screen name="FinishPayment" component={FinishPayment} />
+          <Stack.Screen name="EditVehicle" component={EditVehicle} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
