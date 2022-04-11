@@ -1,5 +1,73 @@
 import http from '../../helpers/http';
 import qs from 'qs';
+import RNFetchBlob from 'rn-fetch-blob';
+
+export const CreatedVehicles = (token, userData) => {
+  return async dispatch => {
+    try {
+      // dispatch({
+      //   type: 'IS_LOADING',
+      // });
+      console.log(userData);
+      const { data } = await RNFetchBlob.fetch(
+        'POST',
+        'http://192.168.100.8:5000/vehicles/create',
+        {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        [
+          {
+            name: 'image',
+            filename: userData.fileName,
+            type: userData.fileType,
+            data: RNFetchBlob.wrap(userData.picture),
+          },
+        ],
+      );
+      console.log(data);
+      dispatch({
+        type: 'CREATE_VEHICLE',
+        payload: data.results,
+      });
+      // dispatch({
+      //   type: 'IS_LOADING',
+      // });
+    } catch (e) {
+      console.log(e);
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e.response.data.message,
+      });
+    }
+  };
+};
+
+export const addVehicles = (token, dataVehicle) => {
+  return async dispatch => {
+    try {
+      const { data } = await http(token).post(
+        '/vehicles/create',
+        qs.stringify(dataVehicle),
+      );
+      dispatch({
+        type: 'IS_LOADING',
+      });
+      dispatch({
+        type: 'CREATE_VEHICLE',
+        payload: data,
+      });
+      dispatch({
+        type: 'IS_LOADING',
+      });
+    } catch (e) {
+      dispatch({
+        type: 'CREATE_ERROR',
+        payload: e.response.data.message,
+      });
+    }
+  };
+};
 
 export const OnCreate = (
   name,

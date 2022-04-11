@@ -8,7 +8,7 @@ export const editProfile = (token, userData) => {
       dispatch({
         type: 'PAGES_LOADING',
       });
-      console.log(userData);
+      console.log('---------------------------' + userData);
       const { data } = await RNFetchBlob.fetch(
         'PATCH',
         'http://192.168.100.8:5000/profile/update',

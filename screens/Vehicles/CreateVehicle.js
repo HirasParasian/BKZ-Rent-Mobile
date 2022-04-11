@@ -2,7 +2,11 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useRef, useState, useEffect } from 'react';
 import Camera from '../../src/assets/images/cameras.png';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
-import { OnCreate } from '../../src/redux/actions/vehicle';
+import {
+  OnCreate,
+  CreatedVehicles,
+  addVehicles,
+} from '../../src/redux/actions/vehicle';
 import ModalSuccess from '../../src/component/ModalSuccess';
 import ModalError from '../../src/component/ModalError';
 import {
@@ -14,9 +18,11 @@ import {
   Button,
   Image,
   ScrollView,
+  Pressable,
 } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 const CreateVehicle = () => {
   const auth = useSelector(state => state.auth);
@@ -33,6 +39,11 @@ const CreateVehicle = () => {
   const [description, serDescription] = useState('');
   let [location, setLocation] = React.useState('');
   let [category, setCategory] = React.useState('');
+  const [moduleOption, setModuleOption] = useState(false);
+  const [picture, setPicture] = useState({ image: null });
+  const [fileName, setFileName] = useState();
+  const [fileType, setFileType] = useState();
+  const [images, setImages] = React.useState({});
   // const hiddenFileInput = useRef(null);
   const token = auth.token;
   const dispatch = useDispatch();
@@ -43,24 +54,33 @@ const CreateVehicle = () => {
     );
   };
 
-  //Upload File Handler
-  // const uploadFile = e => {
-  //   e.preventDefault();
-  //   hiddenFileInput.current.click();
-  // };
-  // const fileInputHandler = e => {
-  //   const reader = new FileReader();
-  //   const picture = e.target.files[0];
-  //   const profileImage = document.querySelector('#profile-image');
-  //   reader.readAsDataURL(picture);
-  //   reader.onload = e => {
-  //     profileImage.src = e.target.result;
-  //     profileImage.className += ' rounded-circle';
-  //   };
-  //   setDatas({
-  //     picture: e.target.files[0],
-  //   });
-  // };
+  const onCreate = async () => {
+    console.log(name, price, stock, description, location, category, token);
+    const data = {
+      name: name,
+      price: price,
+      stock: stock,
+      description: description,
+      location: location,
+      category: category,
+      image: images,
+    };
+    console.log(data);
+    dispatch(addVehicles(auth.token, data));
+  };
+
+  const ChoosePhoto = () => {
+    const options = {
+      noData: true,
+    };
+    launchImageLibrary(options, response => {
+      if (response.assets) {
+        setPicture({ image: response.assets[0].uri });
+        setImages(response.assets[0]);
+      }
+    });
+    setModuleOption(false);
+  };
 
   return (
     <>
@@ -77,16 +97,25 @@ const CreateVehicle = () => {
             </TouchableOpacity>
           </View>
           <Center>
-            <Image
-              my="5"
-              width={'100'}
-              height={'100'}
-              source={Camera}
-              alt="upload"
-            />
+            <Pressable>
+              <Image
+                rounded={30}
+                my="5"
+                width={'100'}
+                height={'100'}
+                source={picture.image ? { uri: picture.image } : Camera}
+                style={styles.uploadedImg}
+                alt="upload"
+              />
+            </Pressable>
           </Center>
           <Center>
-            <Button rounded={10} my={'1'} py={'2'} w="40%">
+            <Button
+              onPress={ChoosePhoto}
+              rounded={10}
+              my={'1'}
+              py={'2'}
+              w="40%">
               <Text fontSize={16} color={'white'} bold>
                 Add a Picture
               </Text>
@@ -109,6 +138,7 @@ const CreateVehicle = () => {
               placeholder="Type product price"
               borderBottomColor="gray.400"
               value={price}
+              keyboardType="numeric"
               onChangeText={setPrice}
             />
           </Center>
@@ -202,7 +232,7 @@ const CreateVehicle = () => {
             </TouchableOpacity>
           </View>
           <Center>
-            <Button onPress={onCreated} rounded={10} my={'1'} py={'4'} w="80%">
+            <Button onPress={onCreate} rounded={10} my={'1'} py={'4'} w="80%">
               <Text fontSize={16} color={'white'} bold>
                 Save Product
               </Text>

@@ -23,11 +23,10 @@ const Profile = ({ navigation }) => {
     dispatch({
       type: 'CLEAR_UPDATE_MESSAGE',
     });
-    dispatch(getProfile(auth?.token));
     if (data) {
       setImage(data.images);
     }
-  }, [auth?.token, data, data.images, dispatch]);
+  }, [data, data.images, dispatch]);
 
   const ChoosePhoto = () => {
     const options = {

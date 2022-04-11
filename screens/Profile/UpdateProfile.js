@@ -40,7 +40,7 @@ export default function App({ navigation, navigation: { goBack } }) {
     dispatch(
       OnEditProfile(fullName, email, mobileNumber, address, date, token),
     );
-    dispatch(getProfile(auth.token));
+    dispatch(getProfile(auth?.token));
   };
 
   console.log(date);
