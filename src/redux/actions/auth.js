@@ -1,5 +1,47 @@
 import http from '../../helpers/http';
 import qs from 'qs';
+import RNFetchBlob from 'rn-fetch-blob';
+
+export const editProfile = (token, userData) => {
+  return async dispatch => {
+    try {
+      dispatch({
+        type: 'PAGES_LOADING',
+      });
+      console.log('---------------------------' + userData);
+      const { data } = await RNFetchBlob.fetch(
+        'PATCH',
+        'http://192.168.100.8:5000/profile/update',
+        {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        [
+          {
+            name: 'images',
+            filename: userData.fileName,
+            type: userData.fileType,
+            data: RNFetchBlob.wrap(userData.picture),
+          },
+        ],
+      );
+      console.log(data);
+      dispatch({
+        type: 'UPDATE_PROFILE',
+        payload: data.results,
+      });
+      dispatch({
+        type: 'PAGES_LOADING',
+      });
+    } catch (e) {
+      console.log(e);
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e,
+      });
+    }
+  };
+};
 
 export const loginProcess = (username, password) => {
   const dataa = { username: username, password: password };
@@ -63,11 +105,45 @@ export const onForgot = (email, code, password, confirmPassword) => {
   };
 };
 
-export const OnRegister = (username, password, MobileNumber) => {
+export const onVerify = (email, code) => {
+  const dataa = {
+    email: email,
+    code: code,
+  };
+  return async dispatch => {
+    try {
+      dispatch({
+        type: 'CLEAR_ERROR',
+      });
+      const { data } = await http().post(
+        '/auth/emailVerify',
+        qs.stringify(dataa),
+      );
+      dispatch({
+        type: 'AUTH_VERIFY',
+        payload: data.message,
+      });
+    } catch (err) {
+      let payload = '';
+      if (err.response) {
+        payload = err.response.data.message;
+      } else {
+        payload = err.message;
+      }
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: payload,
+      });
+    }
+  };
+};
+
+export const OnRegister = (username, password, MobileNumber, email) => {
   const dataa = {
     username: username,
     password: password,
     MobileNumber: MobileNumber,
+    email: email,
   };
   return async dispatch => {
     try {

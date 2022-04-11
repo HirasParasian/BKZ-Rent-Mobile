@@ -10,6 +10,7 @@ const initialState = {
   myFavorite: [],
   updateProfile: false,
   forgot: false,
+  verify: false,
   successMsg: '',
   pageFavorite: {},
 };
@@ -20,6 +21,10 @@ const auth = (state = initialState, action) => {
     }
     case 'AUTH_FORGOT': {
       state.forgot = true;
+      return { ...state, successMsg: action.payload };
+    }
+    case 'AUTH_VERIFY': {
+      state.verify = true;
       return { ...state, successMsg: action.payload };
     }
     case 'AUTH_SIGNUP': {
@@ -37,7 +42,13 @@ const auth = (state = initialState, action) => {
       return { ...state, isError: true, errMsg: action.payload };
     }
     case 'CLEAR_ERROR': {
-      return { ...state, isError: false, errMsg: '', successMsg: '' };
+      return {
+        ...state,
+        isError: false,
+        errMsg: '',
+        successMsg: '',
+        updateProfile: false,
+      };
     }
     case 'GET_PROFILE': {
       state.userData = action.payload;

@@ -1,21 +1,55 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import React, { useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Image, Button, Pressable } from 'native-base';
+import React, { useEffect, useState } from 'react';
 import avatar from '../src/assets/images/avatar.png';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProfile } from '../src/redux/actions/auth';
+import { editProfile, getProfile } from '../src/redux/actions/auth';
 import pushNotif from 'react-native-push-notification';
+import { launchImageLibrary } from 'react-native-image-picker';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Profile = ({ navigation }) => {
+  const auth = useSelector(state => state.auth);
   const data = useSelector(state => state.auth?.userData);
+  const [moduleOption, setModuleOption] = useState(false);
+  const [picture, setPicture] = useState();
+  const [fileName, setFileName] = useState();
+  const [fileType, setFileType] = useState();
+  const [image, setImage] = React.useState({});
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch({
       type: 'CLEAR_UPDATE_MESSAGE',
     });
-  }, [dispatch]);
+    if (data) {
+      setImage(data.images);
+    }
+  }, [data, data.images, dispatch]);
 
+  const ChoosePhoto = () => {
+    const options = {
+      noData: true,
+    };
+    launchImageLibrary(options, response => {
+      if (response.assets) {
+        setPicture(response.assets[0].uri);
+        setFileName(response.assets[0].fileName);
+        setFileType(response.assets[0].type);
+      }
+    });
+    setModuleOption(false);
+  };
+  const saveImage = async () => {
+    const data = {
+      fileName,
+      fileType,
+      picture,
+    };
+    dispatch(editProfile(auth.token, data));
+    await dispatch(getProfile(auth?.token));
+  };
   const localNotification = () => {
     pushNotif.localNotification({
       channelId: 'testId',
@@ -29,7 +63,31 @@ const Profile = ({ navigation }) => {
       <View style={styles.background}>
         <View style={styles.top}>
           <TouchableOpacity>
-            <Image style={styles.avatar} source={avatar} />
+            <Image
+              position={'relative'}
+              alt="profile"
+              rounded={50}
+              width={100}
+              height={100}
+              source={
+                picture
+                  ? { uri: picture }
+                  : auth.userData?.images
+                  ? { uri: auth.userData.images }
+                  : { avatar }
+              }
+            />
+            <Pressable onPress={ChoosePhoto}>
+              <Icon
+                style={styles.absolute}
+                size={40}
+                color="lightblue"
+                name="pencil-circle"
+              />
+            </Pressable>
+            <Button variant={'ghost'} size={'xs'} onPress={saveImage}>
+              Save
+            </Button>
           </TouchableOpacity>
           <Text style={styles.name}>{data?.fullName}</Text>
           <Text style={styles.email}>{data?.email}</Text>
@@ -79,6 +137,8 @@ const Profile = ({ navigation }) => {
   );
 };
 const styles = StyleSheet.create({
+  absolute: { position: 'absolute', bottom: 0, end: 0 },
+  relative: { position: 'relative' },
   background: {
     backgroundColor: '#DFDFDE',
     height: '100%',
@@ -89,7 +149,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 35,
+    marginTop: 5,
   },
   column: {
     flexDirection: 'row',
@@ -129,9 +189,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     paddingHorizontal: 10,
     borderRadius: 20,
-  },
-  avatar: {
-    borderRadius: 50,
   },
   tabNavigator: {
     padding: 20,

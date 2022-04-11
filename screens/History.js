@@ -22,7 +22,7 @@ const History = () => {
   const toast = useToast();
   let [showModal, setShowModal] = React.useState(false);
   let [idHistory, setIdHistory] = React.useState();
-  let [page, setPage] = React.useState(1);
+  let [page, setPage] = React.useState(0);
   const auth = useSelector(state => state.auth);
   const pageInfo = useSelector(state => state.history?.historyPage);
   const history = useSelector(state => state.history.myHistory);
@@ -32,8 +32,8 @@ const History = () => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    dispatch(getMyHistory(auth.token, page));
-  }, [auth.token, dispatch, page]);
+    dispatch(getMyHistory(auth.token, 1));
+  }, [auth.token, dispatch]);
   const changePages = async number => {
     setPage(number);
     await dispatch(getMyHistory(auth.token, number));

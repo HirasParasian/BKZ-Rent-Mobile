@@ -22,7 +22,7 @@ import { getDetailVehicle } from '../../src/redux/actions/vehicle';
 import { useDispatch, useSelector } from 'react-redux';
 import { orderCount } from '../../src/redux/actions/transaction';
 
-const Reservation = ({ route, navigation }) => {
+const Reservation = ({ route, navigation, navigation: { goBack } }) => {
   const [favoriteReady, setFavoriteReady] = useState();
   // console.log('---------------' + favoriteReady);
   const [idFavorite, setIdFavorite] = useState();
@@ -151,7 +151,7 @@ const Reservation = ({ route, navigation }) => {
           <View style={styles.back}>
             <View style={styles.love}>
               <View style={styles.left}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => goBack()}>
                   <FontAwesome size={40} color="#F56D91" name="chevron-left" />
                 </TouchableOpacity>
               </View>
@@ -272,7 +272,7 @@ const Reservation = ({ route, navigation }) => {
                   placeholder="Select Date"
                   w="40%"
                   maxWidth="300px"
-                  value={date.toString('DD MM yyyy')}
+                  value={date.toString('DD-MM-YYYY')}
                 />
                 <FAicon
                   style={styles.iconDate}
