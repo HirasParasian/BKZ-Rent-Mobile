@@ -40,7 +40,7 @@ const CreateVehicle = () => {
   let [location, setLocation] = React.useState('');
   let [category, setCategory] = React.useState('');
   const [moduleOption, setModuleOption] = useState(false);
-  const [picture, setPicture] = useState({ image: null });
+  const [picture, setPicture] = useState(Camera);
   const [fileName, setFileName] = useState();
   const [fileType, setFileType] = useState();
   const [images, setImages] = React.useState({});
@@ -106,7 +106,7 @@ const CreateVehicle = () => {
                 my="5"
                 width={'100'}
                 height={'100'}
-                source={picture ? { uri: picture } : Camera}
+                source={Camera}
                 style={styles.uploadedImg}
                 alt="upload"
               />

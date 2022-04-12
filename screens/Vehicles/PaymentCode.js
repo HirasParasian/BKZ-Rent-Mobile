@@ -67,12 +67,12 @@ const PaymentCode = ({ navigation }) => {
           </Container>
           <Container pb={'5'} mx={'5'}>
             <Text bold fontSize={'2xl'} mx={'5'}>
-              Rp. 245.000
+              Rp. {transaction.stock * vehicles.price * transaction.day}
             </Text>
           </Container>
           <Center>
             <Button
-              onPress={() => navigation.navigate('FinishPayment')}
+              onPress={() => navigation.replace('FinishPayment')}
               w="80%"
               my={'1'}
               py={'4'}

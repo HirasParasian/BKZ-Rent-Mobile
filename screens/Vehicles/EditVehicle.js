@@ -222,7 +222,7 @@ const EditVehicle = () => {
             </Select>
           </Center>
           <View style={styles.selectRow}>
-            <Text style={styles.select}>Select Bikes :</Text>
+            <Text style={styles.select}>Stock :</Text>
             <TouchableOpacity onPress={decrement}>
               <FontAwesome
                 style={styles.plus}

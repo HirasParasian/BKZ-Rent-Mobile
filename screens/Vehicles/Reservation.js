@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable react-hooks/exhaustive-deps */
 import http from '../../src/helpers/http';
 import qs from 'qs';
@@ -37,7 +38,7 @@ const Reservation = ({ route, navigation, navigation: { goBack } }) => {
   const { vehicleId } = route.params;
   const [date, setDate] = useState(new Date());
   const [modalVisible, setModalVisible] = useState(false);
-  let [service, setService] = React.useState('');
+  let [service, setService] = React.useState('1');
   const dispatch = useDispatch();
 
   const increment = () => {
@@ -76,12 +77,14 @@ const Reservation = ({ route, navigation, navigation: { goBack } }) => {
   };
 
   const onReservation = () => {
-    var endDate = new Date(
-      new Date(date).getTime() + service * 24 * 60 * 60 * 1000,
-    );
-    // console.log(date, endDate);
-    dispatch(orderCount(count, date, endDate, service));
-    navigation.navigate('Payment');
+    if (service != null) {
+      var endDate = new Date(
+        new Date(date).getTime() + service * 24 * 60 * 60 * 1000,
+      );
+      // console.log(date, endDate);
+      dispatch(orderCount(count, date, endDate, service));
+      navigation.replace('Payment');
+    }
   };
 
   const onFavorite = async event => {
