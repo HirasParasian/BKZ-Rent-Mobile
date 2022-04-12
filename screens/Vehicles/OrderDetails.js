@@ -35,7 +35,7 @@ const OrderDetails = ({ navigation }) => {
               Order details :
             </Text>
             <Text my={'1'} mx={'5'}>
-              2 Vespa
+              Vespa
             </Text>
             <Text my={'1'} mx={'5'}>
               Prepayement (no tax)

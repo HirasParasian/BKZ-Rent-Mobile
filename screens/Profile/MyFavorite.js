@@ -43,7 +43,7 @@ const MyFavorite = ({ navigation }) => {
     dispatch({
       type: 'CLEAR_FAVORITE',
     });
-    dispatch(getMyFavorite(auth.token, page));
+    dispatch(getMyFavorite(auth.token, 1));
     setShowModal(false);
     toast.show({
       description: 'Delete Succesfully',

@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { extendTheme, NativeBaseProvider } from 'native-base';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/MaterialCommunityIcons';
+import picture from './src/assets/images/empty.png';
 
 //LOCAL NOTIF
 import pushNotif from 'react-native-push-notification';
@@ -12,6 +13,13 @@ pushNotif.createChannel({
   channelId: 'testId',
   channelName: 'TestingName',
   playSound: false,
+});
+
+pushNotif.createChannel({
+  channelId: 'Transaction',
+  channelName: 'Transaction Successfull',
+  playSound: false,
+  picture: picture,
 });
 //END OF LOCAL NOTIF
 

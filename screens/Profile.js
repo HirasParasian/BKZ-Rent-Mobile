@@ -6,7 +6,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { useDispatch, useSelector } from 'react-redux';
 import { editProfile, getProfile } from '../src/redux/actions/auth';
 import pushNotif from 'react-native-push-notification';
-import { launchImageLibrary } from 'react-native-image-picker';
+import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Profile = ({ navigation }) => {
@@ -33,6 +33,19 @@ const Profile = ({ navigation }) => {
       noData: true,
     };
     launchImageLibrary(options, response => {
+      if (response.assets) {
+        setPicture(response.assets[0].uri);
+        setFileName(response.assets[0].fileName);
+        setFileType(response.assets[0].type);
+      }
+    });
+    setModuleOption(false);
+  };
+  const chooseCamera = () => {
+    const options = {
+      noData: true,
+    };
+    launchCamera(options, response => {
       if (response.assets) {
         setPicture(response.assets[0].uri);
         setFileName(response.assets[0].fileName);
@@ -77,9 +90,17 @@ const Profile = ({ navigation }) => {
                   : { avatar }
               }
             />
-            <Pressable onPress={ChoosePhoto}>
+            <Pressable onPress={chooseCamera}>
               <Icon
                 style={styles.absolute}
+                size={40}
+                color="lightblue"
+                name="camera"
+              />
+            </Pressable>
+            <Pressable onPress={ChoosePhoto}>
+              <Icon
+                style={styles.absolute2}
                 size={40}
                 color="lightblue"
                 name="pencil-circle"
@@ -138,6 +159,7 @@ const Profile = ({ navigation }) => {
 };
 const styles = StyleSheet.create({
   absolute: { position: 'absolute', bottom: 0, end: 0 },
+  absolute2: { position: 'absolute', bottom: 0, start: 0 },
   relative: { position: 'relative' },
   background: {
     backgroundColor: '#DFDFDE',

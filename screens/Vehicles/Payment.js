@@ -5,12 +5,14 @@ import Stepper from '../../src/component/Stepper';
 import { Container, Center, Input, Select, Button } from 'native-base';
 import Back from '../../src/component/Back';
 import { useDispatch, useSelector } from 'react-redux';
+import pushNotif from 'react-native-push-notification';
 import {
   orderDetail,
   OnCreatePayment,
 } from '../../src/redux/actions/transaction';
 
 const Payment = ({ navigation, navigation: { goBack } }) => {
+  const localNotification = () => {};
   //STATE SET
   const [idCardNumber, setIdCardNumber] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -83,8 +85,12 @@ const Payment = ({ navigation, navigation: { goBack } }) => {
         bookingCode,
       ),
     );
-
-    navigation.navigate('PaymentCode');
+    pushNotif.localNotification({
+      channelId: 'Transaction',
+      message: 'Transaction Created',
+      title: `${vehicles.name}`,
+    });
+    navigation.replace('PaymentCode');
   };
 
   return (
@@ -104,6 +110,7 @@ const Payment = ({ navigation, navigation: { goBack } }) => {
           py={'3'}
           w="80%"
           variant="filled"
+          keyboardType="numeric"
           value={idCardNumber}
           onChangeText={setIdCardNumber}
           _focus={{ borderColor: 'pink.300' }}
@@ -137,6 +144,7 @@ const Payment = ({ navigation, navigation: { goBack } }) => {
           py={'3'}
           w="80%"
           variant="filled"
+          keyboardType="numeric"
           defaultValue={mobilePhone}
           onChangeText={setMobilePhone}
           _focus={{ borderColor: 'pink.300' }}

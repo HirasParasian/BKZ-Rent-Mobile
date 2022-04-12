@@ -22,12 +22,12 @@ const History = ({ navigation }) => {
   const toast = useToast();
   let [showModal, setShowModal] = React.useState(false);
   let [idHistory, setIdHistory] = React.useState();
-  let [page, setPage] = React.useState(0);
+  let [page, setPage] = React.useState(1);
   const auth = useSelector(state => state.auth);
   const pageInfo = useSelector(state => state.history?.historyPage);
   const history = useSelector(state => state.history.myHistory);
   const empty = useSelector(state => state.history);
-  console.log('----------------------' + empty.errMsg);
+  // console.log('----------------------' + empty.errMsg);
 
   const dispatch = useDispatch();
 
@@ -114,7 +114,7 @@ const History = ({ navigation }) => {
   const onTrash = async historyId => {
     setShowModal(true);
     setIdHistory(historyId);
-    console.log(historyId);
+    // console.log(historyId);
   };
 
   const onDel = async event => {
@@ -123,7 +123,7 @@ const History = ({ navigation }) => {
     dispatch({
       type: 'CLEAR_HISTORY',
     });
-    dispatch(getMyHistory(auth.token, page));
+    dispatch(getMyHistory(auth.token, 1));
     setShowModal(false);
     toast.show({
       description: 'Delete Succesfully',

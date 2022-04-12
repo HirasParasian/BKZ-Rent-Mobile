@@ -11,17 +11,24 @@ import {
 import Back from '../../src/component/Back';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Order from '../../src/assets/images/1.png';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMyHistory } from '../../src/redux/actions/history';
 const FinishPayment = ({ navigation }) => {
+  const auth = useSelector(state => state.auth);
   const transaction = useSelector(state => state.transaction);
   const vehicles = useSelector(state => state.vehicle?.detailVehicle);
   console.log('===========================' + vehicles.image);
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(getMyHistory(auth.token, 1));
+  }, [auth.token, dispatch]);
+  const changePages = async () => {
+    await dispatch(getMyHistory(auth.token, 1));
+    navigation.navigate('History');
+  };
   return (
     <>
-      <Back
-        onPress={() => navigation.navigate('History')}
-        name={'See History'}
-      />
+      <Back onPress={() => changePages} name={'See History'} />
       <ScrollView>
         <View style={styles.content}>
           <View style={styles.elevate}>
@@ -44,7 +51,7 @@ const FinishPayment = ({ navigation }) => {
                   <Text style={styles.textAvailable}>Available</Text>
                 </View>
                 <View>
-                  <Text style={styles.textName}>4 Days</Text>
+                  <Text style={styles.textName}>{transaction.day} Days</Text>
                   <Text style={styles.textName}>
                     {transaction.rentStartDate} - {transaction.rentEndDate}
                   </Text>
@@ -93,7 +100,10 @@ const FinishPayment = ({ navigation }) => {
               style={styles.Button}
               colorScheme={'pink'}
               variant="subtle">
-              <Text bold>Total : {transaction.stock * vehicles.price}</Text>
+              <Text bold>
+                Total : Rp.
+                {transaction.stock * vehicles.price * transaction.day}
+              </Text>
             </Button>
           </Center>
         </View>
