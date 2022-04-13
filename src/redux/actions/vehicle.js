@@ -190,7 +190,7 @@ export const getSearch = (page, search) => {
       });
     } catch (e) {
       dispatch({
-        type: 'VEHICLE_ERROR',
+        type: 'SEARCH_ERROR',
         payload: e.response.message,
       });
     }
@@ -216,6 +216,9 @@ export const getFilter = (
     search,
   );
   return async dispatch => {
+    dispatch({
+      type: 'CLEAR_SEARCH',
+    });
     try {
       const { data } = await http().get(
         `/vehicles?search=${search}&page=${page}
@@ -228,7 +231,7 @@ export const getFilter = (
       });
     } catch (e) {
       dispatch({
-        type: 'VEHICLE_ERROR',
+        type: 'SEARCH_ERROR',
         payload: e.response.data.message,
       });
     }
