@@ -6,6 +6,7 @@ const initialState = {
   historyPage: {},
   successMsg: '',
   delete: '',
+  detailHistory: {},
 };
 const history = (state = initialState, action) => {
   switch (action.type) {
@@ -18,6 +19,10 @@ const history = (state = initialState, action) => {
         myHistory: [],
         historyPage: {},
       };
+    }
+    case 'GET_DETAIL_HISTORY': {
+      state.detailHistory = action.payload;
+      return { ...state };
     }
     case 'GET_MY_HISTORY': {
       state.myHistory = action.payload.results;
