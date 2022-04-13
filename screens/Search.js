@@ -2,6 +2,7 @@ import FAicon from 'react-native-vector-icons/FontAwesome';
 import { View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import emptys from '../src/assets/images/empty3.png';
 import {
   Box,
   Input,
@@ -21,7 +22,7 @@ import moment from 'moment';
 
 const Search = ({ navigation }) => {
   const [showModal, setShowModal] = useState(false);
-  let [page, setPage] = React.useState(1);
+  let [page, setPage] = React.useState();
   let [location, setLocation] = React.useState('');
   let [rating, setRating] = React.useState('');
   let [sort, setSort] = React.useState('name');
@@ -42,7 +43,7 @@ const Search = ({ navigation }) => {
   }, []);
 
   const getProfiler = () => {
-    dispatch(getSearch(page, location, sort, min, max, category, search));
+    dispatch(getSearch(1, location, sort, min, max, category, search));
   };
 
   const changePages = async number => {
@@ -195,14 +196,32 @@ const Search = ({ navigation }) => {
             <View style={styles.page}>{items}</View>
           </Center>
         </Box>
-
-        <View style={styles.main}>
-          <FlatList
-            data={vehicles}
-            renderItem={renderItem}
-            showsVerticalScrollIndicator={false}
-          />
-        </View>
+        {vehicle.searchError && (
+          <>
+            <Center>
+              <Image
+                source={emptys}
+                width={'70%'}
+                height={'70%'}
+                alt="history"
+              />
+            </Center>
+            <Center>
+              <Text fontSize={40} bold>
+                404 Not Found
+              </Text>
+            </Center>
+          </>
+        )}
+        {!vehicle.searchError && (
+          <View style={styles.main}>
+            <FlatList
+              data={vehicles}
+              renderItem={renderItem}
+              showsVerticalScrollIndicator={false}
+            />
+          </View>
+        )}
         <Modal
           style={styles.modals}
           size={'full'}

@@ -1,5 +1,6 @@
 const initialState = {
   isError: false,
+  searchError: false,
   errMsg: [],
   isLoading: false,
   createVehicle: false,
@@ -20,6 +21,9 @@ const vehicle = (state = initialState, action) => {
       state.createVehicle = true;
       return { ...state };
     }
+    case 'SEARCH_ERROR': {
+      return { ...state, searchError: true, errMsg: action.payload };
+    }
     case 'EDIT_VEHICLE': {
       state.edited = true;
       state.dataEdited = action.payload.results;
@@ -30,10 +34,15 @@ const vehicle = (state = initialState, action) => {
       state.allVehicle = action.payload;
       return { ...state };
     }
+    case 'CLEAR_SEARCH': {
+      state.searched = [];
+      state.pageSearch = {};
+      return { ...state };
+    }
     case 'GET_SEARCH': {
       state.searched = action.payload.results;
       state.pageSearch = action.payload.pageInfo;
-      return { ...state };
+      return { ...state, searchError: false };
     }
     case 'GET_BIKE': {
       state.bike = action.payload;
