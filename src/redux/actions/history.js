@@ -21,6 +21,24 @@ export const getMyHistory = (token, page) => {
   };
 };
 
+export const getDetailHistory = historyId => {
+  console.log(historyId);
+  return async dispatch => {
+    try {
+      const { data } = await http().get(`/myHistory/search/${historyId}`);
+      dispatch({
+        type: 'GET_DETAIL_HISTORY',
+        payload: data,
+      });
+    } catch (e) {
+      dispatch({
+        type: 'DETAIL_HISTORY_ERROR',
+        payload: e.response.data.error[0],
+      });
+    }
+  };
+};
+
 export const deleteHistory = idHistory => {
   return async dispatch => {
     try {
