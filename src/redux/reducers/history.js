@@ -10,7 +10,14 @@ const initialState = {
 const history = (state = initialState, action) => {
   switch (action.type) {
     case 'CLEAR_ERROR_HISTORY': {
-      return { ...state, isError: false, errMsg: '', successMsg: '' };
+      return {
+        ...state,
+        isError: false,
+        errMsg: '',
+        successMsg: '',
+        myHistory: [],
+        historyPage: {},
+      };
     }
     case 'GET_MY_HISTORY': {
       state.myHistory = action.payload.results;

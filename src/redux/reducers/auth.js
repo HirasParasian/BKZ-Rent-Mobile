@@ -8,6 +8,7 @@ const initialState = {
   userData: {},
   favoriteId: [],
   myFavorite: [],
+  updateProfiles: {},
   updateProfile: false,
   forgot: false,
   verify: false,
@@ -33,6 +34,12 @@ const auth = (state = initialState, action) => {
     }
     case 'UPDATE_PROFILE': {
       state.updateProfile = true;
+      state.updateProfiles = action.payload.result;
+      return { ...state, successMsg: action.payload.message };
+    }
+    case 'UPDATE_PROFILE': {
+      state.updateProfile = true;
+      // state.updateProfiles = action.payload.result;
       return { ...state, successMsg: action.payload };
     }
     case 'AUTH_LOGOUT': {

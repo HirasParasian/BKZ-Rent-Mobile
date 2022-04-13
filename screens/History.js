@@ -22,7 +22,7 @@ const History = ({ navigation }) => {
   const toast = useToast();
   let [showModal, setShowModal] = React.useState(false);
   let [idHistory, setIdHistory] = React.useState();
-  let [page, setPage] = React.useState(1);
+  let [page, setPage] = React.useState();
   const auth = useSelector(state => state.auth);
   const pageInfo = useSelector(state => state.history?.historyPage);
   const history = useSelector(state => state.history.myHistory);

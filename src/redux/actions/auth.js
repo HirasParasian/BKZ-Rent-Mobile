@@ -28,7 +28,7 @@ export const editProfile = (token, userData) => {
       console.log(data);
       dispatch({
         type: 'UPDATE_PROFILE',
-        payload: data.results,
+        payload: JSON.parse(data),
       });
       dispatch({
         type: 'PAGES_LOADING',
@@ -288,8 +288,8 @@ export const OnEditProfile = (
       const { data } = await http(token).patch('/profile', qs.stringify(dataa));
       console.log(data);
       dispatch({
-        type: 'UPDATE_PROFILE',
-        payload: data.message,
+        type: 'UPDATE_PROFILES',
+        payload: data,
       });
     } catch (err) {
       let payload = '';
