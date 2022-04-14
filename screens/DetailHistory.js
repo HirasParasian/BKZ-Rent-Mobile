@@ -1,10 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Input, Image, Select, Center, Box, Text, Button } from 'native-base';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetailHistory } from '../src/redux/actions/history';
+import { Rating, AirbnbRating } from 'react-native-ratings';
 
 const DetailHistory = ({ route }) => {
+  const history = useSelector(state => state.history.detailHistory);
   const dispatch = useDispatch();
   const { historyId } = route.params;
 
@@ -14,12 +17,64 @@ const DetailHistory = ({ route }) => {
 
   const getProfiler = async () => {
     await dispatch(getDetailHistory(historyId));
-    await dispatch(getDetailHistory(historyId));
   };
-  console.log(historyId);
+
   return (
     <View>
-      <Text>DetailHistory</Text>
+      <Image
+        width={'100%'}
+        height="220"
+        borderBottomRadius={30}
+        source={{ uri: history?.image }}
+        alt="image"
+      />
+      <Center>
+        <Text bold fontSize={30}>
+          {history.vehicle}
+        </Text>
+      </Center>
+      <AirbnbRating
+        count={5}
+        reviewSize={0}
+        reviews={false}
+        styles={styles.rating}
+        size={20}
+      />
+      <Text mx={5} bold fontSize={20}>
+        Booking Info :
+      </Text>
+      <Box
+        mx={3}
+        px={3}
+        py={5}
+        my={1}
+        borderWidth={2}
+        borderBottomRadius={10}
+        borderTopRadius={10}
+        borderColor={'pink.300'}>
+        <Text>Booking Name : {history.rentName}</Text>
+        <Text>ID Card Number : {history.idCardNumber}</Text>
+        <Text>Email : {history.emailAddress}</Text>
+        <Text>Location : {history.location}</Text>
+      </Box>
+      <Center>
+        <Text>Booking Code : {history.bookingCode}</Text>
+        <Text>Payment Code : {history.paymentCode}</Text>
+      </Center>
+      <Box
+        mx={3}
+        px={3}
+        py={5}
+        my={1}
+        borderWidth={2}
+        borderBottomRadius={10}
+        borderTopRadius={10}
+        borderColor={'pink.300'}>
+        <Text>Start Day Rent : {history.rentStartDate} Day</Text>
+        <Text>End Day Rent : {history.rentEndDate} Day</Text>
+        <Text>Total Day : {history.days} Day</Text>
+        <Text>Total Price : {history.totalPrice}</Text>
+      </Box>
     </View>
   );
 };
