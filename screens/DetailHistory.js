@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { StyleSheet, View } from 'react-native';
-import { Input, Image, Select, Center, Box, Text, Button } from 'native-base';
+import { Image, Center, Box, Text, Button } from 'native-base';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetailHistory } from '../src/redux/actions/history';
