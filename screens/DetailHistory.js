@@ -5,8 +5,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetailHistory } from '../src/redux/actions/history';
 import { Rating, AirbnbRating } from 'react-native-ratings';
+import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 
-const DetailHistory = ({ route }) => {
+const DetailHistory = ({ route, navigation, navigation: { goBack } }) => {
   const history = useSelector(state => state.history.detailHistory);
   const dispatch = useDispatch();
   const { historyId } = route.params;
@@ -28,6 +29,15 @@ const DetailHistory = ({ route }) => {
         source={{ uri: history?.image }}
         alt="image"
       />
+      <View style={styles.back}>
+        <View style={styles.love}>
+          <View style={styles.left}>
+            <Button onPress={() => goBack()} variant={'ghost'}>
+              <FontAwesome size={40} color="#F56D91" name="chevron-left" />
+            </Button>
+          </View>
+        </View>
+      </View>
       <Center>
         <Text bold fontSize={30}>
           {history.vehicle}
@@ -58,8 +68,8 @@ const DetailHistory = ({ route }) => {
         <Text>Location : {history.location}</Text>
       </Box>
       <Center>
-        <Text>Booking Code : {history.bookingCode}</Text>
-        <Text>Payment Code : {history.paymentCode}</Text>
+        <Text bold>Booking Code : {history.bookingCode}</Text>
+        <Text bold>Payment Code : {history.paymentCode}</Text>
       </Center>
       <Box
         mx={3}
@@ -81,4 +91,8 @@ const DetailHistory = ({ route }) => {
 
 export default DetailHistory;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  back: {
+    position: 'absolute',
+  },
+});
