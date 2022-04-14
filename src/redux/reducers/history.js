@@ -21,7 +21,7 @@ const history = (state = initialState, action) => {
       };
     }
     case 'GET_DETAIL_HISTORY': {
-      state.detailHistory = action.payload;
+      state.detailHistory = action.payload.results;
       return { ...state };
     }
     case 'GET_MY_HISTORY': {
