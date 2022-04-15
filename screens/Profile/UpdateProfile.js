@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  StyleSheet,
-  DatePickerIOS,
-  TextInput,
-  TouchableOpacity,
-  ImageBackground,
-  Image,
-  Modal,
-} from 'react-native';
+import { View, StyleSheet, Modal } from 'react-native';
 import { Text, Button, Input, Pressable } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfile, OnEditProfile } from '../../src/redux/actions/auth';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DatePicker from 'react-native-date-picker';
 import FAicon from 'react-native-vector-icons/FontAwesome';
 import ModalSuccess from '../../src/component/ModalSuccess';
@@ -53,84 +44,72 @@ export default function App({ navigation, navigation: { goBack } }) {
       </Pressable>
 
       <View style={styles.container}>
-        <View>
-          <Modal
-            transparent={true}
-            animationType="slide"
-            visible={modalVisible}>
-            <View style={styles.datetime}>
-              <TouchableOpacity style={styles.close}>
-                <Text style={styles.selectDate}>Select Date</Text>
-                <FAicon
-                  onPress={() => setModalVisible(!modalVisible)}
-                  size={40}
-                  color="#F56D91"
-                  name="close"
-                />
-              </TouchableOpacity>
-              <View>
-                <DatePicker date={date} mode="date" onDateChange={setDate} />
-              </View>
-              <TouchableOpacity
-                onPress={() => setModalVisible(false)}
-                style={styles.save}>
-                <Text style={styles.textSave}>Save</Text>
-              </TouchableOpacity>
-            </View>
-          </Modal>
-        </View>
         {auth.updateProfile && <ModalSuccess message={auth?.successMsg} />}
         {auth.isError && <ModalError message={auth?.errMsg} />}
         <View style={styles.form}>
-          <Text>Name :</Text>
           <Input
-            style={styles.input}
+            variant={'underlined'}
             defaultValue={data?.fullName}
             placeholderTextColor="#fff"
-            variant={'underlined'}
             onChangeText={setFullName}
+            w={{
+              base: '100%',
+              md: '25%',
+            }}
+            InputLeftElement={
+              <Text>
+                <MaterialIcons size={20} name="person" />
+              </Text>
+            }
+            placeholder="Name"
           />
-          <Text>Email Address :</Text>
           <Input
-            style={styles.input}
             defaultValue={data?.email}
             placeholderTextColor="#fff"
             variant={'underlined'}
             onChangeText={setEmail}
+            w={{
+              base: '100%',
+              md: '25%',
+            }}
+            InputLeftElement={
+              <Text>
+                <MaterialIcons size={20} name="mail" />
+              </Text>
+            }
+            placeholder="Name"
           />
-          <Text>Mobile Number :</Text>
           <Input
-            style={styles.input}
             defaultValue={data?.mobileNumber}
             placeholderTextColor="#fff"
             variant={'underlined'}
             onChangeText={setMobileNumber}
+            w={{
+              base: '100%',
+              md: '25%',
+            }}
+            InputLeftElement={
+              <Text>
+                <MaterialIcons size={20} name="phone" />
+              </Text>
+            }
+            placeholder="Name"
           />
-          <Text>Date of Birth :</Text>
-          <View style={styles.rows}>
-            <Input
-              variant={'underlined'}
-              placeholder="Select Date"
-              w="80%"
-              maxWidth="300px"
-              value={date.toString('DD-MM-YYYY')}
-            />
-            <FAicon
-              style={styles.iconDate}
-              onPress={() => setModalVisible(true)}
-              size={30}
-              color="#F56D91"
-              name="calendar"
-            />
-          </View>
-          <Text>Delivery Address :</Text>
-          {/* <DatePickerIOS /> */}
-          <TextInput
-            style={styles.input}
+          <Input
             defaultValue={data?.address}
             placeholderTextColor="#fff"
             variant={'underlined'}
             onChangeText={setAddress}
+            w={{
+              base: '100%',
+              md: '25%',
+            }}
+            InputLeftElement={
+              <Text>
+                <MaterialIcons size={20} name="home-work" />
+              </Text>
+            }
+            placeholder="Address"
           />
           <Button
             onPress={onEdit}
@@ -230,7 +209,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   container: {
-    flex: 1,
     justifyContent: 'center',
     backgroundColor: '#fff',
     padding: 20,
