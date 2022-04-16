@@ -36,7 +36,7 @@ yarn install
 
 ## ✍️ BKZ RENT - Backend Repository
 
-<https://github.com/HirasParasian/fw5-backend-beginner>
+<https://github.com/HirasParasian/BKZ-Rent-Backend>
 
 
 ## ⛏️ Built Using
